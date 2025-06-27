@@ -1,15 +1,11 @@
 'use client';
 
-import dynamic from 'next/dynamic';
-
-const SimpleMap = dynamic(() => import('@/components/page elements/SimpleMap'), {
-  ssr: false, 
-});
+import MenuMain from "@/components/page elements/MenuMain";
 
 export default function Home() {
   return (
     <div>
-      <SimpleMap/>
+      <MenuMain/>
     </div>
   );
 } 
