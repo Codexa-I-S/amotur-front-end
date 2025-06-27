@@ -28,6 +28,7 @@ export default function SimpleMap() {
   return (
     <div className="h-screen w-screen relative">
       <MapContainer
+        style={{ zIndex: 0 }}
         center={[-3.0274694, -39.6503127]}
         zoom={14}
         scrollWheelZoom={true}

@@ -6,7 +6,7 @@ export default function SideBar() {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="relative">
+    <div className="relative z-[1001]">
       {/* Navbar - mantido como você aprovou */}
       <div className="flex items-center justify-between p-4 px-7 h-24 absolute top-0 left-0 right-0 z-50 bg-[#009089] text-white shadow-md">
         <div className='flex items-center gap-5'>
