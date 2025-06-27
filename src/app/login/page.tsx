@@ -54,7 +54,6 @@ export default function LoginPage() {
                             <p>
                                 Esqueceu sua senha? <br></br> <a className="flex justify-center" href="" ><strong>Clique aqui.</strong></a>
                             </p>
-                            
                         </div>
 
                     </form>
