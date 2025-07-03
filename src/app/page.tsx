@@ -1,16 +1,22 @@
-  'use client';
+'use client';
+import dynamic from 'next/dynamic';
+import { MenuM } from '@/components/page elements/SidebarM';
+import Navbar from '@/components/ui/NavBar';
 
-  import dynamic from 'next/dynamic';
-  import MenuMain from '@/components/page elements/MenuMain';
-  const SimpleMap = dynamic(() => import('@/components/page elements/SimpleMap'), {
-    ssr: false, 
-  });
+const SimpleMap = dynamic(() => import('@/components/page elements/SimpleMap'), {
+  ssr: false,
+});
 
-  export default function Home() {
-    return (
-      <div>
-        <MenuMain/>
-        <SimpleMap/>
+export default function Home() {
+  return (
+    <div className="flex flex-col h-screen">
+      <Navbar />
+      <div className="flex flex-1 overflow-hidden">
+        <MenuM />
+        <div className="flex-1">
+          <SimpleMap />
+        </div>
       </div>
-    );
-  } 
+    </div>
+  );
+}
