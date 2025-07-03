@@ -78,7 +78,7 @@ export function MenuM() {
                     className="h-9 w-9 shrink-0 rounded-full"
                     width={36}
                     height={36}
-                    alt="Avatar do usuário"
+                    alt="Avatar do Usuário"
                   />
                 ),
               }}
