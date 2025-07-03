@@ -8,11 +8,11 @@ function ZoomControls() {
   const map = useMap();
 
   return (
-    <div className="absolute top-160 right-4 z-[1000] flex rounded-full  bg-zinc-100">
-      <button onClick={() => map.zoomIn()} className=" text-black w-12 h-12">
+    <div className="fixed top-180 right-4 z-[9999] flex rounded-full bg-zinc-100">
+      <button onClick={() => map.zoomIn()} className="text-black w-12 h-12">
         +
       </button>
-      <button onClick={() => map.zoomOut()} className=" text-black  w-12 h-12">
+      <button onClick={() => map.zoomOut()} className="text-black w-12 h-12">
         −
       </button>
     </div>
