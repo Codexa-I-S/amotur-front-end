@@ -66,7 +66,7 @@ export default function CadastroPage() {
                         {...register("email")}
                         type="email"
                         placeholder="Digite seu e-mail"
-                        className="bg-[#f5f5f5] h-[45px] mt-3 mb-4 rounded-[100px] transition-transform duration-300 hover:scale-104"
+                        className="bg-[#f5f5f5] h-[45px] mt-3 mb-4 rounded-2xl transition-transform duration-300 hover:scale-104"
                         width={400}
                         />
                         {errors.email && <p className="text-red-500" >
@@ -79,7 +79,7 @@ export default function CadastroPage() {
                         {...register("senha")}
                         type="password"
                         placeholder="Digite sua senha"
-                        className="bg-[#f5f5f5] h-[45px] mt-3 mb-2 rounded-[100px] transition-transform duration-300 hover:scale-104"
+                        className="bg-[#f5f5f5] h-[45px] mt-3 mb-2 rounded-2xl transition-transform duration-300 hover:scale-104"
                         width={400}
                         />
                         {errors.senha && <p className="text-red-500" >
@@ -92,7 +92,7 @@ export default function CadastroPage() {
                         {...register("confirmarSenha")}
                         type="password"
                         placeholder="Confirme sua senha"
-                        className="bg-[#f5f5f5] h-[45px] mt-3 mb-2 rounded-[100px] transition-transform duration-300 hover:scale-104"
+                        className="bg-[#f5f5f5] h-[45px] mt-3 mb-2 rounded-2xl transition-transform duration-300 hover:scale-104"
                         width={400}
                         />
                         {errors.confirmarSenha && <p className="text-red-500" >
@@ -100,16 +100,16 @@ export default function CadastroPage() {
                         </p>}
                         
                         {/* Botão */}
-                        <div className="flex justify-center mt-5">
+                        <div className="flex justify-center mt-5 lg:mt-7">
 
                             <Button variant={"designButton"} size={"buttonSize"} > Cadastre-se  </Button>
 
                         </div>
                         
                         {/* Link */}
-                        <div className="flex justify-center mt-3 text-white lg:text-[15px]">
+                        <div className="flex justify-center mt-3 text-[14px] text-white lg:text-[15px]">
                             <p>
-                                Já tem uma conta? <br></br> <a className="flex justify-center" href="" ><strong>Clique aqui.</strong></a>
+                                Já tem uma conta? <br></br> <a className="flex justify-center" href="/login" ><strong>Clique aqui.</strong></a>
                             </p>
                             
                         </div>

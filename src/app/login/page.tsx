@@ -32,7 +32,7 @@ export default function LoginPage() {
                         <Input
                         type="Email"
                         placeholder="Digite seu e-mail"
-                        className="bg-[#f5f5f5] h-[45px] mt-3 mb-4 rounded-[100px] transition-transform duration-300 hover:scale-104"
+                        className="bg-[#f5f5f5] h-[45px] mt-3 mb-4 rounded-2xl transition-transform duration-300 hover:scale-104"
                         width={400}
                         />
 
@@ -40,7 +40,7 @@ export default function LoginPage() {
                         <Input
                         type="password"
                         placeholder="Digite sua senha"
-                        className="bg-[#f5f5f5] h-[45px] mt-3 mb-2 rounded-[100px] transition-transform duration-300 hover:scale-104"
+                        className="bg-[#f5f5f5] h-[45px] mt-3 mb-2 rounded-2xl transition-transform duration-300 hover:scale-104"
                         width={400}
                         />
                         
