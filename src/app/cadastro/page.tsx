@@ -7,13 +7,18 @@ import { z } from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 
+
+
+
 //Esquema de validações por campo de input
 const validationSchema = z.object({
-    email: z.string().min(9, "Email inválido!"),
-    senha: z.string().min(8, "A senha deve conter no mínimo 8 caracteres.").regex(/[!@#$%^&*(),.?":{}|<>]/, "A senha deve conter ao menos um caractere especial."),
-    confirmarSenha: z.string()
-}).refine((data) => data.senha === data.confirmarSenha, {
-    path: ["confirmarSenha"],
+    email: z.string().email("e-mail inválido"),
+    password: z.string()
+        .min(8, "A senha deve conter no mínimo 8 caracteres.")
+        .regex(/[!@#$%^&*(),.?":{}|<>]/, "A senha deve conter ao menos um caractere especial."),
+    confirmPassword: z.string()
+}).refine((data) => data.password === data.confirmPassword, {
+    path: ["confirmPassword"],
     message: "As senhas não coincidem",
 })
 
@@ -33,7 +38,11 @@ export default function CadastroPage() {
     })
 
     const onSubmit = (data: FormData) => {
-        alert("os dados foram enviados")
+        
+        const {confirmPassword, ...otherTypes} = data
+        
+        //lugar onde vai ficar a requisição para o backend
+
     }
 
     return (
@@ -76,27 +85,27 @@ export default function CadastroPage() {
                         {/* Senha */}
                         <label className="text-white">Senha:</label>
                         <Input
-                        {...register("senha")}
+                        {...register("password")}
                         type="password"
                         placeholder="Digite sua senha"
                         className="bg-[#f5f5f5] h-[45px] mt-3 mb-2 rounded-2xl transition-transform duration-300 hover:scale-104"
                         width={400}
                         />
-                        {errors.senha && <p className="text-red-500" >
-                            {errors.senha.message}    
+                        {errors.password && <p className="text-red-500" >
+                            {errors.password.message}    
                         </p>}
                         
                         {/* Confirmar senha */}
                         <label className="text-white">Confirme sua senha:</label>
                         <Input
-                        {...register("confirmarSenha")}
+                        {...register("confirmPassword")}
                         type="password"
                         placeholder="Confirme sua senha"
                         className="bg-[#f5f5f5] h-[45px] mt-3 mb-2 rounded-2xl transition-transform duration-300 hover:scale-104"
                         width={400}
                         />
-                        {errors.confirmarSenha && <p className="text-red-500" >
-                            {errors.confirmarSenha.message}    
+                        {errors.confirmPassword && <p className="text-red-500" >
+                            {errors.confirmPassword.message}    
                         </p>}
                         
                         {/* Botão */}
