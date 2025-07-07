@@ -68,7 +68,7 @@ export default function LoginPage() {
       api.defaults.headers.common['Authorization'] = `Bearer ${response.data.access_token}`
       
       // 5. página inicial
-      router.push("/Inicio")
+      router.push("/map")
 
     } catch (err) {
       
@@ -99,7 +99,7 @@ export default function LoginPage() {
     <div className="bg-[url('/imagem_2.png')] bg-cover bg-center h-screen w-screen flex flex-col lg:flex-row">
       
       {/* Logo */}
-      <div className="h-1/3 lg:h-screen w-screen lg:w-1/2 flex justify-center items-center">
+      <div className="h-1/3 lg:h-screen w-screen lg:w-1/2 flex justify-center items-center lg:mt-[-20]">
         <Image
           className="lg:w-[350px]"
           src={'/amotur_azul.png'}
@@ -112,7 +112,7 @@ export default function LoginPage() {
 
       {/* Formulário */}
       <div className="bg-[#009089] h-2/3 lg:h-screen w-screen lg:w-1/2 rounded-t-[100px] lg:rounded-none flex flex-col justify-center items-center">
-        <div className="mt-20 lg:mt-50 w-[80%] lg:w-[60%] h-[80%] text-[20px] flex-row">
+        <div className="mt-20 lg:mt-60 w-[80%] lg:w-[60%] h-[80%] text-[20px] flex-row">
           
           {/* Mensagem de erro */}
           {error && (
@@ -167,8 +167,8 @@ export default function LoginPage() {
             
             <div className="flex justify-center pt-8 text-white lg:text-[15px] text-center">
               <p>
-                Esqueceu sua senha? <br />
-                <Link href="/recuperar-senha" className="font-bold hover:underline">
+                Ainda não tem uma conta? <br />
+                <Link href="/cadastro" className="font-bold hover:underline">
                   Clique aqui.
                 </Link>
               </p>
