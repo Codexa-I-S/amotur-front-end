@@ -90,7 +90,7 @@ export default function CadastroPage() {
         <div className="bg-[url('/imagem_2.png')] bg-cover bg-center h-screen w-screen flex flex-col lg:flex-row">
             
             {/* logo */}
-            <div className="h-1/3 lg:h-screen w-screen lg:w-1/2 flex justify-center items-center">
+            <div className="h-1/3 lg:h-screen w-screen lg:w-1/2 flex justify-center items-center lg:mt-[-20]">
                 <Image
                     className="lg:w-[350px]"
                     src={'/amotur_azul.png'}
@@ -102,7 +102,7 @@ export default function CadastroPage() {
 
             {/* Forms */}
             <div className="bg-[#009089] h-2/3 lg:h-screen w-screen lg:w-1/2 rounded-t-[100px] lg:rounded-none flex flex-col justify-center items-center">
-                <div className="mt-20 lg:mt-40 w-[80%] lg:w-[60%] h-[80%] text-[20px] flex-row">
+                <div className="mt-60 lg:mt-40 w-[80%] lg:w-[60%] h-[80%] text-[20px] flex-row">
                     <form onSubmit={handleSubmit(onSubmit)}>
                         {/* Email */}
                         <label className="text-white">E-mail</label>
