@@ -11,17 +11,17 @@ const SimpleMap = dynamic(() => import('@/components/page elements/SimpleMap'), 
 
 export default function Home() {
 
-  const rounter = useRouter()
+//   const rounter = useRouter()
 
   
 
-  useEffect(() => {
-    const token = localStorage.getItem("access_token")
+//   useEffect(() => {
+//     const token = localStorage.getItem("authToken")
 
-    if (!token) {
-      rounter.push("/login")
-    }
-  })
+//     if (!token) {
+//       rounter.push("/login")
+//     }
+//   })
 
 
   return (
