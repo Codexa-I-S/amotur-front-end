@@ -1,8 +1,9 @@
 'use client';
 
-import React from 'react';
-import { MapContainer, TileLayer, useMap } from 'react-leaflet';
+import React, { useState } from 'react';
+import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvent } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
+import  L  from 'leaflet'
 
 function ZoomControls() {
   const map = useMap();
@@ -19,7 +20,32 @@ function ZoomControls() {
   );
 }
 
+//Um tipo que receber uma função
+type Props = {
+  //Recebe uma tupla com a posição 
+  setLocationPosition: (position: [number, number]) => void
+}
+
+//Função para receber um evento de click no mapa
+function ShowFormRegisterOnClick({setLocationPosition} : Props) {
+
+  useMapEvent("click", (event) => {
+    
+    //Pega a lat e lng vindas do evento e alimenta a função que recebe a posição
+    const position: [number, number] = [event.latlng.lat, event.latlng.lng]
+      setLocationPosition(position)
+
+  })
+
+  return null
+
+}
+
 export default function SimpleMap() {
+
+  const [newLocationPosition, setNewLocationPosition] = useState<[number, number] | null> (null)
+
+
   const bounds: [[number, number], [number, number]] = [
     [-3.1600, -39.8000],
     [-2.9200, -39.5500],
@@ -44,6 +70,19 @@ export default function SimpleMap() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <ZoomControls />
+
+        {/* Chamada da função que espera um evento de click e atualiza a posição para o newLocationPosition */}
+        <ShowFormRegisterOnClick setLocationPosition={setNewLocationPosition} />
+
+        {newLocationPosition && (
+
+          <Popup position={newLocationPosition} >
+            Cadastrar local
+            {/* Componente do dialog */}
+          </Popup>
+
+        )}
+
       </MapContainer>
     </div>
   );
