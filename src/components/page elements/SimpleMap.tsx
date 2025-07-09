@@ -63,7 +63,9 @@ export default function SimpleMap() {
         {newLocationPosition && (
 
           <Popup position={newLocationPosition} maxWidth={400}>
-            <ModalRegister/>
+            <ModalRegister 
+              lat={parseFloat(newLocationPosition[0].toFixed(10))}
+              lng={parseFloat(newLocationPosition[1].toFixed(10))} />
           </Popup>
 
         )}
