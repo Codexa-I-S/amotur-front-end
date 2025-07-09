@@ -73,8 +73,31 @@ export default function FormLocalRegister() {
             </div>
 
             {/* Contacts */}
-            <div>
-                
+            <div className="flex flex-col gap-1 sm:flex-row sm:items-center">
+                <label className="sm:w-20">Email:</label>
+                <Input
+                    type="email"
+                    placeholder="Digite o e-mail da empresa"
+                    className="w-full sm:w-[70%] h-8 p-2 lg:text-[14px]"
+                />
+            </div>
+
+            <div className="flex flex-col gap-1 sm:flex-row sm:items-center">
+                <label className="sm:w-20">Telefone:</label>
+                <Input
+                    type="tel"
+                    placeholder="Digite o número de telefone da empresa"
+                    className="w-full sm:w-[70%] h-8 p-2 lg:text-[14px]"
+                />
+            </div>
+            
+            <div className="flex flex-col gap-1 sm:flex-row sm:items-center">
+                <label className="sm:w-20">Instagram:</label>
+                <Input
+                    type="text"
+                    placeholder="Digite a url para o instagram da empresa"
+                    className="w-full sm:ml-4 sm:w-[70%] h-8 p-2 lg:text-[14px]"
+                />
             </div>
 
             {/* logo */}
