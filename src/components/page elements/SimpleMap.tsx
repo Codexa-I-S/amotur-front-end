@@ -1,26 +1,10 @@
 'use client';
 import LocalButtons from './LocalButtons';
 import React, { useState } from 'react';
-import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvent } from 'react-leaflet';
+import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvent, } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import  L  from 'leaflet'
+import ZoomControls from './ZoomControls';
 import ModalRegister from './ModalRegister';
-
-function ZoomControls() {
-  const map = useMap();
-
-  return (
-    <div className="fixed top-180 right-4 z-[9999] flex rounded-full bg-zinc-100">
-      <button onClick={() => map.zoomIn()} className="text-black w-12 h-12">
-        +
-      </button>
-      <button onClick={() => map.zoomOut()} className="text-black w-12 h-12">
-        −
-      </button>
-    </div>
-  );
-}
-
 //Um tipo que receber uma função
 type Props = {
   //Recebe uma tupla com a posição 
@@ -83,7 +67,7 @@ export default function SimpleMap() {
           </Popup>
 
         )}
-
+      <ZoomControls/>
       </MapContainer>
     </div>
   );

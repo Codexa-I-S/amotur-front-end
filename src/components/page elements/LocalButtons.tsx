@@ -5,7 +5,7 @@ import React, { useState } from 'react'
 
 type Coordenada = [number, number]
 
-// Interface para representar uma localidade
+// Interface para representar uma localidade  
 interface Localidade {
   nome: string
   coordenadas: Coordenada
@@ -39,10 +39,10 @@ export default function BotoesLocalidades() {
   return (
     <div
   className="
-    absolute bottom-4 left-1/2 -translate-x-1/2 z-[9999]
-    flex flex-wrap justify-center gap-4
+    absolute bottom-4 left-1/2 -translate-x-1/2 z-[9998]
+    flex justify-center gap-4 mb-12
     bg-transparent
-    w-[95%] sm:w-[80%] md:w-[60%] lg:w-auto
+    w-auto
   "
 >
   {localidades.map((local) => (
@@ -52,9 +52,10 @@ export default function BotoesLocalidades() {
       aria-current={ativo === local.nome ? 'location' : undefined}
       aria-label={`Centralizar mapa em ${local.nome}`}
       className={`
-        px-6 sm:px-8 md:px-10 py-3 md:py-4
-        rounded-full text-sm font-semibold border-2
-        transition-all duration-200 mb-4
+        px-6 py-3 sm:px-8 md:px-14  lg:px-18 md:py-4  
+        text-sm mb-4 md:text-lg font-semibold
+        rounded-full  border-2
+        transition-all duration-200 
         ${
           ativo === local.nome
             ? 'bg-white text-teal-700 border-teal-700'
