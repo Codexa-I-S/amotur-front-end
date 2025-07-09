@@ -1,9 +1,10 @@
 'use client';
-
+import LocalButtons from './LocalButtons';
 import React, { useState } from 'react';
 import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvent } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import  L  from 'leaflet'
+import ModalRegister from './ModalRegister';
 
 function ZoomControls() {
   const map = useMap();
@@ -61,7 +62,7 @@ export default function SimpleMap() {
         className="h-full w-full"
         maxZoom={18}
         minZoom={13.5}
-        maxBounds={bounds}
+       
         maxBoundsViscosity={1.0}
         zoomControl={false}
       >
@@ -69,16 +70,16 @@ export default function SimpleMap() {
           attribution='&copy; OpenStreetMap contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <ZoomControls />
+        
+        <LocalButtons />
 
         {/* Chamada da função que espera um evento de click e atualiza a posição para o newLocationPosition */}
         <ShowFormRegisterOnClick setLocationPosition={setNewLocationPosition} />
 
         {newLocationPosition && (
 
-          <Popup position={newLocationPosition} >
-            Cadastrar local
-            {/* Componente do dialog */}
+          <Popup position={newLocationPosition} maxWidth={400}>
+            <ModalRegister/>
           </Popup>
 
         )}
