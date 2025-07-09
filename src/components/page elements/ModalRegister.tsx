@@ -8,7 +8,12 @@ import {
 } from "@/components/ui/dialog"
 import FormLocalRegister from "./FormLocalRegister"
 
-export default function ModalRegister(){
+type props = {
+    lat: number;
+    lng: number;
+}
+
+export default function ModalRegister({lat, lng} : props){
 
     return(
         <Dialog>
@@ -18,7 +23,7 @@ export default function ModalRegister(){
                 </button>
             </DialogTrigger>
 
-            <DialogContent className="max-h-[90vh] overflow-y-auto w-[95vw] max-w-md sm:max-w-lg p-4 sm:p-6" >
+            <DialogContent className="max-h-[90vh] overflow-y-auto w-[95vw] max-w-md sm:max-w-lg p-4 sm:p-6 z-[1002]" >
 
                 <DialogHeader>
 
@@ -27,7 +32,9 @@ export default function ModalRegister(){
 
                 </DialogHeader>
                 
-                <FormLocalRegister />
+                <FormLocalRegister 
+                    lat={lat}
+                    lng={lng}/>
                 
             </DialogContent>
         </Dialog>
