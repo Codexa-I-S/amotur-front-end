@@ -52,7 +52,7 @@ export default function BotoesLocalidades() {
       aria-current={ativo === local.nome ? 'location' : undefined}
       aria-label={`Centralizar mapa em ${local.nome}`}
       className={`
-        px-6 py-3 sm:px-8 md:px-14  lg:px-18 md:py-4  
+        px-6 py-3 sm:px-8 md:px-14  lg:px-18 md:py-4 cursor-pointer
         text-sm mb-4 md:text-lg font-semibold
         rounded-full  border-2
         transition-all duration-200 
