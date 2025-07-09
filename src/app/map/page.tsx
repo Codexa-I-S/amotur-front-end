@@ -1,7 +1,7 @@
 'use client';
 import dynamic from 'next/dynamic';
 import { MenuM } from '@/components/page elements/SidebarM';
-import Navbar from '@/components/ui/NavBar';
+import Navbar from '@/components/navbar/NavBar';
 import { useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
