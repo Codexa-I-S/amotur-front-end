@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvent } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import  L  from 'leaflet'
+import ModalRegister from './ModalRegister';
 
 function ZoomControls() {
   const map = useMap();
@@ -76,9 +77,8 @@ export default function SimpleMap() {
 
         {newLocationPosition && (
 
-          <Popup position={newLocationPosition} >
-            Cadastrar local
-            {/* Componente do dialog */}
+          <Popup position={newLocationPosition} maxWidth={400}>
+            <ModalRegister/>
           </Popup>
 
         )}
