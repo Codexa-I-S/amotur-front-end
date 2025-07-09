@@ -18,7 +18,7 @@ export default function ModalRegister(){
                 </button>
             </DialogTrigger>
 
-            <DialogContent>
+            <DialogContent className="max-h-[90vh] overflow-y-auto w-[95vw] max-w-md sm:max-w-lg p-4 sm:p-6" >
 
                 <DialogHeader>
 
