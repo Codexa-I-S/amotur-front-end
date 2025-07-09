@@ -37,26 +37,35 @@ export default function BotoesLocalidades() {
   if (!mapaCarregado) return null
 
   return (
-    <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-[9999] flex gap-4 bg-transparent">
-      {localidades.map((local) => (
-        <button
-          key={local.nome}
-          onClick={() => centralizarNoMapa(local)}
-          aria-current={ativo === local.nome ? 'location' : undefined}
-          aria-label={`Centralizar mapa em ${local.nome}`}
-          className={`
-            px-10 py-4 rounded-full text-sm font-semibold border-2 w-50 mb-8
-            transition-all duration-200
-            ${
-              ativo === local.nome
-                ? 'bg-white text-teal-700 border-teal-700'
-                : 'bg-[#009089] text-white border-teal-700 hover:bg-teal-800'
-            }
-          `}
-        >
-          {local.nome}
-        </button>
-      ))}
-    </div>
+    <div
+  className="
+    absolute bottom-4 left-1/2 -translate-x-1/2 z-[9999]
+    flex flex-wrap justify-center gap-4
+    bg-transparent
+    w-[95%] sm:w-[80%] md:w-[60%] lg:w-auto
+  "
+>
+  {localidades.map((local) => (
+    <button
+      key={local.nome}
+      onClick={() => centralizarNoMapa(local)}
+      aria-current={ativo === local.nome ? 'location' : undefined}
+      aria-label={`Centralizar mapa em ${local.nome}`}
+      className={`
+        px-6 sm:px-8 md:px-10 py-3 md:py-4
+        rounded-full text-sm font-semibold border-2
+        transition-all duration-200 mb-4
+        ${
+          ativo === local.nome
+            ? 'bg-white text-teal-700 border-teal-700'
+            : 'bg-[#009089] text-white border-teal-700 hover:bg-teal-800'
+        }
+      `}
+    >
+      {local.nome}
+    </button>
+  ))}
+</div>
+
   )
 }

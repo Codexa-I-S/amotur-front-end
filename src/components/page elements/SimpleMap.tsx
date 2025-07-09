@@ -70,7 +70,7 @@ export default function SimpleMap() {
           attribution='&copy; OpenStreetMap contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <ZoomControls />
+        
         <LocalButtons />
 
         {/* Chamada da função que espera um evento de click e atualiza a posição para o newLocationPosition */}
