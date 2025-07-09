@@ -1,5 +1,5 @@
 'use client';
-
+import LocalButtons from './LocalButtons';
 import React, { useState } from 'react';
 import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvent } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -62,7 +62,7 @@ export default function SimpleMap() {
         className="h-full w-full"
         maxZoom={18}
         minZoom={13.5}
-        maxBounds={bounds}
+       
         maxBoundsViscosity={1.0}
         zoomControl={false}
       >
@@ -71,6 +71,7 @@ export default function SimpleMap() {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
         <ZoomControls />
+        <LocalButtons />
 
         {/* Chamada da função que espera um evento de click e atualiza a posição para o newLocationPosition */}
         <ShowFormRegisterOnClick setLocationPosition={setNewLocationPosition} />
