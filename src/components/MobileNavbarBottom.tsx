@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { Hotel, BedDouble, Utensils, Menu } from "lucide-react";
+import { Hotel, BedDouble, Utensils, Menu, Martini } from "lucide-react";
 
 export default function MobileNavbarBottom({ onMenuClick }: { onMenuClick: () => void }) {
   return (
@@ -14,6 +14,10 @@ export default function MobileNavbarBottom({ onMenuClick }: { onMenuClick: () =>
       </Button>
       <Button variant="mobileButton" className="h-[50px] w-[50px]">
         <Utensils className="size-6" />
+        {/* Restaurantes */}
+      </Button>
+      <Button variant="mobileButton" className="h-[50px] w-[50px]">
+        <Martini className="size-6" />
         {/* Restaurantes */}
       </Button>
       <Button
