@@ -5,6 +5,8 @@ import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvent, } from 're
 import 'leaflet/dist/leaflet.css';
 import ZoomControls from './ZoomControls';
 import ModalRegister from './ModalRegister';
+import CardInfo from '../ui/CardInfo';
+import L from 'leaflet'
 //Um tipo que receber uma função
 type Props = {
   //Recebe uma tupla com a posição 
@@ -68,7 +70,40 @@ export default function SimpleMap() {
               lng={parseFloat(newLocationPosition[1].toFixed(10))} />
           </Popup>
 
+
         )}
+        {/* <Marker position={[-3.0274694, -39.6503127]}
+
+          icon={
+            new L.Icon({
+              iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
+              iconSize: [40, 40],
+            })
+          }
+
+        >
+
+          
+
+
+          <Popup maxWidth={600} maxHeight={700} >
+              <main className="min-h-screen bg-gray-100 py-10 px-4">
+                <CardInfo
+                  name="Cafeteria Central"
+                  type="Café & Confeitaria"
+                  instagramUrl="https://www.instagram.com/cafeteriacentral"
+                  description="Localizado no coração da cidade, a Cafeteria Central oferece uma variedade de cafés especiais, bolos caseiros e um ambiente aconchegante para você relaxar."
+                  logo="/images/cafeteria-logo.png"
+                  images={[
+                    "/image-2.png",
+                    "/Imagem_2.png",
+                    "/image-2.png",
+                  ]}
+                />
+              </main>
+          </Popup>
+        </Marker> */}
+
       <ZoomControls/>
       </MapContainer>
     </div>

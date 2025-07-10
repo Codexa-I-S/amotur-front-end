@@ -40,7 +40,7 @@ export default function BotoesLocalidades() {
     <div
   className="
     absolute bottom-4 left-1/2 -translate-x-1/2 z-[9998]
-    flex justify-center gap-4 mb-12
+    flex justify-center gap-4 mb-18
     bg-transparent
     w-auto
   "
