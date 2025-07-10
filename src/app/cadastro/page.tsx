@@ -26,7 +26,7 @@ type FormData = z.infer<typeof validationSchema>
 
 // instância do axios com configurações padrão
 const api = axios.create({
-  baseURL: 'http://localhost:3123',
+  baseURL: 'https://squad-03-server-production.up.railway.app',
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',
