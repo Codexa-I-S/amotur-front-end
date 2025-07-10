@@ -82,7 +82,7 @@ export default function FormLocalRegister({ lat, lng }: Props) {
                     const selectedFiles = Array.from(e.target.files)
 
                     if (selectedFiles.length > 3) {
-                        alert("Você pode selecionar no máximo 4 fotos.") // substituir por um mensagem 
+                        alert("Você pode selecionar no máximo 3 fotos.") // substituir por um mensagem 
                         return
                     }
 
