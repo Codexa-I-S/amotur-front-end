@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Poppins, Work_Sans } from "next/font/google";
 import "./globals.css";
+import NavbarWrapper from "@/components/NavbarWrapper"; // o import
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -26,9 +27,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${poppins.variable} ${workSans.variable} antialiased`}
-      >
+      <body className={`${poppins.variable} ${workSans.variable} antialiased`}>
+        <NavbarWrapper /> {/* a navbar */}
         {children}
       </body>
     </html>

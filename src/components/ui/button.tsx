@@ -21,7 +21,10 @@ const buttonVariants = cva(
           "hover:bg-accent hover:text-accent-foreground dark:hover:bg-accent/50",
         link: "text-primary underline-offset-4 hover:underline",
         designButton: 
-          "bg-[#4F6589] text-white rounded-[100px] text-[18px] transition duration-300 hover:bg-accent/100 hover:text-black"
+          "bg-[#4F6589] text-white rounded-[100px] text-[18px] transition duration-300 hover:bg-accent/100 hover:text-black",
+        mobileButton:
+          "bg-[#4F6589] py-2 px-4 justify-around rounded-2xl items-center text-white"
+      
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",

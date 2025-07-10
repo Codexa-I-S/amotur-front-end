@@ -11,7 +11,6 @@ import { useState } from "react"
 import Link from "next/link"
 import axios from "axios"
 
-// Esquema de validação
 const loginValidationSchema = z.object({
   email: z.string().email("E-mail inválido!"),
   password: z.string().min(1, "A senha é obrigatória!")
@@ -19,15 +18,13 @@ const loginValidationSchema = z.object({
 
 type LoginData = z.infer<typeof loginValidationSchema>
 
-// Instância axios
 const api = axios.create({
-  baseURL: 'http://localhost:3123',
+  baseURL: 'https://squad-03-server-production.up.railway.app',
   timeout: 5000,
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
-  },
-  withCredentials: true
+  }
 })
 
 export default function LoginPage() {
@@ -48,47 +45,32 @@ export default function LoginPage() {
     setError("")
 
     try {
-     
-      // 1. Requisição
       const response = await api.post("/auth/login", {
         email: data.email,
         password: data.password
       })
 
-
-      // 2. Verifica se access_token existe
       if (!response.data.access_token) {
-        throw new Error("Access token não recebido na resposta")
+        throw new Error("Access token não recebido")
       }
 
-      // 3. Armazena o token no localStorage
+      // Armazena o token com a chave padrão que o FormLocalRegister espera
       localStorage.setItem("authToken", response.data.access_token)
       
-      // 4. Configura o token para futuras requisições
-      api.defaults.headers.common['Authorization'] = `Bearer ${response.data.access_token}`
-      
-      // 5. página inicial
+      // Redireciona para a página do mapa após login
       router.push("/map")
 
     } catch (err) {
-      
-      // Tratamento de erros
       if (axios.isAxiosError(err)) {
         if (err.response) {
-          // Erro retornado pelo servidor
           setError(err.response.data?.message || "Credenciais inválidas")
         } else if (err.request) {
-          // A requisição foi feita mas não houve resposta
-          setError("Servidor não respondeu. Tente novamente mais tarde.")
+          setError("Servidor não respondeu")
         } else {
-          // erros Axios
-          setError("Erro ao configurar a requisição")
+          setError("Erro na requisição")
         }
-      } else if (err instanceof Error) {
-        // Erros gerais
-        setError(err.message)
       } else {
-        setError("Ocorreu um erro inesperado")
+        setError("Erro desconhecido")
       }
     } finally {
       setLoading(false)
@@ -114,7 +96,6 @@ export default function LoginPage() {
       <div className="bg-[#009089] h-2/3 lg:h-screen w-screen lg:w-1/2 rounded-t-[100px] lg:rounded-none flex flex-col justify-center items-center">
         <div className="mt-20 lg:mt-60 w-[80%] lg:w-[60%] h-[80%] text-[20px] flex-row">
           
-          {/* Mensagem de erro */}
           {error && (
             <div className="mb-4 p-2 bg-red-100 text-red-700 rounded text-center">
               {error}
@@ -129,7 +110,7 @@ export default function LoginPage() {
                 {...register("email")}
                 type="email"
                 placeholder="Digite seu e-mail"
-                className="bg-[#f5f5f5] h-[45px] rounded-2xl transition-transform duration-300 hover:scale-104"
+                className="bg-[#f5f5f5] h-[45px] rounded-2xl hover:scale-104 transition-transform"
               />
               {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
             </div>
@@ -141,7 +122,7 @@ export default function LoginPage() {
                 {...register("password")}
                 type="password"
                 placeholder="Digite sua senha"
-                className="bg-[#f5f5f5] h-[45px] rounded-2xl transition-transform duration-300 hover:scale-104"
+                className="bg-[#f5f5f5] h-[45px] rounded-2xl hover:scale-104 transition-transform"
               />
               {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
             </div>
