@@ -53,7 +53,7 @@ export default function FormLocalRegister({ lat, lng }: Props) {
     // Criando instância do Axios
     const api = axios.create({
         baseURL: 'https://squad-03-server-production.up.railway.app',
-        timeout: 10000
+        timeout: 30000
     })
 
     const {
@@ -69,28 +69,35 @@ export default function FormLocalRegister({ lat, lng }: Props) {
             type: undefined // Alterado para string vazia para evitar warning de uncontrolled/controlled
         }
     })
+            // diz que so pode 1 arquivo pra logo
+            const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+                if (e.target.files && e.target.files.length > 0) {
+                    setLogoFile(e.target.files[0])
+                }
+            }
+            
+            // diz que so pode 3 arquivo pra fotos
+                const handlePhotosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+                if (e.target.files) {
+                    const selectedFiles = Array.from(e.target.files)
 
-    const handleLogoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files && e.target.files.length > 0) {
-            setLogoFile(e.target.files[0])
-        }
-    }
+                    if (selectedFiles.length > 3) {
+                        alert("Você pode selecionar no máximo 4 fotos.") // substituir por um mensagem 
+                        return
+                    }
 
-    const handlePhotosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) {
-            setPhotoFiles(Array.from(e.target.files))
-        }
-    }
+                    setPhotoFiles(selectedFiles)
+                }
+            }
 
     async function onSubmit(data: LocalFormData) {
         setIsSubmitting(true)
         
         try {
             const token = localStorage.getItem('authToken')
-            console.log('Token recuperado:', token) // Log para debug
             
             if (!token) {
-                alert('Você precisa estar logado para cadastrar um local!')
+                alert('Você precisa estar logado para cadastrar um local!')// substituir por um mensagem 
                 router.push('/login')
                 return
             }
@@ -103,14 +110,14 @@ export default function FormLocalRegister({ lat, lng }: Props) {
             formData.append('type', typeMapping[data.type as keyof typeof typeMapping])
             formData.append('description', data.description)
             
-            // Serializa as coordenadas como string JSON
+            // transforma as coordenadas como string JSON
             const coordinates = JSON.stringify({
                 lat: data.lat,
                 lon: data.lng
             })
             formData.append('coordinates', coordinates)
             
-            // Serializa os contatos como string JSON
+            // transfirma os contatos como string JSON
             const contacts = JSON.stringify({
                 telefone: data.phone,
                 email: data.email
@@ -121,8 +128,7 @@ export default function FormLocalRegister({ lat, lng }: Props) {
             if (logoFile) formData.append('logo', logoFile)
             photoFiles.forEach(file => formData.append('photos', file))
 
-            // Log para debug
-            console.log('Dados que serão enviados:')
+            
             for (const [key, value] of formData.entries()) {
                 console.log(key, value)
             }
@@ -137,7 +143,7 @@ export default function FormLocalRegister({ lat, lng }: Props) {
                 withCredentials: true
             })
 
-            alert("Local cadastrado com sucesso!")
+            alert("Local cadastrado com sucesso!")// substituir por um mensagem 
             window.location.reload()
             
         } catch (error: any) {
