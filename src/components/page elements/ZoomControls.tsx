@@ -12,15 +12,15 @@ export default function ZoomControls() {
         <div
           className="
            
-            rounded-xl bg-zinc-100/90 backdrop-blur-sm
-            shadow-lg border border-zinc-200
-            hover:bg-zinc-100 transition-all
+            rounded-full bg-zinc-100/90 backdrop-blur-sm
+            shadow-lg border-2 border-[#009089]
+            hover:bg-zinc-100 transition-all hover:rounded-full
           "
         >
           <button
             onClick={() => map.zoomIn()}
             className="
-              text-black hover:text-zinc-700
+              text-black hover:text-zinc-700 hover:rounded-full
               w-10 h-10 sm:w-12 sm:h-12
               flex items-center justify-center
               text-xl font-medium
@@ -35,7 +35,7 @@ export default function ZoomControls() {
           <button
             onClick={() => map.zoomOut()}
             className="
-              text-black hover:text-zinc-700
+              text-black hover:text-zinc-700 hover:rounded-full
               w-10 h-10 sm:w-12 sm:h-12
               flex items-center justify-center
               text-xl font-medium
