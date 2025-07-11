@@ -53,7 +53,7 @@ export default function CadastroPage() {
             alert('Cadastro realizado com sucesso!')
             
             // Redireciona para a página inicial
-            router.push('/Inicio')
+            router.push('/map')
 
         } catch (error: any) {
             console.error('Erro no cadastro:', error)
