@@ -170,22 +170,31 @@ export default function FormLocalRegister({ lat, lng }: Props) {
     }
 
     return (
+        //Formulário
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+
+
             {/* Name */}
             <div className="flex flex-col gap-1 sm:flex-row sm:items-center">
+
                 <label className="sm:w-20">Nome:</label>
+
                 <Input
                     {...register("name")}
                     type="text"
                     placeholder="Digite o nome da empresa"
                     className="w-full sm:w-[70%] h-8 p-2 lg:text-[14px]"
                 />
+
             </div>
             {errors.name && <p className="text-red-500">{errors.name.message}</p>}
             
+
             {/* Type */}
             <div className="flex items-center">
+
                 <label>Tipo: </label>
+
                 <Controller
                     name="type"
                     control={control}
@@ -203,23 +212,31 @@ export default function FormLocalRegister({ lat, lng }: Props) {
                         </Select>
                     )}
                 />
+
             </div>
             {errors.type && <p className="text-red-500">{errors.type.message}</p>}
 
+
             {/* Description */}
             <div>
+
                 <label>Descrição:</label>
+
                 <Textarea
                     {...register("description")}
                     placeholder="Descrição do local"
                     className="mt-2"
                 />
+
             </div>
             {errors.description && <p className="text-red-500">{errors.description.message}</p>}
 
+
             {/* Coordinates */}
             <div className="flex flex-col sm:flex-row">
+
                 <label className="sm:w-20 mr-2">Latitude:</label>
+
                 <Input
                     type="text"
                     value={lat}
@@ -227,7 +244,8 @@ export default function FormLocalRegister({ lat, lng }: Props) {
                     readOnly
                 />
 
-                <label className="sm:w-20 px-2 mr-6">Longitude:</label>
+                <label className="sm:w-20 sm:px-2 mr-6 mt-2 sm:mt-0">Longitude:</label>
+
                 <Input
                     type="text"
                     value={lng}
@@ -236,68 +254,94 @@ export default function FormLocalRegister({ lat, lng }: Props) {
                 />
             </div>
 
+
             {/* Contacts */}
             <div className="flex flex-col gap-1 sm:flex-row sm:items-center">
-                <label className="sm:w-20">Email:</label>
+
+                <label className="sm:w-24">Email:</label>
+
                 <Input
                     {...register("email")}
                     type="email"
                     placeholder="Digite o e-mail da empresa"
                     className="w-full sm:w-[70%] h-8 p-2 lg:text-[14px]"
                 />
+
             </div>
             {errors.email && <p className="text-red-500">{errors.email.message}</p>}
 
+
             <div className="flex flex-col gap-1 sm:flex-row sm:items-center">
-                <label className="sm:w-20">Telefone:</label>
+
+                <label className="sm:w-24">Telefone:</label>
+
                 <Input
                     {...register("phone")}
                     type="tel"
                     placeholder="(99) 99999-9999"
                     className="w-full sm:w-[70%] h-8 p-2 lg:text-[14px]"
                 />
+
             </div>
             {errors.phone && <p className="text-red-500">{errors.phone.message}</p>}
             
             <div className="flex flex-col gap-1 sm:flex-row sm:items-center">
+
                 <label className="sm:w-20">Instagram:</label>
+
                 <Input
                     {...register("Instagram")}
                     type="text"
                     placeholder="https://www.instagram.com/sualoja"
                     className="w-full sm:ml-4 sm:w-[70%] h-8 p-2 lg:text-[14px]"
                 />
+
             </div>
             {errors.Instagram && <p className="text-red-500">{errors.Instagram.message}</p>}
 
-            {/* logo */}
-            <div className="flex flex-col sm:flex-row sm:items-center">
-                <label>Logo:</label>
+
+            {/* logo and Photos */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-center ">
+
                 <Input 
+                    id="file"
                     type="file"
                     onChange={handleLogoChange}
-                    className="mt-2 sm:ml-5 sm:mt-0"
+                    className="hidden"
                     accept="image/*"
                 />
-            </div>
+                
+                <label
+                    htmlFor="file"
+                    className="cursor-pointer mt-2 mb-2 px-3 py-2 bg-[#009089] text-white rounded-[10px] text-center sm:w-[50%] hover:bg-[#4f8f8c]"
+                    >
+                    Adicionar Logo
+                </label>
 
-            {/* Photos */}
-            <div className="flex flex-col sm:flex-row sm:items-center">
-                <label>Fotos:</label>
                 <Input 
+                    id="fileM"
                     multiple
                     type="file"
                     onChange={handlePhotosChange}
-                    className="mt-2 sm:ml-5 sm:mt-0"
+                    className="hidden"
                     accept="image/*"
                 />
+                
+                <label
+                    htmlFor="fileM"
+                    className="cursor-pointer mt-2 mb-2 px-3 py-2 bg-[#009089] text-white rounded-[10px] text-center sm:ml-10 sm:w-[50%] hover:bg-[#4f8f8c]"
+                    >
+                    Adicionar fotos
+                </label>
+
             </div>
 
             <div className="flex justify-center">
+                
                 <Button 
                     variant={"designButton"} 
                     size={"sm"}
-                    className="px-4"
+                    className="px-10"
                     disabled={isSubmitting}
                 > 
                     {isSubmitting ? "Enviando..." : "Cadastrar"}
