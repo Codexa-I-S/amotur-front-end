@@ -72,6 +72,7 @@ export default function SimpleMap() {
 
 
         )}
+        
         {/* <Marker position={[-3.0274694, -39.6503127]}
 
           icon={

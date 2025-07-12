@@ -6,8 +6,7 @@ export default function ZoomControls() {
   const map = useMap();
 
   return (
-    <div className='fixed z-[9999] w-full
-            flex justify-end px-6 py-30'>
+    <div className='fixed z-[9999] right-6 top-30'>
         
         <div
           className="
