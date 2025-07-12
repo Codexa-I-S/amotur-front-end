@@ -18,6 +18,7 @@ import { useState } from "react"
 import axios from "axios"
 import { useRouter } from "next/navigation"
 
+//Esquema de validações
 const validationLocalSchema = z.object({
     name: z.string().min(5, "O nome é muito curto."),
     type: z.enum(["hotel", "pousada", "bar", "restaurante"]),
@@ -106,6 +107,7 @@ export default function FormLocalRegister({ lat, lng }: Props) {
             
             // Adiciona os campos básicos ao FormData
             formData.append('name', data.name)
+            
             // Converte o tipo para o formato esperado pelo servidor
             formData.append('type', typeMapping[data.type as keyof typeof typeMapping])
             formData.append('description', data.description)
