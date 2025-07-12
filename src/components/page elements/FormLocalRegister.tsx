@@ -49,6 +49,8 @@ export default function FormLocalRegister({ lat, lng }: Props) {
     const [logoFile, setLogoFile] = useState<File | null>(null)
     const [photoFiles, setPhotoFiles] = useState<File[]>([])
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const [logoError, setLogoError] = useState<string | null>(null)
+    const [photoError, setPhotoError] = useState<string | null>(null)
     const router = useRouter()
 
     // Criando instância do Axios
@@ -81,17 +83,29 @@ export default function FormLocalRegister({ lat, lng }: Props) {
                 const handlePhotosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                 if (e.target.files) {
                     const selectedFiles = Array.from(e.target.files)
-
-                    if (selectedFiles.length > 3) {
-                        alert("Você pode selecionar no máximo 3 fotos.") // substituir por um mensagem 
-                        return
-                    }
-
                     setPhotoFiles(selectedFiles)
                 }
             }
 
     async function onSubmit(data: LocalFormData) {
+
+        if(!logoFile) {
+            setLogoError("Você precisa adicionar uma logo.")
+            return
+        } else {
+            setLogoError(null)
+        }
+
+        if (photoFiles.length === 0){
+            setPhotoError("Você precisa adicionar pelo menos uma foto.")
+            return
+        } else if (photoFiles.length > 3) {
+            setPhotoError("Você só pode adicionar no máximo 3 fotos.")
+            return
+        } else {
+            setPhotoError(null)
+        }
+
         setIsSubmitting(true)
         
         try {
@@ -315,7 +329,7 @@ export default function FormLocalRegister({ lat, lng }: Props) {
                 
                 <label
                     htmlFor="file"
-                    className="cursor-pointer mt-2 mb-2 px-3 py-2 bg-[#009089] text-white rounded-[10px] text-center sm:w-[50%] hover:bg-[#4f8f8c]"
+                    className="cursor-pointer mt-2 mb-2 sm:mb-0 px-3 py-2 bg-[#009089] text-white rounded-[10px] text-center sm:w-[50%] hover:bg-[#4f8f8c]"
                     >
                     Adicionar Logo
                 </label>
@@ -331,12 +345,14 @@ export default function FormLocalRegister({ lat, lng }: Props) {
                 
                 <label
                     htmlFor="fileM"
-                    className="cursor-pointer mt-2 mb-2 px-3 py-2 bg-[#009089] text-white rounded-[10px] text-center sm:ml-10 sm:w-[50%] hover:bg-[#4f8f8c]"
+                    className="cursor-pointer mt-2 sm:mb-0 px-3 py-2 bg-[#009089] text-white rounded-[10px] text-center sm:ml-10 sm:w-[50%] hover:bg-[#4f8f8c]"
                     >
                     Adicionar fotos
                 </label>
 
             </div>
+            <p className="text-red-500">{logoError}</p>
+            <p className="text-red-500">{photoError}</p>
 
             <div className="flex justify-center">
                 
