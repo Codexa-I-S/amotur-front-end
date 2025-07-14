@@ -29,6 +29,79 @@ function ShowFormRegisterOnClick({setLocationPosition} : Props) {
 
 }
 
+//Tipos de locais
+type PointsType = "hotel" | "pousada" | "bar" | "restaurante"
+
+//Icons de acordo com o tipo do local
+const iconMap: Record<PointsType, L.Icon> = {
+
+  hotel: new L.Icon({
+    iconUrl: "https://cdn-icons-png.flaticon.com/512/6917/6917642.png",
+    iconSize: [40, 40],
+  }),
+
+  pousada: new L.Icon({
+    iconUrl: "https://cdn-icons-png.flaticon.com/512/566/566486.png",
+    iconSize: [40, 40],
+  }),
+
+  bar: new L.Icon({
+    iconUrl: "https://cdn-icons-png.flaticon.com/512/8031/8031633.png",
+    iconSize: [40, 40],
+  }),
+
+  restaurante: new L.Icon({
+    iconUrl: "https://cdn-icons-png.flaticon.com/512/7845/7845646.png",
+    iconSize: [40, 40],
+  })
+
+}
+
+//Tipo do ponto com as informações vindas da requisição
+type Point = {
+  id: number;
+  name: string;
+  type: string;
+  instagramUrl: string;
+  description: string;
+  logo: string;
+  images: string[];
+  position: [number, number]
+}
+
+//Vai receber todas os locais cadastrados
+const points: Point[] = [
+  {
+    id:1,
+    name: 'Padaria do João',
+    type: 'pousada',
+    instagramUrl: 'https://instagram.com/padariadojoao',
+    description: 'A Padaria do João oferece pães artesanais, bolos caseiros e um ambiente acolhedor. Localizada no coração da cidade, é o lugar ideal para um café da manhã delicioso.',
+    logo: "https://www.cozinhaaz.com/wp-content/uploads/2023/10/bolo-caseiro.jpg",
+    images: [
+      "https://www.cozinhaaz.com/wp-content/uploads/2023/10/bolo-caseiro.jpg",
+      "https://www.cozinhaaz.com/wp-content/uploads/2023/10/bolo-caseiro.jpg",
+      "https://www.cozinhaaz.com/wp-content/uploads/2023/10/bolo-caseiro.jpg",
+    ],
+    position: [-3.02807786, -39.6529626846]
+  },
+
+  {
+    id:2,
+    name: 'Bar da lora',
+    type: 'hotel',
+    instagramUrl: 'https://instagram.com/padariadojoao',
+    description: 'A Padaria do João oferece pães artesanais, bolos caseiros e um ambiente acolhedor. Localizada no coração da cidade, é o lugar ideal para um café da manhã delicioso.',
+    logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnvh7-q3ldMYqeJYaP-X_VfdWfPsQn2ForHA&s",
+    images: [
+      "https://www.cozinhaaz.com/wp-content/uploads/2023/10/bolo-caseiro.jpg",
+      "https://www.cozinhaaz.com/wp-content/uploads/2023/10/bolo-caseiro.jpg",
+      "https://www.cozinhaaz.com/wp-content/uploads/2023/10/bolo-caseiro.jpg",
+    ],
+    position: [-3.0316369452, -39.649143219]
+  }
+]
+
 export default function SimpleMap() {
 
   const [newLocationPosition, setNewLocationPosition] = useState<[number, number] | null> (null)
@@ -74,32 +147,28 @@ export default function SimpleMap() {
 
         )}
         
-        <Marker 
-          position={[-3.02807786, -39.6529626846]}
-          icon={
-            new L.Icon({
-              iconUrl: "https://cdn-icons-png.flaticon.com/512/7845/7845646.png",
-              iconSize: [40, 40],
-            })
-          }
-        >
+        {points.map((point => (
+          <Marker 
+            key={point.id}
+            position={point.position}
+            icon={iconMap[point.type as PointsType]}
+          >
 
-          <Popup maxWidth={500} >
-              <PreCard
-                name='Padaria do João'
-                type='Restaurante'
-                instagramUrl='https://instagram.com/padariadojoao'
-                description='A Padaria do João oferece pães artesanais, bolos caseiros e um ambiente acolhedor. Localizada no coração da cidade, é o lugar ideal para um café da manhã delicioso.'
-                logo="https://www.cozinhaaz.com/wp-content/uploads/2023/10/bolo-caseiro.jpg"
-                images={[
-                  "https://www.cozinhaaz.com/wp-content/uploads/2023/10/bolo-caseiro.jpg",
-                  "https://www.cozinhaaz.com/wp-content/uploads/2023/10/bolo-caseiro.jpg",
-                  "https://www.cozinhaaz.com/wp-content/uploads/2023/10/bolo-caseiro.jpg",
-                ]}
-              />
-          </Popup>
+            <Popup maxWidth={500} >
+                <PreCard
+                  name={point.name}
+                  type={point.type}
+                  instagramUrl={point.instagramUrl}
+                  description={point.description}
+                  logo={point.logo}
+                  images={point.images}
+                />
+            </Popup>
 
-        </Marker>
+          </Marker>
+        )))}
+        
+        
 
       <ZoomControls/>
       </MapContainer>
