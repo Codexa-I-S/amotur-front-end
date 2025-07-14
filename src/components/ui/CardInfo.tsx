@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image"
 import Link from "next/link"
 import { Instagram } from "lucide-react"
 import {
@@ -37,7 +36,7 @@ export default function CardInfo({
         <CarouselContent>
           {images.map((src, idx) => (
             <CarouselItem key={idx}>
-              <Image
+              <img
                 src={src}
                 alt={`Imagem ${idx + 1}`}
                 width={800}
@@ -57,14 +56,15 @@ export default function CardInfo({
 
           {/* Logo e nome/tipo */}
           <div className="flex items-center gap-3">
-            <Image
-              src={logo}
-              alt={`${name} logo`}
-              width={48}
-              height={48}
-              className="rounded-full border object-cover w-12 h-12"
-            />
-
+            <a href={logo} target="e_blank">
+              <img
+                src={logo}
+                alt={`${name} logo`}
+                width={48}
+                height={48}
+                className="rounded-full border object-cover w-12 h-12"
+              />
+            </a>
             <div>
               <h2 className="text-xl font-bold">{name}</h2>
               <p className="text-sm text-gray-500">{type}</p>
