@@ -34,7 +34,7 @@ export default function CardInfo({
 }: CardProps) {
 
   return (
-    <div className="w-full max-w-2xl mx-auto border rounded-xl overflow-hidden shadow-md bg-white">
+    <div className="w-full h-130 overflow-y-scroll max-w-2xl mx-auto border rounded-xl overflow-hidden shadow-md bg-white">
       {/* Carrossel no topo */}
       <Carousel className="w-full opts={{ loop: true }}">
         <CarouselContent>
