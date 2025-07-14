@@ -5,8 +5,9 @@ import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvent, } from 're
 import 'leaflet/dist/leaflet.css';
 import ZoomControls from './ZoomControls';
 import ModalRegister from './ModalRegister';
-import CardInfo from '../ui/CardInfo';
 import L from 'leaflet'
+import PreCard from './PreCard';
+
 //Um tipo que receber uma função
 type Props = {
   //Recebe uma tupla com a posição 
@@ -73,37 +74,32 @@ export default function SimpleMap() {
 
         )}
         
-        {/* <Marker position={[-3.0274694, -39.6503127]}
-
+        <Marker 
+          position={[-3.02807786, -39.6529626846]}
           icon={
             new L.Icon({
-              iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
+              iconUrl: "https://cdn-icons-png.flaticon.com/512/7845/7845646.png",
               iconSize: [40, 40],
             })
           }
-
         >
 
-          
-
-
-          <Popup maxWidth={600} maxHeight={700} >
-              <main className="min-h-screen bg-gray-100 py-10 px-4">
-                <CardInfo
-                  name="Cafeteria Central"
-                  type="Café & Confeitaria"
-                  instagramUrl="https://www.instagram.com/cafeteriacentral"
-                  description="Localizado no coração da cidade, a Cafeteria Central oferece uma variedade de cafés especiais, bolos caseiros e um ambiente aconchegante para você relaxar."
-                  logo="/images/cafeteria-logo.png"
-                  images={[
-                    "/image-2.png",
-                    "/Imagem_2.png",
-                    "/image-2.png",
-                  ]}
-                />
-              </main>
+          <Popup maxWidth={500} >
+              <PreCard
+                name='Padaria do João'
+                type='Restaurante'
+                instagramUrl='https://instagram.com/padariadojoao'
+                description='A Padaria do João oferece pães artesanais, bolos caseiros e um ambiente acolhedor. Localizada no coração da cidade, é o lugar ideal para um café da manhã delicioso.'
+                logo="https://www.cozinhaaz.com/wp-content/uploads/2023/10/bolo-caseiro.jpg"
+                images={[
+                  "https://www.cozinhaaz.com/wp-content/uploads/2023/10/bolo-caseiro.jpg",
+                  "https://www.cozinhaaz.com/wp-content/uploads/2023/10/bolo-caseiro.jpg",
+                  "https://www.cozinhaaz.com/wp-content/uploads/2023/10/bolo-caseiro.jpg",
+                ]}
+              />
           </Popup>
-        </Marker> */}
+
+        </Marker>
 
       <ZoomControls/>
       </MapContainer>
