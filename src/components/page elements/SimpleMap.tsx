@@ -63,6 +63,8 @@ type Point = {
   name: string;
   type: string;
   instagramUrl: string;
+  email: string;
+  telefone: string;
   description: string;
   logo: string;
   images: string[];
@@ -77,6 +79,8 @@ const points: Point[] = [
     type: 'pousada',
     instagramUrl: 'https://instagram.com/padariadojoao',
     description: 'A Padaria do João oferece pães artesanais, bolos caseiros e um ambiente acolhedor. Localizada no coração da cidade, é o lugar ideal para um café da manhã delicioso.',
+    email: 'padariadojoao@gmail.com',
+    telefone: '(88) 9 9634-7632',
     logo: "https://www.cozinhaaz.com/wp-content/uploads/2023/10/bolo-caseiro.jpg",
     images: [
       "https://www.cozinhaaz.com/wp-content/uploads/2023/10/bolo-caseiro.jpg",
@@ -92,6 +96,8 @@ const points: Point[] = [
     type: 'hotel',
     instagramUrl: 'https://instagram.com/padariadojoao',
     description: 'A Padaria do João oferece pães artesanais, bolos caseiros e um ambiente acolhedor. Localizada no coração da cidade, é o lugar ideal para um café da manhã delicioso.',
+    email: 'padariadojoao@gmail.com',
+    telefone: '(88) 9 9634-7632',
     logo: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnvh7-q3ldMYqeJYaP-X_VfdWfPsQn2ForHA&s",
     images: [
       "https://www.cozinhaaz.com/wp-content/uploads/2023/10/bolo-caseiro.jpg",
@@ -159,6 +165,8 @@ export default function SimpleMap() {
                   name={point.name}
                   type={point.type}
                   instagramUrl={point.instagramUrl}
+                  email={point.email}
+                  telefone={point.telefone}
                   description={point.description}
                   logo={point.logo}
                   images={point.images}

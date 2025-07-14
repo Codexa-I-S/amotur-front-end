@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Instagram } from "lucide-react"
+import { Instagram, Mail, Phone } from "lucide-react"
 import {
   Carousel,
   CarouselContent,
@@ -15,6 +15,8 @@ type CardProps = {
   name: string
   type: string
   instagramUrl: string
+  email: string
+  telefone: string
   description: string
   images: string[]
   logo: string
@@ -24,6 +26,8 @@ export default function CardInfo({
   name,
   type,
   instagramUrl,
+  email,
+  telefone,
   description,
   images,
   logo,
@@ -84,6 +88,18 @@ export default function CardInfo({
 
         {/* Descrição */}
         <p className="text-gray-700"> <br/> {description} </p>
+        <br/>
+
+        {/* Email/Telefone */}
+        <div className="flex items-center gap-2 text-gray-700"> 
+            <Mail className="w-5 h-5"  />
+            <span> {email} </span>
+        </div>
+        <div className="flex items-center gap-2 text-gray-700">
+            <Phone className="w-5 h-5" />
+            <span> {telefone} </span>
+        </div>
+
       </div>
     </div>    
   )
