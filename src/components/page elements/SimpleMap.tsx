@@ -37,22 +37,22 @@ const iconMap: Record<PointsType, L.Icon> = {
 
   hotel: new L.Icon({
     iconUrl: "https://cdn-icons-png.flaticon.com/512/6917/6917642.png",
-    iconSize: [40, 40],
+    iconSize: [35, 35],
   }),
 
   pousada: new L.Icon({
     iconUrl: "https://cdn-icons-png.flaticon.com/512/566/566486.png",
-    iconSize: [40, 40],
+    iconSize: [35, 35],
   }),
 
   bar: new L.Icon({
     iconUrl: "https://cdn-icons-png.flaticon.com/512/8031/8031633.png",
-    iconSize: [40, 40],
+    iconSize: [35, 35],
   }),
 
   restaurante: new L.Icon({
     iconUrl: "https://cdn-icons-png.flaticon.com/512/7845/7845646.png",
-    iconSize: [40, 40],
+    iconSize: [35, 35],
   })
 
 }
@@ -66,7 +66,7 @@ type Point = {
   description: string;
   logo: string;
   images: string[];
-  position: [number, number]
+  coordinates: {lat: number, lon: number}
 }
 
 //Vai receber todas os locais cadastrados
@@ -74,7 +74,7 @@ const points: Point[] = [
   {
     id:1,
     name: 'Padaria do João',
-    type: 'pousada',
+    type: 'restaurante',
     instagramUrl: 'https://instagram.com/padariadojoao',
     description: 'A Padaria do João oferece pães artesanais, bolos caseiros e um ambiente acolhedor. Localizada no coração da cidade, é o lugar ideal para um café da manhã delicioso.',
     logo: "https://www.cozinhaaz.com/wp-content/uploads/2023/10/bolo-caseiro.jpg",
@@ -83,7 +83,7 @@ const points: Point[] = [
       "https://www.cozinhaaz.com/wp-content/uploads/2023/10/bolo-caseiro.jpg",
       "https://www.cozinhaaz.com/wp-content/uploads/2023/10/bolo-caseiro.jpg",
     ],
-    position: [-3.02807786, -39.6529626846]
+    coordinates: {lat:-3.02807786, lon: -39.6529626846}
   },
 
   {
@@ -98,7 +98,7 @@ const points: Point[] = [
       "https://www.cozinhaaz.com/wp-content/uploads/2023/10/bolo-caseiro.jpg",
       "https://www.cozinhaaz.com/wp-content/uploads/2023/10/bolo-caseiro.jpg",
     ],
-    position: [-3.0316369452, -39.649143219]
+    coordinates: {lat: -3.0316369452, lon: -39.649143219}
   }
 ]
 
@@ -150,7 +150,7 @@ export default function SimpleMap() {
         {points.map((point => (
           <Marker 
             key={point.id}
-            position={point.position}
+            position={[point.coordinates.lat, point.coordinates.lon]}
             icon={iconMap[point.type as PointsType]}
           >
 
