@@ -13,13 +13,15 @@ type ModalProps = {
     name: string;
     type: string;
     instagramUrl: string;
+    email: string;
+    telefone: string;
     description: string;
     images: string[];
     logo: string;
     
 }
 
-export default function ModalCard({name, type, instagramUrl, description, images, logo} : ModalProps) {
+export default function ModalCard({name, type, instagramUrl, email, telefone, description, images, logo} : ModalProps) {
 
     return (
         <Dialog>
@@ -42,6 +44,8 @@ export default function ModalCard({name, type, instagramUrl, description, images
                 name={name}
                 type={type}
                 instagramUrl={instagramUrl}
+                email={email}
+                telefone={telefone}
                 description={description}
                 logo={logo}
                 images={images}

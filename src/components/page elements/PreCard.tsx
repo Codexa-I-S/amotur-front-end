@@ -5,13 +5,15 @@ type Props = {
     name: string;
     type: string;
     instagramUrl: string;
+    email: string;
+    telefone: string;
     description: string;
     images: string[];
     logo: string;
     
 }
 
-export default function PreCard({logo, name, type, instagramUrl, description, images} : Props){
+export default function PreCard({logo, name, type, instagramUrl, email, telefone, description, images} : Props){
 
     return (
         <div className="w-[280px] h-[100px] p-[10px] rounded-2xl" >
@@ -47,6 +49,8 @@ export default function PreCard({logo, name, type, instagramUrl, description, im
                     name={name}
                     type={type}
                     instagramUrl={instagramUrl}
+                    email={email}
+                    telefone={telefone}
                     description={description}
                     logo={logo}
                     images={images}
