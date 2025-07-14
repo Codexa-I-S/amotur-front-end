@@ -18,8 +18,9 @@ export default function BotoesLocalidades() {
  
   const localidades: Localidade[] = [
     { nome: 'Icaraí', coordenadas: [-3.027, -39.650] },
-    { nome: 'Moitas', coordenadas: [-3.014, -39.687] },
-    { nome: 'Caetanos', coordenadas: [-3.081, -39.560] }
+    { nome: 'Moitas', coordenadas: [-3.006, -39.694] },
+    { nome: 'Caetanos', coordenadas: [-3.078, -39.561] },
+    { nome: 'Frecheras', coordenadas: [-3.065,-39.651 ] }
   ]
 
   // Qual local está selecionado
@@ -28,7 +29,7 @@ export default function BotoesLocalidades() {
   //centralizar o mapa 
   const centralizarNoMapa = (local: Localidade) => {
     setAtivo(local.nome)
-    mapa.flyTo(local.coordenadas, 15, {
+    mapa.flyTo(local.coordenadas, 16, {
       duration: 1
     })
   }
@@ -40,8 +41,8 @@ export default function BotoesLocalidades() {
     <div
   className="
     absolute bottom-4 left-1/2 -translate-x-1/2 z-[9998]
-    flex justify-center gap-4 mb-12
-    bg-transparent
+    flex justify-center  gap-2 md:gap-4 mb-18 md:mb-3
+    bg-transparent 
     w-auto
   "
 >
@@ -52,9 +53,9 @@ export default function BotoesLocalidades() {
       aria-current={ativo === local.nome ? 'location' : undefined}
       aria-label={`Centralizar mapa em ${local.nome}`}
       className={`
-        px-6 py-3 sm:px-8 md:px-14  lg:px-18 md:py-4 cursor-pointer
-        text-sm mb-4 md:text-lg font-semibold
-        rounded-full  border-2
+        px-4 py-3 sm:px-8 md:px-14  lg:px-12 md:py-4 cursor-pointer
+        text-sm mb-4 mb:text-[15px]  font-semibold
+        rounded-3xl  border-1
         transition-all duration-200 
         ${
           ativo === local.nome

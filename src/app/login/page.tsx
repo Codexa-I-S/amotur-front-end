@@ -50,14 +50,13 @@ export default function LoginPage() {
         password: data.password
       })
 
-      if (!response.data.access_token) {
+      if (!response.data.token) {
         throw new Error("Access token não recebido")
       }
 
-      // Armazena o token com a chave padrão que o FormLocalRegister espera
-      localStorage.setItem("authToken", response.data.access_token)
+      // Armazena o token 
+      localStorage.setItem("authToken", response.data.token)
       
-      // Redireciona para a página do mapa após login
       router.push("/map")
 
     } catch (err) {
