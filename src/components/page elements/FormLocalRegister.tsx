@@ -136,7 +136,8 @@ export default function FormLocalRegister({ lat, lng }: Props) {
             // transfirma os contatos como string JSON
             const contacts = JSON.stringify({
                 telefone: data.phone,
-                email: data.email
+                email: data.email,
+                site: data.Instagram
             })
             formData.append('contacts', contacts)
             

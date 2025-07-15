@@ -116,6 +116,7 @@ export default function SimpleMap() {
         });
 
         setPlaces(response.data);
+        console.log("Places recebidos:", response.data);
       } catch (err) {
         console.error("Erro ao carregar os locais:", err);
         setError(err instanceof Error ? err.message : "Erro ao carregar locais");
