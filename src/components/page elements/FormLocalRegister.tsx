@@ -51,6 +51,9 @@ export default function FormLocalRegister({ lat, lng }: Props) {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [logoError, setLogoError] = useState<string | null>(null)
     const [photoError, setPhotoError] = useState<string | null>(null)
+    const [registerSuccessful, setRegisterSuccessful] = useState<string | null>(null)
+    const [logoLabel, setLogoLabel] = useState<string>("Adicionar logo")
+    const [photosLabel, setPhotosLabel] = useState<string>("Adicionar fotos")
     const router = useRouter()
 
     // Criando instância do Axios
@@ -77,6 +80,10 @@ export default function FormLocalRegister({ lat, lng }: Props) {
                 if (e.target.files && e.target.files.length > 0) {
                     setLogoFile(e.target.files[0])
                 }
+
+                if (e.target.files) {
+                    setLogoLabel("Logo adicionada.")
+                }
             }
             
             // diz que so pode 3 arquivo pra fotos
@@ -84,6 +91,11 @@ export default function FormLocalRegister({ lat, lng }: Props) {
                 if (e.target.files) {
                     const selectedFiles = Array.from(e.target.files)
                     setPhotoFiles(selectedFiles)
+                    if (selectedFiles.length === 1) {
+                        setPhotosLabel(`${selectedFiles.length} foto adicionada.`)
+                    } else {
+                        setPhotosLabel(`${selectedFiles.length} fotos adicionadas.`)
+                    }
                 }
             }
 
@@ -160,7 +172,7 @@ export default function FormLocalRegister({ lat, lng }: Props) {
                 withCredentials: true
             })
 
-            alert("Local cadastrado com sucesso!")// substituir por um mensagem 
+            setRegisterSuccessful("Local cadastrado com sucesso.")// substituir por um mensagem 
             window.location.reload()
             
         } catch (error: any) {
@@ -332,7 +344,7 @@ export default function FormLocalRegister({ lat, lng }: Props) {
                     htmlFor="file"
                     className="cursor-pointer mt-2 mb-2 sm:mb-0 px-3 py-2 bg-[#009089] text-white rounded-[10px] text-center sm:w-[50%] hover:bg-[#4f8f8c]"
                     >
-                    Adicionar Logo
+                    {logoLabel}
                 </label>
 
                 <Input 
@@ -348,7 +360,7 @@ export default function FormLocalRegister({ lat, lng }: Props) {
                     htmlFor="fileM"
                     className="cursor-pointer mt-2 sm:mb-0 px-3 py-2 bg-[#009089] text-white rounded-[10px] text-center sm:ml-10 sm:w-[50%] hover:bg-[#4f8f8c]"
                     >
-                    Adicionar fotos
+                    {photosLabel}
                 </label>
 
             </div>
@@ -366,6 +378,7 @@ export default function FormLocalRegister({ lat, lng }: Props) {
                     {isSubmitting ? "Enviando..." : "Cadastrar"}
                 </Button>
             </div>
+            <p className="text-green-500" >{registerSuccessful}</p>
         </form>
     )
 }
