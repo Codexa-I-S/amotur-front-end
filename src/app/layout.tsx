@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Poppins, Work_Sans } from "next/font/google";
 import "./globals.css";
 import NavbarWrapper from "@/components/NavbarWrapper"; // o import
+import 'leaflet.markercluster/dist/MarkerCluster.css';
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 
 const poppins = Poppins({
   variable: "--font-poppins",

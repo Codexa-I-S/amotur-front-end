@@ -8,6 +8,7 @@ import ModalRegister from './ModalRegister';
 import L from 'leaflet';
 import PreCard from './PreCard';
 import axios from 'axios';
+import MarkerClusterGroup from 'react-leaflet-markercluster';
 
 // servio para ajeitar problema dos ícones padrão do Leaflet 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -174,27 +175,28 @@ export default function SimpleMap() {
           </div>
         )}
 
-        {places.map((place) => (
-          <Marker 
-            key={place.id}
-            position={[place.coordinates.lat, place.coordinates.lon]}
-            icon={getIconForType(place.type)} // Usando a função de seleção de ícone
-          >
-            <Popup maxWidth={500}>
-              <PreCard
-                name={place.name}
-                type={place.type}
-                instagramUrl={place.contacts.site}
-                email={place.contacts.email}
-                telefone={place.contacts.telefone}
-                description={place.description}
-                logo={place.logo}
-                images={place.images}
-              />
-            </Popup>
-          </Marker>
-        ))}
-        
+        <MarkerClusterGroup>
+          {places.map((place) => (
+            <Marker 
+              key={place.id}
+              position={[place.coordinates.lat, place.coordinates.lon]}
+              icon={getIconForType(place.type)} // Usando a função de seleção de ícone
+            >
+              <Popup maxWidth={500}>
+                <PreCard
+                  name={place.name}
+                  type={place.type}
+                  instagramUrl={place.contacts.site}
+                  email={place.contacts.email}
+                  telefone={place.contacts.telefone}
+                  description={place.description}
+                  logo={place.logo}
+                  images={place.images}
+                />
+              </Popup>
+            </Marker>
+          ))}
+        </MarkerClusterGroup>
         <ZoomControls/>
       </MapContainer>
     </div>
