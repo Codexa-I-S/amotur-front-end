@@ -20,7 +20,7 @@ type LoginData = z.infer<typeof loginValidationSchema>
 
 const api = axios.create({
   baseURL: 'https://squad-03-server-production.up.railway.app',
-  timeout: 5000,
+  timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
@@ -50,12 +50,12 @@ export default function LoginPage() {
         password: data.password
       })
 
-      if (!response.data.token) {
+      if (!response.data.access_token) {
         throw new Error("Access token não recebido")
       }
 
       // Armazena o token 
-      localStorage.setItem("authToken", response.data.token)
+      localStorage.setItem("authToken", response.data.access_token)
       
       router.push("/map")
 
@@ -70,6 +70,7 @@ export default function LoginPage() {
         }
       } else {
         setError("Erro desconhecido")
+        alert(err)
       }
     } finally {
       setLoading(false)
