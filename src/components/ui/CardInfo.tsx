@@ -1,7 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { Instagram, Mail, Phone } from "lucide-react"
+import { Instagram } from "lucide-react"
+import { MdEmail, MdPhone } from "react-icons/md"
 import {
   Carousel,
   CarouselContent,
@@ -9,7 +10,6 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
-
 
 type CardProps = {
   name: string
@@ -32,20 +32,17 @@ export default function CardInfo({
   images,
   logo,
 }: CardProps) {
-
   return (
-    <div className="w-[450px] h-130 overflow-y-scroll max-w-2xl mx-auto border rounded-xl overflow-hidden shadow-md bg-white">
-      {/* Carrossel no topo */}
-      <Carousel className="w-full opts={{ loop: true }}">
+    <div className="w-full max-w-md md:max-w-2xl mx-auto border rounded-xl shadow-md bg-white overflow-hidden">
+      {/* Carrossel de Imagens */}
+      <Carousel opts={{ loop: true }} className="w-full">
         <CarouselContent>
           {images.map((src, idx) => (
             <CarouselItem key={idx}>
               <img
                 src={src}
                 alt={`Imagem ${idx + 1}`}
-                width={800}
-                height={400}
-                className="w-full h-60 md:h-80 object-cover"
+                className="w-full h-60 sm:h-72 md:h-80 object-cover"
               />
             </CarouselItem>
           ))}
@@ -54,24 +51,24 @@ export default function CardInfo({
         <CarouselNext />
       </Carousel>
 
-      {/* Informações da empresa */}
-      <div className="p-4 space-y-2">
-        <div className="flex items-center justify-between">
-
-          {/* Logo e nome/tipo */}
-          <div className="flex items-center gap-3">
-            <a href={logo} target="e_blank">
+      {/* Informações */}
+      <div className="p-4 space-y-4">
+        {/* Topo: Logo, Nome, Tipo, Instagram */}
+        <div className="flex items-start justify-between gap-2">
+          {/* Logo + Nome + Tipo */}
+          <div className="flex items-center gap-3 overflow-hidden">
+            <a href={logo} target="_blank" rel="noopener noreferrer">
               <img
                 src={logo}
                 alt={`${name} logo`}
-                width={48}
-                height={48}
-                className="rounded-full border object-cover w-12 h-12"
+                className="w-12 h-12 min-w-[3rem] min-h-[3rem] rounded-full border object-cover flex-shrink-0"
               />
             </a>
-            <div className="w-[300px] flex flex-col justify-center">
-              <h2 className="text-xl font-bold break-words">{name}</h2>
-              <p className="text-sm text-gray-500">{type}</p>
+            <div className="min-w-0 flex flex-col">
+              <h2 className="text-lg sm:text-xl font-bold break-words leading-snug">
+                {name}
+              </h2>
+              <p className="text-sm text-gray-500 truncate">{type}</p>
             </div>
           </div>
 
@@ -80,28 +77,27 @@ export default function CardInfo({
             href={instagramUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-pink-600 hover:text-pink-800"
+            className="text-pink-600 hover:text-pink-800 flex-shrink-0"
           >
             <Instagram className="w-6 h-6" />
           </Link>
         </div>
 
         {/* Descrição */}
-        <p className="text-gray-700"> <br/> {description} </p>
-        <br/>
+        <p className="text-gray-700 text-sm sm:text-base">{description}</p>
 
-        {/* Email/Telefone */}
-        <div className="flex items-center gap-2 text-gray-700"> 
-            <Mail className="w-5 h-5"  />
-            <span> {email} </span>
+        {/* Contato */}
+        <div className="flex flex-col gap-2 text-gray-700">
+          <div className="flex items-center gap-2">
+            <MdEmail className="text-xl text-blue-600" />
+            <span className="text-sm">{email}</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <MdPhone className="text-xl text-green-600" />
+            <span className="text-sm">{telefone}</span>
+          </div>
         </div>
-        <div className="flex items-center gap-2 text-gray-700">
-            <Phone className="w-5 h-5" />
-            <span> {telefone} </span>
-        </div>
-
       </div>
-    </div>    
+    </div>
   )
-
 }
