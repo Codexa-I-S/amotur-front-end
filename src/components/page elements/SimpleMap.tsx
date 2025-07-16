@@ -182,18 +182,19 @@ export default function SimpleMap() {
               position={[place.coordinates.lat, place.coordinates.lon]}
               icon={getIconForType(place.type)} // Usando a função de seleção de ícone
             >
-              <Popup maxWidth={500}>
-                <PreCard
-                  name={place.name}
-                  type={place.type}
-                  instagramUrl={place.contacts.site}
-                  email={place.contacts.email}
-                  telefone={place.contacts.telefone}
-                  description={place.description}
-                  logo={place.logo}
-                  images={place.images}
-                />
+              <Popup maxWidth={500}  closeButton={false}>
+                  <PreCard
+                    name={place.name}
+                    type={place.type}
+                    instagramUrl={place.contacts.site}
+                    email={place.contacts.email}
+                    telefone={place.contacts.telefone}
+                    description={place.description}
+                    logo={place.logo}
+                    images={place.images}
+                  />
               </Popup>
+                
             </Marker>
           ))}
         </MarkerClusterGroup>

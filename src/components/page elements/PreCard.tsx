@@ -1,50 +1,67 @@
 import ModalCard from "./ModalCard";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
 
 type Props = {
-    
-    name: string;
-    type: string;
-    instagramUrl: string;
-    email: string;
-    telefone: string;
-    description: string;
-    images: string[];
-    logo: string;
-    
-}
+  name: string;
+  type: string;
+  instagramUrl: string;
+  email: string;
+  telefone: string;
+  description: string;
+  images: string[];
+  logo: string;
+};
 
-export default function PreCard({logo, name, type, instagramUrl, email, telefone, description, images} : Props){
+export default function PreCard({
+  logo,
+  name,
+  type,
+  instagramUrl,
+  email,
+  telefone,
+  description,
+  images,
+}: Props) {
+  return (
+    <div className="w-[280px] rounded-2xl overflow-visible">
+      
+      <div className="w-full h-[120px] rounded-t-2xl overflow-hidden">
 
-    return (
-        <div className="w-[280px] h-[100px] p-[10px] rounded-2xl" >
+        <Carousel opts={{ loop: true }} className="w-full h-full">
+          <CarouselContent>
+            {images.map((src, idx) => (
+              <CarouselItem key={idx} className="h-full">
+                <img
+                  src={src}
+                  alt={`Imagem ${idx + 1}`}
+                  className="w-full h-full object-cover rounded-t-2xl"
+                />
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="left-1 top-1/2 -translate-y-1/2" />
+          <CarouselNext className="right-1 top-1/2 -translate-y-1/2" />
+        </Carousel>
+        
+      </div>
 
-            <div className="w-full h-2/3 flex" >
+        <div className="relative px-2 pt-2 pb-4" >
 
-                <div className="w-1/3 h-full flex justify-start items-center">
-                    <a href={logo} target="e_blank">
-                        <img
-                        src={logo}
-                        className="w-12 h-12  rounded-full transition-transform duration-300 hover:scale-105"
-                        />
-                    </a>
-                </div>
+            <div className="pr-5">
 
-                <div className="w-2/3 h-full flex flex-col justify-center mr-15">
-
-                    <div className="h-1/3 font-bold text-[16px]">
-                        <p>{name}</p>
-                    </div>
-                    
-                    <div className="h-1/3 mb-11 py-1">
-                        <p className="text-amber-600">{type}</p>
-                    </div> 
-
-                </div>
-                
+                <span className="text-[15px] font-semibold break-words block">{name}</span>
+                <span className="text-amber-600 block">{type}</span>
 
             </div>
 
-            <div className="w-full h-1/3 flex justify-center items-center cursor-pointer border-t-3 border-gray-300 mt-1 hover:text-gray-500" >
+            <div className="absolute right-2 bottom-2">
+
                 <ModalCard
                     name={name}
                     type={type}
@@ -58,6 +75,7 @@ export default function PreCard({logo, name, type, instagramUrl, email, telefone
             </div>
 
         </div>
-    )
-
+      
+    </div>
+  );
 }

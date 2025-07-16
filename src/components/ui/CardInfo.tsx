@@ -34,7 +34,7 @@ export default function CardInfo({
 }: CardProps) {
 
   return (
-    <div className="w-full h-130 overflow-y-scroll max-w-2xl mx-auto border rounded-xl overflow-hidden shadow-md bg-white">
+    <div className="w-[450px] h-130 overflow-y-scroll max-w-2xl mx-auto border rounded-xl overflow-hidden shadow-md bg-white">
       {/* Carrossel no topo */}
       <Carousel className="w-full opts={{ loop: true }}">
         <CarouselContent>
@@ -69,8 +69,8 @@ export default function CardInfo({
                 className="rounded-full border object-cover w-12 h-12"
               />
             </a>
-            <div>
-              <h2 className="text-xl font-bold">{name}</h2>
+            <div className="w-[300px] flex flex-col justify-center">
+              <h2 className="text-xl font-bold break-words">{name}</h2>
               <p className="text-sm text-gray-500">{type}</p>
             </div>
           </div>
