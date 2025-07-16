@@ -35,25 +35,25 @@ type PointsType = "HOTEL" | "POUSADA" | "BAR" | "RESTAURANTE" | string
 
 const iconMap: Record<string, L.Icon> = {
   HOTEL: new L.Icon({
-    iconUrl: "https://cdn-icons-png.flaticon.com/512/6917/6917642.png",
+    iconUrl: "https://img.icons8.com/?size=100&id=3EoZXr2wBtFd&format=png&color=C850F2",
     iconSize: [35, 35],
     iconAnchor: [17, 35],
     popupAnchor: [0, -35]
   }),
   POUSADA: new L.Icon({
-    iconUrl: "https://cdn-icons-png.flaticon.com/512/566/566486.png",
+    iconUrl: "https://img.icons8.com/?size=100&id=bc9PfkZ8cbJC&format=png&color=FAB005",
     iconSize: [35, 35],
     iconAnchor: [17, 35],
     popupAnchor: [0, -35]
   }),
   BAR: new L.Icon({
-    iconUrl: "https://cdn-icons-png.flaticon.com/512/8031/8031633.png",
+    iconUrl: "https://img.icons8.com/?size=100&id=C7fB8O7JIvix&format=png&color=228BE6",
     iconSize: [35, 35],
     iconAnchor: [17, 35],
     popupAnchor: [0, -35]
   }),
   RESTAURANTE: new L.Icon({
-    iconUrl: "https://cdn-icons-png.flaticon.com/512/7845/7845646.png",
+    iconUrl: "https://img.icons8.com/?size=100&id=lq7Ugy76e18x&format=png&color=12B886",
     iconSize: [35, 35],
     iconAnchor: [17, 35],
     popupAnchor: [0, -35]
