@@ -139,7 +139,7 @@ export default function SimpleMap() {
       <MapContainer
         style={{ zIndex: 0 }}
         center={[-3.0274694, -39.6503127]}
-        zoom={14}
+        zoom={15}
         scrollWheelZoom={true}
         className="h-full w-full"
         maxZoom={18}
@@ -175,7 +175,7 @@ export default function SimpleMap() {
           </div>
         )}
 
-        <MarkerClusterGroup>
+        
           {places.map((place) => (
             <Marker 
               key={place.id}
@@ -197,7 +197,7 @@ export default function SimpleMap() {
                 
             </Marker>
           ))}
-        </MarkerClusterGroup>
+        
         <ZoomControls/>
       </MapContainer>
     </div>
