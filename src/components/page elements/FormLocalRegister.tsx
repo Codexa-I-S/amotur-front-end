@@ -2,7 +2,7 @@
 
 import { Input } from "../ui/input"
 import { Button } from "../ui/button"
-import { string, z } from "zod"
+import { z } from "zod"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import {
@@ -18,6 +18,7 @@ import { useState } from "react"
 import axios from "axios"
 import { useRouter } from "next/navigation"
 
+//Esquema de validações
 const validationLocalSchema = z.object({
     name: z.string().min(5, "O nome é muito curto."),
     type: z.enum(["hotel", "pousada", "bar", "restaurante"]),
@@ -48,6 +49,11 @@ export default function FormLocalRegister({ lat, lng }: Props) {
     const [logoFile, setLogoFile] = useState<File | null>(null)
     const [photoFiles, setPhotoFiles] = useState<File[]>([])
     const [isSubmitting, setIsSubmitting] = useState(false)
+    const [logoError, setLogoError] = useState<string | null>(null)
+    const [photoError, setPhotoError] = useState<string | null>(null)
+    const [registerSuccessful, setRegisterSuccessful] = useState<string | null>(null)
+    const [logoLabel, setLogoLabel] = useState<string>("Adicionar logo")
+    const [photosLabel, setPhotosLabel] = useState<string>("Adicionar fotos")
     const router = useRouter()
 
     // Criando instância do Axios
@@ -74,23 +80,44 @@ export default function FormLocalRegister({ lat, lng }: Props) {
                 if (e.target.files && e.target.files.length > 0) {
                     setLogoFile(e.target.files[0])
                 }
+
+                if (e.target.files) {
+                    setLogoLabel("Logo adicionada.")
+                }
             }
             
             // diz que so pode 3 arquivo pra fotos
                 const handlePhotosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
                 if (e.target.files) {
                     const selectedFiles = Array.from(e.target.files)
-
-                    if (selectedFiles.length > 3) {
-                        alert("Você pode selecionar no máximo 4 fotos.") // substituir por um mensagem 
-                        return
-                    }
-
                     setPhotoFiles(selectedFiles)
+                    if (selectedFiles.length === 1) {
+                        setPhotosLabel(`${selectedFiles.length} foto adicionada.`)
+                    } else {
+                        setPhotosLabel(`${selectedFiles.length} fotos adicionadas.`)
+                    }
                 }
             }
 
     async function onSubmit(data: LocalFormData) {
+
+        if(!logoFile) {
+            setLogoError("Você precisa adicionar uma logo.")
+            return
+        } else {
+            setLogoError(null)
+        }
+
+        if (photoFiles.length === 0){
+            setPhotoError("Você precisa adicionar pelo menos uma foto.")
+            return
+        } else if (photoFiles.length > 3) {
+            setPhotoError("Você só pode adicionar no máximo 3 fotos.")
+            return
+        } else {
+            setPhotoError(null)
+        }
+
         setIsSubmitting(true)
         
         try {
@@ -106,6 +133,7 @@ export default function FormLocalRegister({ lat, lng }: Props) {
             
             // Adiciona os campos básicos ao FormData
             formData.append('name', data.name)
+            
             // Converte o tipo para o formato esperado pelo servidor
             formData.append('type', typeMapping[data.type as keyof typeof typeMapping])
             formData.append('description', data.description)
@@ -120,7 +148,8 @@ export default function FormLocalRegister({ lat, lng }: Props) {
             // transfirma os contatos como string JSON
             const contacts = JSON.stringify({
                 telefone: data.phone,
-                email: data.email
+                email: data.email,
+                site: data.Instagram
             })
             formData.append('contacts', contacts)
             
@@ -143,7 +172,7 @@ export default function FormLocalRegister({ lat, lng }: Props) {
                 withCredentials: true
             })
 
-            alert("Local cadastrado com sucesso!")// substituir por um mensagem 
+            setRegisterSuccessful("Local cadastrado com sucesso.")// substituir por um mensagem 
             window.location.reload()
             
         } catch (error: any) {
@@ -170,22 +199,31 @@ export default function FormLocalRegister({ lat, lng }: Props) {
     }
 
     return (
+        //Formulário
         <form className="space-y-4" onSubmit={handleSubmit(onSubmit)} encType="multipart/form-data">
+
+
             {/* Name */}
             <div className="flex flex-col gap-1 sm:flex-row sm:items-center">
+
                 <label className="sm:w-20">Nome:</label>
+
                 <Input
                     {...register("name")}
                     type="text"
                     placeholder="Digite o nome da empresa"
                     className="w-full sm:w-[70%] h-8 p-2 lg:text-[14px]"
                 />
+
             </div>
             {errors.name && <p className="text-red-500">{errors.name.message}</p>}
             
+
             {/* Type */}
             <div className="flex items-center">
+
                 <label>Tipo: </label>
+
                 <Controller
                     name="type"
                     control={control}
@@ -203,23 +241,31 @@ export default function FormLocalRegister({ lat, lng }: Props) {
                         </Select>
                     )}
                 />
+
             </div>
             {errors.type && <p className="text-red-500">{errors.type.message}</p>}
 
+
             {/* Description */}
             <div>
+
                 <label>Descrição:</label>
+
                 <Textarea
                     {...register("description")}
                     placeholder="Descrição do local"
                     className="mt-2"
                 />
+
             </div>
             {errors.description && <p className="text-red-500">{errors.description.message}</p>}
 
+
             {/* Coordinates */}
             <div className="flex flex-col sm:flex-row">
+
                 <label className="sm:w-20 mr-2">Latitude:</label>
+
                 <Input
                     type="text"
                     value={lat}
@@ -227,7 +273,8 @@ export default function FormLocalRegister({ lat, lng }: Props) {
                     readOnly
                 />
 
-                <label className="sm:w-20 px-2 mr-6">Longitude:</label>
+                <label className="sm:w-20 sm:px-2 mr-6 mt-2 sm:mt-0">Longitude:</label>
+
                 <Input
                     type="text"
                     value={lng}
@@ -236,73 +283,102 @@ export default function FormLocalRegister({ lat, lng }: Props) {
                 />
             </div>
 
+
             {/* Contacts */}
             <div className="flex flex-col gap-1 sm:flex-row sm:items-center">
-                <label className="sm:w-20">Email:</label>
+
+                <label className="sm:w-24">Email:</label>
+
                 <Input
                     {...register("email")}
                     type="email"
                     placeholder="Digite o e-mail da empresa"
                     className="w-full sm:w-[70%] h-8 p-2 lg:text-[14px]"
                 />
+
             </div>
             {errors.email && <p className="text-red-500">{errors.email.message}</p>}
 
+
             <div className="flex flex-col gap-1 sm:flex-row sm:items-center">
-                <label className="sm:w-20">Telefone:</label>
+
+                <label className="sm:w-24">Telefone:</label>
+
                 <Input
                     {...register("phone")}
                     type="tel"
                     placeholder="(99) 99999-9999"
                     className="w-full sm:w-[70%] h-8 p-2 lg:text-[14px]"
                 />
+
             </div>
             {errors.phone && <p className="text-red-500">{errors.phone.message}</p>}
             
             <div className="flex flex-col gap-1 sm:flex-row sm:items-center">
+
                 <label className="sm:w-20">Instagram:</label>
+
                 <Input
                     {...register("Instagram")}
                     type="text"
                     placeholder="https://www.instagram.com/sualoja"
                     className="w-full sm:ml-4 sm:w-[70%] h-8 p-2 lg:text-[14px]"
                 />
+
             </div>
             {errors.Instagram && <p className="text-red-500">{errors.Instagram.message}</p>}
 
-            {/* logo */}
-            <div className="flex flex-col sm:flex-row sm:items-center">
-                <label>Logo:</label>
+
+            {/* logo and Photos */}
+            <div className="flex flex-col sm:flex-row sm:items-center justify-center ">
+
                 <Input 
+                    id="file"
                     type="file"
                     onChange={handleLogoChange}
-                    className="mt-2 sm:ml-5 sm:mt-0"
+                    className="hidden"
                     accept="image/*"
                 />
-            </div>
+                
+                <label
+                    htmlFor="file"
+                    className="cursor-pointer mt-2 mb-2 sm:mb-0 px-3 py-2 bg-[#009089] text-white rounded-[10px] text-center sm:w-[50%] hover:bg-[#4f8f8c]"
+                    >
+                    {logoLabel}
+                </label>
 
-            {/* Photos */}
-            <div className="flex flex-col sm:flex-row sm:items-center">
-                <label>Fotos:</label>
                 <Input 
+                    id="fileM"
                     multiple
                     type="file"
                     onChange={handlePhotosChange}
-                    className="mt-2 sm:ml-5 sm:mt-0"
+                    className="hidden"
                     accept="image/*"
                 />
+                
+                <label
+                    htmlFor="fileM"
+                    className="cursor-pointer mt-2 sm:mb-0 px-3 py-2 bg-[#009089] text-white rounded-[10px] text-center sm:ml-10 sm:w-[50%] hover:bg-[#4f8f8c]"
+                    >
+                    {photosLabel}
+                </label>
+
             </div>
+            <p className="text-red-500">{logoError}</p>
+            <p className="text-red-500">{photoError}</p>
 
             <div className="flex justify-center">
+                
                 <Button 
                     variant={"designButton"} 
                     size={"sm"}
-                    className="px-4"
+                    className="px-10"
                     disabled={isSubmitting}
                 > 
                     {isSubmitting ? "Enviando..." : "Cadastrar"}
                 </Button>
             </div>
+            <p className="text-green-500" >{registerSuccessful}</p>
         </form>
     )
 }
