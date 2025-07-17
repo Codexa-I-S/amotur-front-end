@@ -1,18 +1,27 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { SearchDialog } from "./SearchDialog";
+import SideBarLocais from "../page elements/SideBarLocais";
+import { useState } from "react";
 
 export default function Navbar() {
+  const [openSheet, setOpenSheet] = useState(false)
+  const [categoria, setCategoria] = useState<string>("")
+
   const links = [
-    { label: "Pontos Turísticos", href: "/" },
-    { label: "Hotéis", href: "/" },
-    { label: "Pousadas", href: "/" },
-    { label: "Restaurantes", href: "/" },
-    { label: "Petiscarias", href: "/" },
-    { label: "Bares", href: "/" },
+    { label: "Pontos Turísticos", tipo: "Ponto" },
+    { label: "Hotéis", tipo: "Hotel" },
+    { label: "Pousadas", tipo: "Pousada" },
+    { label: "Restaurantes", tipo: "Restaurante" },
+    { label: "Petiscarias", tipo: "Petiscaria" },
+    { label: "Bares", tipo: "Bar" },
   ];
+
+  const handleAbrirCategoria = (tipo: string) => {
+    setCategoria(tipo)
+    setOpenSheet(true)
+  }
 
   return (
     <div className="relative z-[1001]">
@@ -31,11 +40,11 @@ export default function Navbar() {
         <ul className="flex items-center gap-6 font-semibold text-base">
           {links.map((item, index) => (
             <li key={index}>
-              <Link href={item.href}>
-                <button className="text-[#f5f5f5] px-4 py-1 hover:scale-105 transition-transform">
+                <button 
+                  onClick={() => handleAbrirCategoria(item.tipo)}
+                  className="text-[#f5f5f5] px-4 py-1 hover:scale-105 transition-transform">
                   {item.label}
                 </button>
-              </Link>
             </li>
           ))}
           <li>
@@ -55,14 +64,17 @@ export default function Navbar() {
       <div className="md:hidden fixed top-20 left-0 right-0 z-[1001] px-2 py-2 overflow-x-auto scrollbar-hide">
         <div className="flex items-center gap-3 w-max">
           {links.map((item, index) => (
-            <Link key={index} href={item.href}>
-              <button className="bg-[#009089] text-white px-4 py-2 rounded-full whitespace-nowrap shadow hover:scale-105 transition text-sm">
+              <button 
+                key={index}
+                onClick={() => handleAbrirCategoria(item.tipo)}
+                className="bg-[#009089] text-white px-4 py-2 rounded-full whitespace-nowrap shadow hover:scale-105 transition text-sm">
                 {item.label}
               </button>
-            </Link>
           ))}
         </div>
       </div>
+
+      <SideBarLocais tipo={categoria} open={openSheet} onOpenChange={setOpenSheet} />
     </div>
   );
 }
