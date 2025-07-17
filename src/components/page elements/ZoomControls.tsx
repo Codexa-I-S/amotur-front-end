@@ -10,7 +10,7 @@ export default function ZoomControls() {
         
         <div
           className="
-           
+            hidden md:block
             rounded-full bg-zinc-100/90 backdrop-blur-sm
             shadow-lg border-2 border-[#009089]
             hover:bg-zinc-100 transition-all hover:rounded-full

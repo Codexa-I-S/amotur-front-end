@@ -41,7 +41,7 @@ export default function BotoesLocalidades() {
     <div
   className="
     fixed bottom-0 left-1/2 -translate-x-1/2 z-[9999] 
-    flex justify-around items-center gap-2 md:gap-4  md:mb-3
+    flex justify-center items-center gap-2 md:gap-4  md:mb-3
     md:justify-center md:bg-transparent md:w-auto
    bg-[#009089]/87  w-full px-4 py-2  h-[90px]  shadow-md
   rounded-t-3xl 

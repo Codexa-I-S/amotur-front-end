@@ -87,7 +87,7 @@ export default function SideBarLocais({ tipo, open, onOpenChange }: Props) {
       
       <SheetContent
         side={isMobile ? "bottom" : "left"}
-        className={`flex flex-col ${
+        className={`flex flex-col [&>button.absolute]:hidden ${
           isMobile ? "h-[65%]" : "w-[360px] sm:w-[350px] h-full z-[2000]"
         } bg-white/10 backdrop-blur-lg border border-white/20`}
         aria-describedby={undefined}
