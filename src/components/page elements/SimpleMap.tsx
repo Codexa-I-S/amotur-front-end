@@ -9,6 +9,7 @@ import L from 'leaflet';
 import PreCard from './PreCard';
 import axios from 'axios';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
+import SidebarLocais from './SideBarLocais';
 
 // servio para ajeitar problema dos ícones padrão do Leaflet 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -200,6 +201,7 @@ export default function SimpleMap() {
           ))}
         
         <ZoomControls/>
+        
       </MapContainer>
     </div>
   );

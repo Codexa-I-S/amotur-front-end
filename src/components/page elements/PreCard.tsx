@@ -38,7 +38,7 @@ export default function PreCard({
   }, [emblaApi])
 
   return (
-    <div className="w-[280px] rounded-2xl overflow-visible">
+    <div className="w-[280px] rounded-2xl overflow-visible bg-white">
       <div className="w-full h-[120px] rounded-t-2xl overflow-hidden">
         <div className="overflow-hidden w-full h-full" ref={emblaRef}>
           <div className="flex h-full">
