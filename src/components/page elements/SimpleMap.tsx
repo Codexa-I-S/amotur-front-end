@@ -9,6 +9,7 @@ import L from 'leaflet';
 import PreCard from './PreCard';
 import axios from 'axios';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
+import SidebarLocais from './SideBarLocais';
 
 // servio para ajeitar problema dos ícones padrão do Leaflet 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -146,6 +147,7 @@ export default function SimpleMap() {
         minZoom={13.5}
         maxBoundsViscosity={1.0}
         zoomControl={false}
+        attributionControl={false}
       >
         <TileLayer
           attribution='&copy; OpenStreetMap contributors'
@@ -199,6 +201,7 @@ export default function SimpleMap() {
           ))}
         
         <ZoomControls/>
+        
       </MapContainer>
     </div>
   );

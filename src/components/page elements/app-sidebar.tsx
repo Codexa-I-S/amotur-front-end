@@ -48,7 +48,7 @@ export function AppSidebar() {
         <div className="flex items-center gap-2">
           <BarChart3 className="h-6 w-6 sm:h-8 sm:w-8 text-white flex-shrink-0" />
           <span className="font-bold text-base sm:text-lg group-data-[collapsible=icon]:hidden truncate">
-            SB Admin 2
+            Amotur
           </span>
         </div>
       </SidebarHeader>

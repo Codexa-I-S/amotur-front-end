@@ -40,10 +40,12 @@ export default function BotoesLocalidades() {
   return (
     <div
   className="
-    absolute bottom-4 left-1/2 -translate-x-1/2 z-[9998]
-    flex justify-center  gap-2 md:gap-4 mb-18 md:mb-3
-    bg-transparent 
-    w-auto
+    fixed bottom-0 left-1/2 -translate-x-1/2 z-[9999] 
+    flex justify-center items-center gap-2 md:gap-4  md:mb-3
+    md:justify-center md:bg-transparent md:w-auto
+   bg-[#009089]/87  w-full px-4 py-2  h-[90px]  shadow-md
+  rounded-t-3xl 
+    
   "
 >
   {localidades.map((local) => (
@@ -53,6 +55,7 @@ export default function BotoesLocalidades() {
       aria-current={ativo === local.nome ? 'location' : undefined}
       aria-label={`Centralizar mapa em ${local.nome}`}
       className={`
+        flex justify-center items-center
         px-4 py-3 sm:px-8 md:px-14  lg:px-12 md:py-4 cursor-pointer
         text-sm mb-4 mb:text-[15px]  font-semibold
         rounded-3xl  border-1
