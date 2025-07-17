@@ -35,7 +35,7 @@ export default function CardInfo({
   return (
     <div className="w-full max-w-md md:max-w-2xl mx-auto border rounded-xl shadow-md bg-white overflow-hidden">
       {/* Carrossel de Imagens */}
-      <Carousel opts={{ loop: true }} className="w-full">
+      <Carousel opts={{ loop: true }} className="w-full relative">
         <CarouselContent>
           {images.map((src, idx) => (
             <CarouselItem key={idx}>
@@ -47,8 +47,9 @@ export default function CardInfo({
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        <CarouselPrevious className="left-1 top-1/2 -translate-y-1/2" />
+        <CarouselNext className="right-1 top-1/2 -translate-y-1/2" />
+       
       </Carousel>
 
       {/* Informações */}
