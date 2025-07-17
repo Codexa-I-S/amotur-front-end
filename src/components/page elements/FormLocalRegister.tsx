@@ -122,7 +122,8 @@ export default function FormLocalRegister({ lat, lng }: Props) {
         
         try {
             const token = localStorage.getItem('authToken')
-            
+
+
             if (!token) {
                 alert('Você precisa estar logado para cadastrar um local!')// substituir por um mensagem 
                 router.push('/login')

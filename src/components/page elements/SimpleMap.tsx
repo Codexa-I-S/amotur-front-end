@@ -146,6 +146,7 @@ export default function SimpleMap() {
         minZoom={13.5}
         maxBoundsViscosity={1.0}
         zoomControl={false}
+        attributionControl={false}
       >
         <TileLayer
           attribution='&copy; OpenStreetMap contributors'
