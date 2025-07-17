@@ -10,7 +10,11 @@ import {
 } from "@/components/ui/command";
 import { Search } from "lucide-react";
 
-export function SearchDialog() {
+type SearchDialogProps = {
+  variant?: "desktop" | "mobile";
+};
+
+export function SearchDialog({ variant = "desktop" }: SearchDialogProps) {
   const [open, setOpen] = React.useState(false);
 
   // Atalho Ctrl+K para abrir
@@ -29,9 +33,20 @@ export function SearchDialog() {
     <>
       <button
         onClick={() => setOpen(true)}
-        className="text-white hover:scale-110 transition-transform"
+        className={
+          variant === "mobile"
+            ? "flex items-center gap-2 text-[#009089] w-full"
+            : "text-white hover:scale-110 transition-transform"
+        }
       >
-        <Search size={20} strokeWidth={2.5} />
+        <Search
+          size={20}
+          strokeWidth={2.5}
+          className={variant === "mobile" ? "text-[#009089]" : "text-white"}
+        />
+        {variant === "mobile" && (
+          <span className="text-sm text-zinc-700">Pesquisar</span>
+        )}
       </button>
 
       <CommandDialog open={open} onOpenChange={setOpen}>

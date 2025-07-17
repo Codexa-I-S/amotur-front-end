@@ -44,8 +44,15 @@ export default function Navbar() {
         </ul>
       </div>
 
+      {/* Mobile: Barra de pesquisa flutuante com estilo personalizado */}
+      <div className="md:hidden fixed top-8 left-0 right-0 z-[1002] px-4">
+        <div className="bg-white/80 rounded-full px-4 py-3 shadow-md backdrop-blur">
+          <SearchDialog variant="mobile" />
+        </div>
+      </div>
+
       {/* Botões flutuantes no topo - somente mobile */}
-      <div className="md:hidden fixed top-16 left-0 right-0 z-[1002] px-2 py-3 overflow-x-auto scrollbar-hide">
+      <div className="md:hidden fixed top-20 left-0 right-0 z-[1001] px-2 py-2 overflow-x-auto scrollbar-hide">
         <div className="flex items-center gap-3 w-max">
           {links.map((item, index) => (
             <Link key={index} href={item.href}>
