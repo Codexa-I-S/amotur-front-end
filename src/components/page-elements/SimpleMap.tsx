@@ -133,18 +133,7 @@ export default function SimpleMap({ focusCoords, setFocusCoords }: SimpleMapProp
       try {
         setLoading(true);
         setError(null);
-        
-        const token = localStorage.getItem("authToken");
-        
-        if (!token) {
-          throw new Error("Token de autenticação não encontrado");
-        }
-
-        const response = await axios.get("https://squad-03-server-production.up.railway.app/place/all", {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
+        const response = await axios.get("https://squad-03-server-production.up.railway.app/place/all",);
 
         setPlaces(response.data);
         console.log("Places recebidos:", response.data);

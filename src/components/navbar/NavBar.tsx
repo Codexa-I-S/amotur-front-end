@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { SearchDialog } from "./SearchDialog";
-import SideBarLocais from "../page elements/SideBarLocais";
+import SideBarLocais from "../page-elements/SideBarLocais";
 import { useState } from "react";
 
 type NavbarProps = {

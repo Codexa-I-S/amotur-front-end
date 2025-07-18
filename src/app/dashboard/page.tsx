@@ -1,7 +1,7 @@
 "use client"
 import { SidebarProvider } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/page elements/app-sidebar"
-import { DashboardContent } from "@/components/page elements/dashboard-content"
+import { AppSidebar } from "@/components/page-elements/app-sidebar"
+import { DashboardContent } from "@/components/page-elements/dashboard-content"
 
 export default function Dashboard() {
   return (
