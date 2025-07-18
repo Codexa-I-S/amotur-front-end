@@ -5,7 +5,11 @@ import { SearchDialog } from "./SearchDialog";
 import SideBarLocais from "../page elements/SideBarLocais";
 import { useState } from "react";
 
-export default function Navbar() {
+type NavbarProps = {
+  setFocusCoords: (coords: [number, number] | null) => void;
+}
+
+export default function Navbar({setFocusCoords} : NavbarProps) {
   const [openSheet, setOpenSheet] = useState(false)
   const [categoria, setCategoria] = useState<string>("")
   const [label, setlabel] = useState<string>("")
@@ -76,7 +80,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      <SideBarLocais tipo={categoria} label={label} open={openSheet} onOpenChange={setOpenSheet} />
+      <SideBarLocais tipo={categoria} label={label} open={openSheet} onOpenChange={setOpenSheet} setFocusCoords={setFocusCoords} />
     </div>
   );
 }
