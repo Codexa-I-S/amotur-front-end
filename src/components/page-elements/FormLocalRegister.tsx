@@ -121,14 +121,7 @@ export default function FormLocalRegister({ lat, lng }: Props) {
         setIsSubmitting(true)
         
         try {
-            const token = localStorage.getItem('authToken')
-
-
-            if (!token) {
-                alert('Você precisa estar logado para cadastrar um local!')// substituir por um mensagem 
-                router.push('/login')
-                return
-            }
+            
 
             const formData = new FormData()
             
@@ -167,7 +160,6 @@ export default function FormLocalRegister({ lat, lng }: Props) {
             const response = await api.post("/place", formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Authorization': `Bearer ${token}`,
                     'Accept': 'application/json'
                 },
                 withCredentials: true

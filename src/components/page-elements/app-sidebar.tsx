@@ -1,6 +1,6 @@
 "use client"
 
-import { BarChart3, Home, MapPin, Plus, TrendingUp, Users } from "lucide-react"
+import { Home, MapPin, Plus, TrendingUp, Users } from "lucide-react"
 
 import {
   Sidebar,
@@ -46,7 +46,7 @@ export function AppSidebar() {
     <Sidebar side="left" variant="sidebar" collapsible="icon" className="border-r-0">
       <SidebarHeader className="bg-[#3a3a3a] text-white p-3 sm:p-4">
         <div className="flex items-center gap-2">
-          <BarChart3 className="h-6 w-6 sm:h-8 sm:w-8 text-white flex-shrink-0" />
+
           <span className="font-bold text-base sm:text-lg group-data-[collapsible=icon]:hidden truncate">
             Amotur
           </span>

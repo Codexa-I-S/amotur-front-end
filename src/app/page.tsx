@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import Navbar from '@/components/navbar/NavBar';
 import { useState } from 'react';
 
-const SimpleMap = dynamic(() => import('@/components/page elements/SimpleMap'), {
+const SimpleMap = dynamic(() => import('@/components/page-elements/SimpleMap'), {
   ssr: false,
 });
 
