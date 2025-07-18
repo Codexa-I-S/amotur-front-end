@@ -64,19 +64,10 @@ export default function SideBarLocais({ tipo, label, open, onOpenChange, setFocu
     if (open) {
       setLoading(true)
 
-      const token = localStorage.getItem("authToken");
-        
-      if (!token) {
-        throw new Error("Token de autenticação não encontrado");
-      }
-
       axios.get("https://squad-03-server-production.up.railway.app/place", {
         params: {
           type: tipo
-        },
-        headers: {
-            'Authorization': `Bearer ${token}`
-          }
+        }
       })
 
         .then(res => {
