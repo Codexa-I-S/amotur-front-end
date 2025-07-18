@@ -9,8 +9,8 @@ import L from 'leaflet';
 import PreCard from './PreCard';
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode"
-import MarkerClusterGroup from 'react-leaflet-markercluster';
-import SidebarLocais from './SideBarLocais';
+import FlyToLocation from './FlyToLocation';
+
 
 // servio para ajeitar problema dos ícones padrão do Leaflet 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -40,6 +40,11 @@ function getUserRole () {
     return null
   }
 
+}
+
+type SimpleMapProps = {
+  focusCoords: [number, number] | null;
+  setFocusCoords: (coords: [number, number] | null) => void;
 }
 
 type Props = {
@@ -116,7 +121,7 @@ type Point = {
   };
 }
 
-export default function SimpleMap() {
+export default function SimpleMap({ focusCoords, setFocusCoords }: SimpleMapProps) {
   const [newLocationPosition, setNewLocationPosition] = useState<[number, number] | null>(null);
   const [places, setPlaces] = useState<Point[]>([]);
   const [loading, setLoading] = useState(true);
@@ -180,6 +185,8 @@ export default function SimpleMap() {
         
         <LocalButtons />
         <ShowFormRegisterOnClick setLocationPosition={setNewLocationPosition} />
+
+        {focusCoords && <FlyToLocation coords={focusCoords} />}
 
         {role === "ADMIN" && newLocationPosition && (
           <Popup position={newLocationPosition} maxWidth={400}>

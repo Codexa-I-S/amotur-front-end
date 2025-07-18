@@ -13,6 +13,7 @@ type Props = {
   description: string
   images: string[]
   logo: string
+  onClick? : () => void;
 }
 
 export default function PreCard({
@@ -24,6 +25,7 @@ export default function PreCard({
   telefone,
   description,
   images,
+  onClick,
 }: Props) {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true })
 
@@ -38,7 +40,7 @@ export default function PreCard({
   }, [emblaApi])
 
   return (
-    <div className="w-[280px] rounded-2xl overflow-visible bg-white">
+    <div className="w-[280px] rounded-2xl overflow-visible bg-white" onClick={onClick}>
       <div className="w-full h-[120px] rounded-t-2xl overflow-hidden">
         <div className="overflow-hidden w-full h-full" ref={emblaRef}>
           <div className="flex h-full">

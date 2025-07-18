@@ -36,9 +36,10 @@ type Props = {
   label: string;
   open: boolean
   onOpenChange: (v: boolean) => void
+  setFocusCoords: (coords: [number, number]) => void;  // nova prop
 }
 
-export default function SideBarLocais({ tipo, label, open, onOpenChange }: Props) {
+export default function SideBarLocais({ tipo, label, open, onOpenChange, setFocusCoords }: Props) {
 
   const [loading, setLoading] = useState(false)
   const [expectdeCount, setExpectedCount] = useState(3)
@@ -119,10 +120,15 @@ export default function SideBarLocais({ tipo, label, open, onOpenChange }: Props
                 type={local.type}
                 email={local.contacts.email}
                 telefone={local.contacts.telefone}
-                instagramUrl={local.contacts.site} // ou outro campo
+                instagramUrl={local.contacts.site}
                 description={local.description}
                 images={local.images}
                 logo={local.logo}
+
+                onClick={() => {
+                  setFocusCoords([local.coordinates.lat, local.coordinates.lon])
+                  onOpenChange(false)
+                }}
               />
             ))
           }
