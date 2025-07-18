@@ -57,7 +57,7 @@ export default function LoginPage() {
       // Armazena o token 
       localStorage.setItem("authToken", response.data.access_token)
       
-      router.push("/map")
+      router.push("/")
 
     } catch (err) {
       if (axios.isAxiosError(err)) {
