@@ -8,6 +8,7 @@ import { useState } from "react";
 export default function Navbar() {
   const [openSheet, setOpenSheet] = useState(false)
   const [categoria, setCategoria] = useState<string>("")
+  const [label, setlabel] = useState<string>("")
 
   const links = [
     { label: "Pontos Turísticos", tipo: "Ponto" },
@@ -18,8 +19,9 @@ export default function Navbar() {
     { label: "Bares", tipo: "Bar" },
   ];
 
-  const handleAbrirCategoria = (tipo: string) => {
+  const handleAbrirCategoria = (tipo: string, label:string) => {
     setCategoria(tipo)
+    setlabel(label)
     setOpenSheet(true)
   }
 
@@ -41,7 +43,7 @@ export default function Navbar() {
           {links.map((item, index) => (
             <li key={index}>
                 <button 
-                  onClick={() => handleAbrirCategoria(item.tipo)}
+                  onClick={() => handleAbrirCategoria(item.tipo, item.label)}
                   className="text-[#f5f5f5] px-4 py-1 hover:scale-105 transition-transform">
                   {item.label}
                 </button>
@@ -66,7 +68,7 @@ export default function Navbar() {
           {links.map((item, index) => (
               <button 
                 key={index}
-                onClick={() => handleAbrirCategoria(item.tipo)}
+                onClick={() => handleAbrirCategoria(item.tipo, item.label)}
                 className="bg-[#009089] text-white px-4 py-2 rounded-full whitespace-nowrap shadow hover:scale-105 transition text-sm">
                 {item.label}
               </button>
@@ -74,7 +76,7 @@ export default function Navbar() {
         </div>
       </div>
 
-      <SideBarLocais tipo={categoria} open={openSheet} onOpenChange={setOpenSheet} />
+      <SideBarLocais tipo={categoria} label={label} open={openSheet} onOpenChange={setOpenSheet} />
     </div>
   );
 }
