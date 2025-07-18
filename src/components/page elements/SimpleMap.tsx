@@ -8,6 +8,7 @@ import ModalRegister from './ModalRegister';
 import L from 'leaflet';
 import PreCard from './PreCard';
 import axios from 'axios';
+import { jwtDecode } from "jwt-decode"
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import SidebarLocais from './SideBarLocais';
 
@@ -18,6 +19,28 @@ L.Icon.Default.mergeOptions({
   iconUrl: '/images/marker-icon.png',
   shadowUrl: '/images/marker-shadow.png',
 });
+
+type DecodedToken = {
+  userId: string;
+  email: string;
+  role: "ADMIN" | "TURISTA";
+  iat: number;
+  exp: number;
+}
+
+function getUserRole () {
+  const token = localStorage.getItem("authToken")
+  if (!token) return null
+
+  try {
+    const decoded: DecodedToken = jwtDecode(token)
+    return decoded.role
+  } catch {
+    console.log("Token inválido")
+    return null
+  }
+
+}
 
 type Props = {
   setLocationPosition: (position: [number, number]) => void
@@ -98,6 +121,7 @@ export default function SimpleMap() {
   const [places, setPlaces] = useState<Point[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const role = getUserRole()
 
   useEffect(() => {
     const fetchPlaces = async () => {
@@ -157,13 +181,15 @@ export default function SimpleMap() {
         <LocalButtons />
         <ShowFormRegisterOnClick setLocationPosition={setNewLocationPosition} />
 
-        {newLocationPosition && (
+        {role === "ADMIN" && newLocationPosition && (
           <Popup position={newLocationPosition} maxWidth={400}>
             <ModalRegister 
               lat={parseFloat(newLocationPosition[0].toFixed(10))}
-              lng={parseFloat(newLocationPosition[1].toFixed(10))} />
+              lng={parseFloat(newLocationPosition[1].toFixed(10))}
+            />
           </Popup>
         )}
+       
         
         {loading && (
           <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
