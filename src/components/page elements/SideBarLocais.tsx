@@ -10,6 +10,7 @@ import {
 import { useEffect, useState } from "react"
 import axios from "axios"
 import PreCard from "./PreCard"
+import { Skeleton } from "../ui/skeleton"
 
 type Local = {
   id: string
@@ -31,13 +32,16 @@ type Local = {
 
 //Propriedades que o componente recebe
 type Props = {
-  tipo: string
+  tipo: string;
+  label: string;
   open: boolean
   onOpenChange: (v: boolean) => void
 }
 
-export default function SideBarLocais({ tipo, open, onOpenChange }: Props) {
+export default function SideBarLocais({ tipo, label, open, onOpenChange }: Props) {
 
+  const [loading, setLoading] = useState(false)
+  const [expectdeCount, setExpectedCount] = useState(3)
   const [locais, setLocais] = useState<Local[]>([])
   const [isMobile, setIsMobile] = useState(false)
 
@@ -57,6 +61,7 @@ export default function SideBarLocais({ tipo, open, onOpenChange }: Props) {
   useEffect(() => {
 
     if (open) {
+      setLoading(true)
 
       const token = localStorage.getItem("authToken");
         
@@ -75,8 +80,10 @@ export default function SideBarLocais({ tipo, open, onOpenChange }: Props) {
 
         .then(res => {
           setLocais(res.data)
+          setExpectedCount(res.data.length)
         })
         .catch(err => console.error("Erro:", err))
+        .finally( () => setLoading(false) )
     }
 
   }, [tipo, open])
@@ -94,26 +101,31 @@ export default function SideBarLocais({ tipo, open, onOpenChange }: Props) {
       >
         <SheetHeader className="h-[10%] ">
 
-          <SheetTitle className="text-white" >{tipo}</SheetTitle>
+          <SheetTitle className="text-white" >{label}</SheetTitle>
 
         </SheetHeader>
 
         <div className="flex flex-col justify-start items-center gap-8 overflow-y-auto flex-1 px-2 scrollbar-hidden">
-
-          {locais.map((local, idx) => (
-            <PreCard
-              key={idx}
-              name={local.name}
-              type={local.type}
-              email={local.contacts.email}
-              telefone={local.contacts.telefone}
-              instagramUrl={local.contacts.site} // ou outro campo
-              description={local.description}
-              images={local.images}
-              logo={local.logo}
-            />
-          ))}
-
+          {loading ? Array.from({ length: expectdeCount }).map((_, i) => (
+            <div key={i} className="w-[280px]">
+                <Skeleton className="w-full h-45 rounded-xl"/>
+            </div>
+          ))
+          :
+            locais.map((local, idx) => (
+              <PreCard
+                key={idx}
+                name={local.name}
+                type={local.type}
+                email={local.contacts.email}
+                telefone={local.contacts.telefone}
+                instagramUrl={local.contacts.site} // ou outro campo
+                description={local.description}
+                images={local.images}
+                logo={local.logo}
+              />
+            ))
+          }
         </div>
 
       </SheetContent>
