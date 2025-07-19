@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Poppins, Work_Sans } from "next/font/google";
 import "./globals.css";
-import NavbarWrapper from "@/components/NavbarWrapper"; // o import
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+import { Toaster } from "sonner"; // Importação direta do Sonner
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -30,7 +30,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${poppins.variable} ${workSans.variable} antialiased`}>
+        
         {children}
+        
+        {/* Adição do Toaster (única modificação) */}
+        <Toaster 
+          position="top-center"
+          richColors 
+          closeButton
+          duration={5000}
+        />
       </body>
     </html>
   );

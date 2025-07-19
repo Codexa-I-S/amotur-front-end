@@ -10,6 +10,8 @@ import { useRouter } from "next/navigation"
 import { useState } from "react"
 import Link from "next/link"
 import axios from "axios"
+import { toast } from "sonner"
+import { Loader2, Eye, EyeOff } from "lucide-react" // icones Eye e EyeOff
 
 const loginValidationSchema = z.object({
   email: z.string().email("E-mail inválido!"),
@@ -24,13 +26,14 @@ const api = axios.create({
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
-  }
+  },
+  withCredentials: true
 })
 
 export default function LoginPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
-  const [error, setError] = useState("")
+  const [showPassword, setShowPassword] = useState(false) // Estado para mostrar/esconder senha
 
   const {
     register,
@@ -42,8 +45,7 @@ export default function LoginPage() {
 
   const onSubmit = async (data: LoginData) => {
     setLoading(true)
-    setError("")
-
+    
     try {
       const response = await api.post("/auth/login", {
         email: data.email,
@@ -54,23 +56,41 @@ export default function LoginPage() {
         throw new Error("Access token não recebido")
       }
 
-      // Armazena o token 
       localStorage.setItem("authToken", response.data.access_token)
       
-      router.push("/")
+      toast.success('Login realizado com sucesso!', {
+        description: 'Você será redirecionado',
+        duration: 3000,
+      })
+      
+      setTimeout(() => router.push("/"), 3000)
 
-    } catch (err) {
+    } catch (err: any) {
+      console.error('Erro no login:', err)
+      
       if (axios.isAxiosError(err)) {
         if (err.response) {
-          setError(err.response.data?.message || "Credenciais inválidas")
+          const errorMessage = err.response.data?.message || "Credenciais inválidas"
+          toast.error('Erro no login', {
+            description: errorMessage,
+            duration: 5000,
+          })
         } else if (err.request) {
-          setError("Servidor não respondeu")
+          toast.error('Erro de conexão', {
+            description: 'Servidor não respondeu. Verifique sua conexão.',
+            duration: 5000,
+          })
         } else {
-          setError("Erro na requisição")
+          toast.error('Erro na requisição', {
+            description: err.message,
+            duration: 5000,
+          })
         }
       } else {
-        setError("Erro desconhecido")
-        alert(err)
+        toast.error('Erro desconhecido', {
+          description: err.message,
+          duration: 5000,
+        })
       }
     } finally {
       setLoading(false)
@@ -95,13 +115,6 @@ export default function LoginPage() {
       {/* Formulário */}
       <div className="bg-[#009089] h-2/3 lg:h-screen w-screen lg:w-1/2 rounded-t-[100px] lg:rounded-none flex flex-col justify-center items-center">
         <div className="mt-20 lg:mt-60 w-[80%] lg:w-[60%] h-[80%] text-[20px] flex-row">
-          
-          {error && (
-            <div className="mb-4 p-2 bg-red-100 text-red-700 rounded text-center">
-              {error}
-            </div>
-          )}
-
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {/* Email */}
             <div>
@@ -115,37 +128,48 @@ export default function LoginPage() {
               {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
             </div>
 
-            {/* Senha */}
-            <div>
+            {/* Senha com botão "olhinho" */}
+            <div className="relative">
               <label className="text-white block mb-1">Senha:</label>
               <Input
                 {...register("password")}
-                type="password"
+                type={showPassword ? "text" : "password"}
                 placeholder="Digite sua senha"
-                className="bg-[#f5f5f5] h-[45px] rounded-2xl hover:scale-104 transition-transform"
+                className="bg-[#f5f5f5] h-[45px] rounded-2xl hover:scale-104 transition-transform pr-10"
               />
+              <button
+                type="button"
+                className="absolute right-3 top-[38px] transform -translate-y-1/2 text-gray-500 hover:text-gray-700"
+                onClick={() => setShowPassword(!showPassword)}
+              >
+                {showPassword ? (
+                  <EyeOff className="h-5 w-5 mt-9" />
+                ) : (
+                  <Eye className="h-5 w-5 mt-9" />
+                )}
+              </button>
               {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
             </div>
             
+            {/* Botão de Login */}
             <div className="flex justify-center pt-6">
               <Button 
                 variant={"designButton"} 
                 size={"buttonSize"}
                 disabled={loading}
-                className="w-full max-w-xs"
+                type="submit"
+                className="min-w-[120px]"
               >
                 {loading ? (
-                  <span className="flex items-center justify-center">
-                    <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    Carregando...
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    Entrando...
+                  </div>
                 ) : "Login"}
               </Button>
             </div>
             
+            {/* Link para cadastro */}
             <div className="flex justify-center pt-8 text-white lg:text-[15px] text-center">
               <p>
                 Ainda não tem uma conta? <br />

@@ -9,8 +9,9 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import axios from "axios"
+import { toast } from "sonner"
+import { Loader2 } from "lucide-react" // Importando o ícone de loading
 
-// Validações de input
 const validationSchema = z.object({
     email: z.string().email("E-mail inválido"),
     password: z.string()
@@ -24,7 +25,6 @@ const validationSchema = z.object({
 
 type FormData = z.infer<typeof validationSchema>
 
-// instância do axios com configurações padrão
 const api = axios.create({
   baseURL: 'https://squad-03-server-production.up.railway.app',
   timeout: 5000,
@@ -32,8 +32,7 @@ const api = axios.create({
     'Content-Type': 'application/json',
     'Accept': 'application/json'
   },
-  withCredentials: true // Importante para CORS com credenciais
-  
+  withCredentials: true
 });
 
 export default function CadastroPage() {
@@ -50,36 +49,48 @@ export default function CadastroPage() {
         
         try {
             const response = await api.post('/auth/register', formData)
-            alert('Cadastro realizado com sucesso!')
+            toast.success('Cadastro realizado com sucesso!', {
+                description: 'Você será redirecionado para a página inicial',
+                duration: 3000,
+            })
             
-            // Redireciona para a página inicial
-            router.push('/')
+            setTimeout(() => router.push('/'), 3000)
 
         } catch (error: any) {
             console.error('Erro no cadastro:', error)
             
-            // Tratamento de erros com axios
             if (axios.isAxiosError(error)) {
                 if (error.response) {
-                    // O servidor respondeu com um status fora do range 2xx
                     if (error.response.status === 409) {
-                        alert('Este e-mail já está cadastrado')
+                        toast.error('Este e-mail já está cadastrado', {
+                            description: 'Por favor, utilize outro e-mail ou faça login',
+                            duration: 5000,
+                        })
                     } else {
                         const errorMessage = error.response.data?.message || 
                                           error.response.data?.error || 
                                           'Erro no servidor'
-                        alert(errorMessage)
+                        toast.error('Erro no cadastro', {
+                            description: errorMessage,
+                            duration: 5000,
+                        })
                     }
                 } else if (error.request) {
-                    // A requisição foi feita mas não houve resposta
-                    alert('Não foi possível conectar ao servidor. Verifique sua conexão.')
+                    toast.error('Erro de conexão', {
+                        description: 'Não foi possível conectar ao servidor. Verifique sua conexão.',
+                        duration: 5000,
+                    })
                 } else {
-                    // Outros erros
-                    alert('Erro ao configurar a requisição: ' + error.message)
+                    toast.error('Erro na requisição', {
+                        description: error.message,
+                        duration: 5000,
+                    })
                 }
             } else {
-                // Erro não relacionado ao axios
-                alert('Erro desconhecido: ' + error.message)
+                toast.error('Erro desconhecido', {
+                    description: error.message,
+                    duration: 5000,
+                })
             }
         } finally {
             setIsLoading(false)
@@ -89,7 +100,6 @@ export default function CadastroPage() {
     return (
         <div className="bg-[url('/imagem_2.png')] bg-cover bg-center h-screen w-screen flex flex-col lg:flex-row">
             
-            {/* logo */}
             <div className="h-1/3 lg:h-screen w-screen lg:w-1/2 flex justify-center items-center lg:mt-[-20]">
                 <Image
                     className="lg:w-[350px]"
@@ -100,11 +110,9 @@ export default function CadastroPage() {
                 />
             </div>
 
-            {/* Forms */}
             <div className="bg-[#009089] h-2/3 lg:h-screen w-screen lg:w-1/2 rounded-t-[100px] lg:rounded-none flex flex-col justify-center items-center">
                 <div className="mt-10 lg:mt-40 w-[80%] lg:w-[60%] h-[80%] text-[20px] flex-row">
                     <form onSubmit={handleSubmit(onSubmit)}>
-                        {/* Email */}
                         <label className="text-white">E-mail</label>
                         <Input
                             {...register("email")}
@@ -115,7 +123,6 @@ export default function CadastroPage() {
                         />
                         {errors.email && <p className="text-red-500">{errors.email.message}</p>}
 
-                        {/* Senha */}
                         <label className="text-white">Senha:</label>
                         <Input
                             {...register("password")}
@@ -126,7 +133,6 @@ export default function CadastroPage() {
                         />
                         {errors.password && <p className="text-red-500">{errors.password.message}</p>}
                         
-                        {/* Confirmar senha */}
                         <label className="text-white">Confirme sua senha:</label>
                         <Input
                             {...register("confirmPassword")}
@@ -137,19 +143,25 @@ export default function CadastroPage() {
                         />
                         {errors.confirmPassword && <p className="text-red-500">{errors.confirmPassword.message}</p>}
                         
-                        {/* Botão */}
                         <div className="flex justify-center mt-5 lg:mt-7">
                             <Button 
                                 variant={"designButton"} 
                                 size={"buttonSize"}
                                 disabled={isLoading}
                                 type="submit"
+                                className="min-w-[120px]"
                             >
-                                {isLoading ? 'Cadastrando...' : 'Cadastre-se'}
+                                {isLoading ? (
+                                    <div className="flex items-center gap-2">
+                                        <Loader2 className="h-6 w-6 animate-spin" />
+                                        Cadastrando...
+                                    </div>
+                                ) : (
+                                    'Cadastre-se'
+                                )}
                             </Button>
                         </div>
                         
-                        {/* Link para login */}
                         <div className="flex justify-center mt-3 text-[14px] text-white lg:text-[15px]">
                             <p>
                                 Já tem uma conta? <br /> 
