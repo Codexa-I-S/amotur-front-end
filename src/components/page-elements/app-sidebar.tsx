@@ -1,80 +1,66 @@
 "use client"
 
 import { Home, MapPin, Plus, TrendingUp, Users } from "lucide-react"
+import { Sidebar, SidebarContent, SidebarHeader, SidebarMenu, SidebarMenuItem, SidebarMenuButton } from "@/components/ui/sidebar"
 
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  SidebarHeader,
-} from "@/components/ui/sidebar"
-
-const items = [
+const menuItems = [
+  {
+    title: "Métricas",
+    url: "/metricas",
+    icon: <TrendingUp className="h-4 w-4" />,
+  },  
+  {
+    title: "Locais",
+    url: "/dashboard/locais",
+    icon: <MapPin className="h-4 w-4" />,
+  },
   {
     title: "Dashboard",
     url: "#",
-    icon: Home,
-  },
-  {
-    title: "Locais",
-    url: "#",
-    icon: MapPin,
+    icon: <Home className="h-4 w-4" />,
   },
   {
     title: "Adicionar Local",
     url: "#",
-    icon: Plus,
-  },
-  {
-    title: "Métricas",
-    url: "#",
-    icon: TrendingUp,
+    icon: <Plus className="h-4 w-4" />,
   },
   {
     title: "Usuários",
     url: "#",
-    icon: Users,
+    icon: <Users className="h-4 w-4" />,
   },
 ]
 
 export function AppSidebar() {
   return (
-    <Sidebar side="left" variant="sidebar" collapsible="icon" className="border-r-0">
-      <SidebarHeader className="bg-[#3a3a3a] text-white p-3 sm:p-4">
+    <Sidebar className="border-r bg-[] text-black">
+      <SidebarHeader className="p-4 border-b border-[#4a4a4a]">
         <div className="flex items-center gap-2">
-
-          <span className="font-bold text-base sm:text-lg group-data-[collapsible=icon]:hidden truncate">
+          <span className={
+            "font-bold text-lg truncate " +
+            "opacity-0 transition-opacity duration-200 " +
+            "group-hover/sidebar-wrapper:opacity-100"
+          }>
             Amotur
           </span>
         </div>
       </SidebarHeader>
-      <SidebarContent className="bg-[#3a3a3a]">
-        <SidebarGroup>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton
-                    asChild
-                    className="text-white hover:bg-[#4a4a4a] hover:text-white data-[active=true]:bg-[#4e73df] data-[active=true]:text-white"
-                    isActive={item.title === "Dashboard"}
-                  >
-                    <a href={item.url} className="flex items-center gap-3 px-3 sm:px-4 py-3">
-                      <item.icon className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
-                      <span className="group-data-[collapsible=icon]:hidden text-sm sm:text-base truncate">
-                        {item.title}
-                      </span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+      
+      <SidebarContent className="p-2">
+        <SidebarMenu>
+          {menuItems.map((item) => (
+            <SidebarMenuItem key={item.title}>
+              <SidebarMenuButton 
+                icon={item.icon}
+                className="hover:bg-[#4a4a4a] data-[active=true]:bg-[#4e73df]"
+              >
+                <a href={item.url} className="block w-full">
+                  {item.title}
+                </a>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+          ))}
+        </SidebarMenu>
       </SidebarContent>
     </Sidebar>
   )
