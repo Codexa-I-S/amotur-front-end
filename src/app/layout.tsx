@@ -29,8 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${poppins.variable} ${workSans.variable} antialiased`}>
-        
+      <body className={`${poppins.className} ${workSans.variable} antialiased`}>       
         {children}
         
         {/* Adição do Toaster (única modificação) */}
