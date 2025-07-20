@@ -82,7 +82,7 @@ export default function Navbar({setFocusCoords} : NavbarProps) {
       </div>
 
       {/* Botões flutuantes no topo - somente mobile */}
-      <div className="md:hidden fixed top-20 left-0 right-0 z-[1001] px-2 py-2 overflow-x-auto scrollbar-hide">
+      <div className="md:hidden fixed top-20 left-0 right-0 z-[1001] px-0.5 py-0.5 overflow-x-auto scrollbar-hide mt-3">
         <div className="flex items-center gap-3 w-max">
           {links.map((item, index) => {
             const Icon = item.icon;
@@ -90,9 +90,9 @@ export default function Navbar({setFocusCoords} : NavbarProps) {
               <button
                 key={index}
                 onClick={() => handleAbrirCategoria(item.tipo, item.label)}
-                className="flex items-center gap-2 bg-[#009089] text-white px-6 py-3 rounded-full whitespace-nowrap shadow hover:scale-105 transition text-base"
+                className="flex items-center gap-2 bg-[#009089] text-white px-4 py-2 rounded-full whitespace-nowrap shadow hover:scale-105 transition text-base"
               >
-                <Icon size={18} />
+                <Icon size={16} />
                 {item.label}
               </button>
             );
