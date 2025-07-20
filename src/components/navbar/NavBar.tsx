@@ -3,13 +3,14 @@
 import Image from "next/image";
 import { SearchDialog } from "./SearchDialog";
 import SideBarLocais from "../page-elements/SideBarLocais";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   MdLocationOn,
   MdHotel,
   MdRestaurant,
 } from "react-icons/md";
 import { FaPizzaSlice, FaMartiniGlass, FaHotel } from "react-icons/fa6";
+import { useRouter } from "next/navigation";
 
 
 type NavbarProps = {
@@ -20,6 +21,13 @@ export default function Navbar({setFocusCoords} : NavbarProps) {
   const [openSheet, setOpenSheet] = useState(false)
   const [categoria, setCategoria] = useState<string>("")
   const [label, setlabel] = useState<string>("")
+  const [token , setToken] = useState<string | null>(null)
+  const router = useRouter() 
+
+  useEffect(() => {
+    const storedToken = localStorage.getItem("authToken")
+    setToken(storedToken)
+  }, [])
 
   const links = [
     { label: "Pontos Turísticos", tipo: "Ponto", icon: MdLocationOn },
@@ -34,6 +42,19 @@ export default function Navbar({setFocusCoords} : NavbarProps) {
     setCategoria(tipo)
     setlabel(label)
     setOpenSheet(true)
+  }
+
+  const handleLogin = () => {
+
+    router.push("/login")
+
+  }
+
+  const handleLogout = () => {
+
+    localStorage.removeItem("authToken")
+    window.location.reload()
+
   }
 
   return (
@@ -66,6 +87,23 @@ export default function Navbar({setFocusCoords} : NavbarProps) {
                 </li>
               );
             })}
+            <li>
+              {!token && (
+                <button 
+                  onClick={() => handleLogin() }
+                  className="flex items-center gap-2 rounded bg-white text-[#009089] px-4 py-1 hover:scale-105 transition-transform">
+                  Login
+                </button>
+              )}
+              
+              {token && (
+                <button 
+                  onClick={() => handleLogout() }
+                  className="flex items-center gap-2 rounded bg-red-500 text-[#f5f5f5] px-4 py-1 hover:scale-105 transition-transform">
+                  Sair
+                </button>
+              )}
+            </li>
           </ul>
 
           <div>
@@ -76,10 +114,28 @@ export default function Navbar({setFocusCoords} : NavbarProps) {
 
       {/* Mobile: Barra de pesquisa flutuante com estilo moderno */}
       <div className="md:hidden fixed top-8 left-0 right-0 z-[1002] px-4">
-        <div className="bg-white/60 rounded-full px-4 py-3 shadow backdrop-blur-md">
-          <SearchDialog variant="mobile" />
+        <div className="bg-white/60 rounded-full px-4 py-2 shadow backdrop-blur-md flex items-center gap-3">
+          <div className="flex-grow">
+            <SearchDialog variant="mobile" />
+          </div>
+          {!token ? (
+            <button
+              onClick={handleLogin}
+              className="bg-[#009089] text-white px-4 py-2 rounded-full whitespace-nowrap hover:bg-[#007a75] transition"
+            >
+              Login
+            </button>
+          ) : (
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 text-white px-4 py-2 rounded-full whitespace-nowrap hover:bg-red-600 transition"
+            >
+              Sair
+            </button>
+          )}
         </div>
       </div>
+
 
       {/* Botões flutuantes no topo - somente mobile */}
       <div className="md:hidden fixed top-20 left-0 right-0 z-[1001] px-0.5 py-0.5 overflow-x-auto scrollbar-hide mt-3">

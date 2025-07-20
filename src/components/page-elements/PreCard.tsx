@@ -63,7 +63,7 @@ export default function PreCard({
           <span className="text-amber-600 block">{type}</span>
         </div>
 
-        <div className="absolute right-2 bottom-2">
+        <div className="absolute right-2 bottom-2" onClick={(e) => e.stopPropagation()}>
           <ModalCard
             name={name}
             type={type}
