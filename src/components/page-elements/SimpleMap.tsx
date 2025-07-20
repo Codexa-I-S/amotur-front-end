@@ -8,7 +8,9 @@ import ModalRegister from './ModalRegister';
 import L from 'leaflet';
 import PreCard from './PreCard';
 import axios from 'axios';
-import MarkerClusterGroup from 'react-leaflet-markercluster';
+import { jwtDecode } from "jwt-decode"
+import FlyToLocation from './FlyToLocation';
+
 
 // servio para ajeitar problema dos ícones padrão do Leaflet 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -17,6 +19,33 @@ L.Icon.Default.mergeOptions({
   iconUrl: '/images/marker-icon.png',
   shadowUrl: '/images/marker-shadow.png',
 });
+
+type DecodedToken = {
+  userId: string;
+  email: string;
+  role: "ADMIN" | "TURISTA";
+  iat: number;
+  exp: number;
+}
+
+function getUserRole () {
+  const token = localStorage.getItem("authToken")
+  if (!token) return null
+
+  try {
+    const decoded: DecodedToken = jwtDecode(token)
+    return decoded.role
+  } catch {
+    console.log("Token inválido")
+    return null
+  }
+
+}
+
+type SimpleMapProps = {
+  focusCoords: [number, number] | null;
+  setFocusCoords: (coords: [number, number] | null) => void;
+}
 
 type Props = {
   setLocationPosition: (position: [number, number]) => void
@@ -92,29 +121,19 @@ type Point = {
   };
 }
 
-export default function SimpleMap() {
+export default function SimpleMap({ focusCoords, setFocusCoords }: SimpleMapProps) {
   const [newLocationPosition, setNewLocationPosition] = useState<[number, number] | null>(null);
   const [places, setPlaces] = useState<Point[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const role = getUserRole()
 
   useEffect(() => {
     const fetchPlaces = async () => {
       try {
         setLoading(true);
         setError(null);
-        
-        const token = localStorage.getItem("authToken");
-        
-        if (!token) {
-          throw new Error("Token de autenticação não encontrado");
-        }
-
-        const response = await axios.get("https://squad-03-server-production.up.railway.app/place/all", {
-          headers: {
-            'Authorization': `Bearer ${token}`
-          }
-        });
+        const response = await axios.get("https://squad-03-server-production.up.railway.app/place/all",);
 
         setPlaces(response.data);
         console.log("Places recebidos:", response.data);
@@ -146,6 +165,7 @@ export default function SimpleMap() {
         minZoom={13.5}
         maxBoundsViscosity={1.0}
         zoomControl={false}
+        attributionControl={false}
       >
         <TileLayer
           attribution='&copy; OpenStreetMap contributors'
@@ -155,13 +175,17 @@ export default function SimpleMap() {
         <LocalButtons />
         <ShowFormRegisterOnClick setLocationPosition={setNewLocationPosition} />
 
-        {newLocationPosition && (
+        {focusCoords && <FlyToLocation coords={focusCoords} />}
+
+        {role === "ADMIN" && newLocationPosition && (
           <Popup position={newLocationPosition} maxWidth={400}>
             <ModalRegister 
               lat={parseFloat(newLocationPosition[0].toFixed(10))}
-              lng={parseFloat(newLocationPosition[1].toFixed(10))} />
+              lng={parseFloat(newLocationPosition[1].toFixed(10))}
+            />
           </Popup>
         )}
+       
         
         {loading && (
           <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
@@ -199,6 +223,7 @@ export default function SimpleMap() {
           ))}
         
         <ZoomControls/>
+        
       </MapContainer>
     </div>
   );

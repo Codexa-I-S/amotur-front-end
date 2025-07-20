@@ -2,7 +2,6 @@
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
 import { Edit, Trash2, Eye } from "lucide-react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 
@@ -12,40 +11,21 @@ const locations = [
     name: "Praia de Icaraí",
     region: "Icaraí",
     visits: 4500,
-    status: "Ativo",
     lastUpdate: "2024-01-15",
   },
   {
     id: 2,
-    name: "Centro de Niterói",
-    region: "Centro",
+    name: "Açai",
+    region: "caetanos",
     visits: 3200,
-    status: "Ativo",
     lastUpdate: "2024-01-14",
   },
   {
     id: 3,
-    name: "Moitas Shopping",
+    name: "Moitas academia",
     region: "Moitas",
     visits: 2800,
-    status: "Inativo",
     lastUpdate: "2024-01-13",
-  },
-  {
-    id: 4,
-    name: "Praia do Ingá",
-    region: "Ingá",
-    visits: 2200,
-    status: "Ativo",
-    lastUpdate: "2024-01-15",
-  },
-  {
-    id: 5,
-    name: "São Francisco",
-    region: "São Francisco",
-    visits: 1800,
-    status: "Ativo",
-    lastUpdate: "2024-01-12",
   },
 ]
 
@@ -87,16 +67,6 @@ export function LocationTable() {
                       {location.visits.toLocaleString()}
                     </TableCell>
                     <TableCell className="px-4 py-3">
-                      <Badge
-                        variant={location.status === "Ativo" ? "default" : "secondary"}
-                        className={`text-xs ${
-                          location.status === "Ativo"
-                            ? "bg-[#1cc88a] hover:bg-[#17a673] text-white"
-                            : "bg-gray-500 hover:bg-gray-600 text-white"
-                        }`}
-                      >
-                        {location.status}
-                      </Badge>
                     </TableCell>
                     <TableCell className="text-gray-600 text-xs sm:text-sm px-4 py-3 hidden sm:table-cell">
                       {new Date(location.lastUpdate).toLocaleDateString("pt-BR")}

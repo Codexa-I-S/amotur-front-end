@@ -1,15 +1,14 @@
 "use client"
 
-import { Search, User, ChevronDown, TrendingUp, TrendingDown } from "lucide-react"
+import { Search, User, ChevronDown} from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { SidebarTrigger } from "@/components/ui/sidebar"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu"
 import { MetricCard } from "@/components/ui/metric-card"
 import { LocationChart } from "@/components/ui/location-chart"
 import { LocationTable } from "@/components/ui/location-table"
-import { InteractiveMap } from "@/components/ui/interactive-map"
+import LocationByRegionChart from "../ui/LocationByRegionChart"
 
 export function DashboardContent() {
   return (
@@ -19,12 +18,13 @@ export function DashboardContent() {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 sm:gap-4">
             <SidebarTrigger />
-            <h1 className="text-xl sm:text-2xl font-bold text-gray-800 truncate">Dashboard</h1>
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-800 truncate">Painel Administrativo</h1>
           </div>
 
           <div className="flex items-center gap-2 sm:gap-4">
             <div className="relative hidden sm:block">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
+              {/*aqui ficara o conponente de pesquisa que a andressa for fazer*/}
               <Input placeholder="Buscar..." className="pl-10 w-48 lg:w-64 bg-gray-50 border-gray-300" />
             </div>
 
@@ -38,7 +38,6 @@ export function DashboardContent() {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuItem>Perfil</DropdownMenuItem>
-                <DropdownMenuItem>Configurações</DropdownMenuItem>
                 <DropdownMenuItem>Sair</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
@@ -88,61 +87,10 @@ export function DashboardContent() {
         {/* Charts and Map Row */}
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
           <LocationChart /> {/* esse é o conponente de grafico de regioes */}
-          <InteractiveMap />{/* esse é o conponente de grafico de interaçoes */}
+          <LocationByRegionChart />
+          
         </div>
 
-        {/* Popular Locations Card */}
-        <Card className="shadow-sm">
-          <CardHeader>
-            <CardTitle className="text-base sm:text-lg font-semibold text-gray-800">Locais Mais Visitados</CardTitle>
-          </CardHeader>
-
-          <CardContent>
-            <div className="space-y-3 sm:space-y-4">
-              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <div className="min-w-0 flex-1">
-                  <p className="font-medium text-gray-800 text-sm sm:text-base truncate">Praia de Icaraí</p>
-                  <p className="text-xs sm:text-sm text-gray-600">Niterói, RJ</p>
-                </div>
-                <div className="text-right flex-shrink-0 ml-4">
-                  <p className="font-bold text-base sm:text-lg text-gray-800">4.500</p>
-                  <div className="flex items-center gap-1 text-green-600 justify-end">
-                    <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4" />
-                    <span className="text-xs sm:text-sm">+8%</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <div className="min-w-0 flex-1">
-                  <p className="font-medium text-gray-800 text-sm sm:text-base truncate">Centro de Niterói</p>
-                  <p className="text-xs sm:text-sm text-gray-600">Niterói, RJ</p>
-                </div>
-                <div className="text-right flex-shrink-0 ml-4">
-                  <p className="font-bold text-base sm:text-lg text-gray-800">3.200</p>
-                  <div className="flex items-center gap-1 text-green-600 justify-end">
-                    <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4" />
-                    <span className="text-xs sm:text-sm">+12%</span>
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
-                <div className="min-w-0 flex-1">
-                  <p className="font-medium text-gray-800 text-sm sm:text-base truncate">Moitas</p>
-                  <p className="text-xs sm:text-sm text-gray-600">Niterói, RJ</p>
-                </div>
-                <div className="text-right flex-shrink-0 ml-4">
-                  <p className="font-bold text-base sm:text-lg text-gray-800">2.800</p>
-                  <div className="flex items-center gap-1 text-red-600 justify-end">
-                    <TrendingDown className="h-3 w-3 sm:h-4 sm:w-4" />
-                    <span className="text-xs sm:text-sm">-5%</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
 
         {/* Location Table */}
         <LocationTable />
