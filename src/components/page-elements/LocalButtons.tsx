@@ -20,7 +20,7 @@ export default function BotoesLocalidades() {
     { nome: 'Icaraí', coordenadas: [-3.027, -39.650] },
     { nome: 'Moitas', coordenadas: [-3.006, -39.694] },
     { nome: 'Caetanos', coordenadas: [-3.078, -39.561] },
-    { nome: 'Freicheras', coordenadas: [-3.065,-39.651 ] }
+    { nome: 'Frecheiras', coordenadas: [-3.065,-39.651 ] }
   ]
 
   // Qual local está selecionado
@@ -43,7 +43,7 @@ export default function BotoesLocalidades() {
     fixed bottom-0 left-1/2 -translate-x-1/2 z-[9999] 
     flex justify-center items-center gap-2 md:gap-4  md:mb-3
     md:justify-center md:bg-transparent md:w-auto
-   bg-[#009089]/87  w-full px-4 py-2  h-[90px]  shadow-md
+   bg-[#009089]/87  w-full px-4 py-2  h-[90px]
   rounded-t-3xl 
     
   "

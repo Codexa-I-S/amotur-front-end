@@ -45,7 +45,7 @@ export function SearchDialog({ variant = "desktop" }: SearchDialogProps) {
           className={variant === "mobile" ? "text-[#009089]" : "text-white"}
         />
         {variant === "mobile" && (
-          <span className="text-sm text-zinc-700">Pesquisar</span>
+          <span className="md:text-base text-zinc-700">Pesquisar</span>
         )}
       </button>
 

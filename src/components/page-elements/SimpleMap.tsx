@@ -28,7 +28,7 @@ type DecodedToken = {
   exp: number;
 }
 
-function getUserRole () {
+export function getUserRole () {
   const token = localStorage.getItem("authToken")
   if (!token) return null
 
