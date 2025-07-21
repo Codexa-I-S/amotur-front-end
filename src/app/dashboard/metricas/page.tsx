@@ -1,21 +1,89 @@
-'use client'
+"use client"
 
-import { SidebarProvider } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/page-elements/app-sidebar"
-import { DashboardContent } from "@/components/page-elements/dashboard-content"
+import { MetricCard } from "@/components/ui/metric-card"
+import { LocationChart } from "@/components/ui/location-chart"
+import LocationByRegionChart from "@/components/ui/LocationByRegionChart"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-export default function Dashboard() {
+export default function DashboardPage() {
   return (
-    <SidebarProvider>
-      <div className="flex min-h-screen w-full bg-gray-100">
-        {/* Sidebar com efeito de hover (dentro do mesmo contexto) */}
-        <AppSidebar />
+    <div className="flex-1 flex flex-col">
+      {/* Conteúdo Principal */}
+      <main className="flex-1 p-4 sm:p-6 space-y-4 sm:space-y-6 overflow-x-hidden">
+        {/* Seção de Métricas */}
+        <section>
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg font-semibold">
+                Visão Geral
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 sm:gap-6">
+                <MetricCard
+                  title="USUÁRIOS CADASTRADOS"
+                  value="1.234"
+                  change="+15%"
+                  changeType="positive"
+                  subtitle="vs. mês anterior"
+                  color="blue"
+                />
+                <MetricCard
+                  title="LOCAIS CADASTRADOS"
+                  value="856"
+                  change="+8%"
+                  changeType="positive"
+                  subtitle="este mês"
+                  color="green"
+                />
+                <MetricCard
+                  title="VISITAS HOJE"
+                  value="12.450"
+                  change="-3%"
+                  changeType="negative"
+                  subtitle="vs. ontem"
+                  color="red"
+                />
+                <MetricCard
+                  title="AVALIAÇÃO MÉDIA"
+                  value="4.8"
+                  change="+0.2"
+                  changeType="positive"
+                  subtitle="de 5 estrelas"
+                  color="purple"
+                />
+              </div>
+            </CardContent>
+          </Card>
+        </section>
 
-        {/* Conteúdo principal */}
-        <div className="flex-1 flex flex-col min-w-0">
-          <DashboardContent />
-        </div>
-      </div>
-    </SidebarProvider>
+        {/* Seção de Gráficos */}
+        <section>
+          <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg font-semibold">
+                  Locais por Categoria
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <LocationChart />
+              </CardContent>
+            </Card>
+            
+            <Card>
+              <CardHeader>
+                <CardTitle className="text-lg font-semibold">
+                  Locais por Região
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <LocationByRegionChart />
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+      </main>
+    </div>
   )
 }
