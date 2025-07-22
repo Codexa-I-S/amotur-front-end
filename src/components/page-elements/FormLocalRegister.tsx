@@ -170,7 +170,7 @@ export default function FormLocalRegister({ lat, lng }: Props) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8 space-y-6"
+      className="max-w-2xl mx-auto bg-white rounded-2xl p-8 space-y-6"
     >
       <h2 className="text-2xl font-bold text-teal-600 text-center">Cadastrar Local</h2>
       

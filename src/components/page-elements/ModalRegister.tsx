@@ -1,10 +1,10 @@
 import {
   Dialog,
   DialogContent,
-  // DialogHeader,
-  // DialogTitle,
+  DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog"
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import FormLocalRegister from "./FormLocalRegister"
 
 type Props = {
@@ -23,21 +23,22 @@ export default function ModalRegister({ lat, lng }: Props) {
 
       <DialogContent
         className={`
+          scrollbar-hidden
+          [&>button.absolute]:hidden
           max-h-[90vh] overflow-y-auto
           w-[95vw] max-w-md sm:max-w-lg
-          // p-0 sm:p-6
+          p-0 sm:p-0
           z-[1002]
-          border-none        /* Remove bordas */
-          shadow-md          /* Sombra leve para profundidade */
-          rounded-lg         /* Cantos arredondados */
+          border-none      
+              
+          rounded-lg         
           `}
       >
-        {/* <DialogHeader className="px-6 py-4 border-b border-gray-200">
-          <DialogTitle className="text-[#009089] text-xl text-center">
-            Cadastrar Local
-          </DialogTitle>
-          {/* Se tiver botão fechar personalizado, coloque aqui */}
-        {/* </DialogHeader> */}
+
+        <VisuallyHidden>
+          <DialogTitle>Cadastrar Local</DialogTitle>
+        </VisuallyHidden>
+        
 
         {/* Aqui o FormLocalRegister deve ter seu próprio padding para espaçamento interno */}
         <FormLocalRegister lat={lat} lng={lng} />
