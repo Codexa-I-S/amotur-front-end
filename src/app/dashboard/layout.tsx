@@ -1,12 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
-import {
-  IconArrowLeft,
-  IconBrandTabler,
-  IconUserBolt,
-} from "@tabler/icons-react";
-import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { Search, User, ChevronDown } from "lucide-react";
 import Image from "next/image";
@@ -19,23 +12,7 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const links = [
-    {
-      label: "Metricas",
-      href: "/dashboard/metricas",
-      icon: <IconBrandTabler className="h-7 w-7 shrink-0 text-neutral-700 dark:text-neutral-200" />,
-    },
-    {
-      label: "Locais",
-      href: "/dashboard/locais",
-      icon: <IconUserBolt className="h-7 w-7 shrink-0 text-neutral-700 dark:text-neutral-200" />,
-    },
-    {
-      label: "Voltar para o mapa",
-      href: "/",
-      icon: <IconArrowLeft className="h-7 w-7 shrink-0 text-neutral-700 dark:text-neutral-200" />,
-    },
-  ];
+
   
   const [open, setOpen] = useState(false);
 
@@ -83,59 +60,15 @@ export default function DashboardLayout({
         </div>
       </header>
 
-      <div className="flex-1 overflow-hidden flex">
-        {/* Sidebar só aparece em telas md pra cima */}
-        <div className="hidden md:flex">
-          <Sidebar open={open} setOpen={setOpen}>
-            <SidebarBody className="justify-between gap-10 ">
-              <div className="flex flex-1 flex-col overflow-x-hidden overflow-y-auto">
-                {open ? <Logo /> : <LogoIcon />}
-                <div className="mt-8 flex flex-col gap-2">
-                  {links.map((link, idx) => (
-                    <SidebarLink key={idx} link={link} />
-                  ))}
-                </div>
-              </div>
-              <div>
-              </div>
-            </SidebarBody>
-          </Sidebar>
-        </div>
-
+    
         {/* Área de conteúdo */}
         <main className="flex-1 overflow-y-auto p-4 sm:p-6 bg-gray-50 dark:bg-neutral-900">
           {children}
         </main>
       </div>
-    </div>
+    
   );
 }
 
-const Logo = () => {
-  return (
-    <a
-      href="#"
-      className="relative z-20 flex items-center space-x-2 py-1 text-sm font-normal text-black dark:text-white"
-    >
-      <div className="h-8 w-8 shrink-0 rounded-tl-lg rounded-tr-sm rounded-br-lg rounded-bl-sm bg-black dark:bg-white" />
-      <motion.span
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="font-medium whitespace-pre"
-      >
-        Amotur
-      </motion.span>
-    </a>
-  );
-};
 
-const LogoIcon = () => {
-  return (
-    <a
-      href="#"
-      className="relative z-20 flex items-center justify-center py-1 text-sm font-normal text-black dark:text-white"
-    >
-      <div className="h-5 w-6 shrink-0 rounded-tl-lg rounded-tr-sm rounded-br-lg rounded-bl-sm bg-black dark:bg-white" />
-    </a>
-  );
-};
+
