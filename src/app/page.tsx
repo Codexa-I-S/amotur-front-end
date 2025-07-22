@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic';
 import Navbar from '@/components/navbar/NavBar';
 import { useEffect, useState } from 'react';
 import { toast } from 'sonner';
-import { getUserRole } from '@/components/page-elements/SimpleMap';
+import { getUserRole } from '@/components/page-elements/GetUserRole';
 
 const SimpleMap = dynamic(() => import('@/components/page-elements/SimpleMap'), {
   ssr: false,

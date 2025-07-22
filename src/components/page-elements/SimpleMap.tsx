@@ -1,15 +1,18 @@
 'use client';
+
 import LocalButtons from './LocalButtons';
 import React, { useEffect, useState } from 'react';
-import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvent } from 'react-leaflet';
+import { MapContainer, Marker, Popup, TileLayer, useMapEvent } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import ZoomControls from './ZoomControls';
 import ModalRegister from './ModalRegister';
 import L from 'leaflet';
 import PreCard from './PreCard';
 import axios from 'axios';
-import { jwtDecode } from "jwt-decode"
+
 import FlyToLocation from './FlyToLocation';
+import TideCard from './TideTable';
+import { getUserRole } from './GetUserRole';
 
 
 // servio para ajeitar problema dos ícones padrão do Leaflet 
@@ -20,27 +23,6 @@ L.Icon.Default.mergeOptions({
   shadowUrl: '/images/marker-shadow.png',
 });
 
-type DecodedToken = {
-  userId: string;
-  email: string;
-  role: "ADMIN" | "TURISTA";
-  iat: number;
-  exp: number;
-}
-
-export function getUserRole () {
-  const token = localStorage.getItem("authToken")
-  if (!token) return null
-
-  try {
-    const decoded: DecodedToken = jwtDecode(token)
-    return decoded.role
-  } catch {
-    console.log("Token inválido")
-    return null
-  }
-
-}
 
 type SimpleMapProps = {
   focusCoords: [number, number] | null;
@@ -224,7 +206,16 @@ export default function SimpleMap({ focusCoords, setFocusCoords }: SimpleMapProp
         
         <ZoomControls/>
         
+        <Marker position={[-3.0206125094, -39.6507740021]} icon={defaultIcon}>
+          <Popup maxWidth={400}>
+            <div className="w-[350px] max-h-[400px] overflow-auto">
+              <TideCard />
+            </div>
+          </Popup>
+        </Marker>
+
       </MapContainer>
+      
     </div>
   );
 }

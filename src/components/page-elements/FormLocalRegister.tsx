@@ -66,11 +66,12 @@ export default function FormLocalRegister({ lat, lng }: Props) {
   const [photoError, setPhotoError] = useState<string | null>(null)
   const router = useRouter()
 
-  const api = axios.create({
-    baseURL: 'https://squad-03-server-production.up.railway.app',
-    timeout: 30000,
-    withCredentials: true
-  })
+    // Criando instância do Axios
+    const api = axios.create({
+        baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
+        timeout: 30000,
+        withCredentials: true
+    })
 
   const {
     register,
