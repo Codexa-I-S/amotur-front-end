@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Poppins, Work_Sans } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
@@ -11,11 +11,6 @@ const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
 });
 
-const workSans = Work_Sans({
-  variable: "--font-work-sans",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -28,8 +23,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${poppins.className} ${workSans.variable} antialiased`}>       
+    <html lang="pt-br">
+      <body className={`${poppins.className} antialiased`}>       
         {children}
         
         {/* Adição do Toaster (única modificação) */}

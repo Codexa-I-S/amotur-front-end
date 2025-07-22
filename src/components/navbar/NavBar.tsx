@@ -64,7 +64,7 @@ export default function Navbar({setFocusCoords} : NavbarProps) {
         <div className="flex-shrink-0">
           <Image
             className="cursor-pointer"
-            src="/amotur_png.png"
+            src="/amotur_azul.png"
             width={100}
             height={80}
             alt="Logo-Amotur"
