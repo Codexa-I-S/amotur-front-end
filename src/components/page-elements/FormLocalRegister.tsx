@@ -59,7 +59,7 @@ export default function FormLocalRegister({ lat, lng }: Props) {
 
     // Criando instância do Axios
     const api = axios.create({
-        baseURL: 'https://squad-03-server-production.up.railway.app',
+        baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
         timeout: 30000,
         withCredentials: true
     })

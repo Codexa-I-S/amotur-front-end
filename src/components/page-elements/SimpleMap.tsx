@@ -1,7 +1,7 @@
 'use client';
 import LocalButtons from './LocalButtons';
 import React, { useEffect, useState } from 'react';
-import { MapContainer, Marker, Popup, TileLayer, useMap, useMapEvent } from 'react-leaflet';
+import { MapContainer, Marker, Popup, TileLayer, useMapEvent } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import ZoomControls from './ZoomControls';
 import ModalRegister from './ModalRegister';

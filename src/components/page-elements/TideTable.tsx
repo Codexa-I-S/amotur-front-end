@@ -30,7 +30,7 @@ export default function TideCard() {
 
       try {
         const response = await axios.get<ApiResponse>(
-          `https://squad-03-server-production.up.railway.app/mares/${hoje}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/mares/${hoje}`,
           {
             headers: {
                 Authorization: `Bearer ${token}`
