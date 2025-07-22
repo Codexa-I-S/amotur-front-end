@@ -10,6 +10,7 @@ import PreCard from './PreCard';
 import axios from 'axios';
 import { jwtDecode } from "jwt-decode"
 import FlyToLocation from './FlyToLocation';
+import TideCard from './TideTable';
 
 
 // servio para ajeitar problema dos ícones padrão do Leaflet 
@@ -224,7 +225,16 @@ export default function SimpleMap({ focusCoords, setFocusCoords }: SimpleMapProp
         
         <ZoomControls/>
         
+        <Marker position={[-3.0206125094, -39.6507740021]} icon={defaultIcon}>
+          <Popup maxWidth={400}>
+            <div className="w-[350px] max-h-[400px] overflow-auto">
+              <TideCard />
+            </div>
+          </Popup>
+        </Marker>
+
       </MapContainer>
+      
     </div>
   );
 }
