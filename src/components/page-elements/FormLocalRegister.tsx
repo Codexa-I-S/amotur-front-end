@@ -73,12 +73,11 @@ export default function FormLocalRegister({ lat, lng }: Props) {
   const [photoError, setPhotoError] = useState<string | null>(null)
   const router = useRouter()
 
-    // Criando instância do Axios
-    const api = axios.create({
-        baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
-        timeout: 30000,
-        withCredentials: true
-    })
+  const api = axios.create({
+    baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
+    timeout: 30000,
+    withCredentials: true
+  })
 
   const {
     register,
@@ -97,14 +96,12 @@ export default function FormLocalRegister({ lat, lng }: Props) {
     const file = e.target.files?.[0]
     if (file) {
       setLogoFile(file)
- 
     }
   }
 
   const handlePhotosChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files ? Array.from(e.target.files) : []
     setPhotoFiles(files)
-   
   }
 
   async function onSubmit(data: LocalFormData) {
@@ -159,17 +156,27 @@ export default function FormLocalRegister({ lat, lng }: Props) {
 
       setTimeout(() => window.location.reload(), 3000)
 
-    } catch (error: any) {
-      const status = error.response?.status
-      if (status === 401 || status === 403) {
-        localStorage.removeItem('authToken')
-        toast.error('Acesso negado', {
-          description: 'Faça login novamente. O token pode estar expirado ou inválido.',
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        const status = error.response?.status
+        if (status === 401 || status === 403) {
+          localStorage.removeItem('authToken')
+          toast.error('Acesso negado', {
+            description: 'Faça login novamente. O token pode estar expirado ou inválido.',
+          })
+          router.push('/login')
+        } else {
+          toast.error('Erro ao cadastrar.', {
+            description: error.response?.data?.message || "Ocorreu um erro ao cadastrar o local.",
+          })
+        }
+      } else if (error instanceof Error) {
+        toast.error('Erro desconhecido', {
+          description: error.message,
         })
-        router.push('/login')
       } else {
-        toast.error('Erro ao cadastrar.', {
-          description: error.response?.data?.message || "Ocorreu um erro ao cadastrar o local.",
+        toast.error('Erro desconhecido', {
+          description: "Ocorreu um erro inesperado",
         })
       }
     } finally {
