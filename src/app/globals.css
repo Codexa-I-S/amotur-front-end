@@ -158,3 +158,10 @@
     @apply bg-background text-foreground;
   }
 }
+/* Força a fonte Poppins nos elementos do Leaflet */
+.leaflet-container,
+.leaflet-popup-content,
+.leaflet-tooltip,
+.leaflet-control {
+  font-family: var(--font-poppins) !important;
+}
