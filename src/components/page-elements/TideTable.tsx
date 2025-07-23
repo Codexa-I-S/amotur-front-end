@@ -1,16 +1,24 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "axios"; // Removido AxiosError não utilizado
+import axios from "axios";
 import dayjs from "dayjs";
+import { Info } from "lucide-react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  TooltipProvider,
+} from "@/components/ui/tooltip";
+import Image from "next/image";
 
 type TideData = {
-  hora: string;    // ex: "01:59"
-  altura: number;  // ex: 0.69
+  hora: string;
+  altura: number;
 };
 
 type ApiResponse = {
-  data: string;     // ex: "2025-07-30"
+  data: string;
   dados: TideData[];
 };
 
@@ -18,8 +26,8 @@ export default function TideCard() {
   const [dataMar, setDataMar] = useState<ApiResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [tooltipOpen, setTooltipOpen] = useState(false);
 
-  // Pega a data atual no formato YYYY-MM-DD
   const hoje = dayjs().format("YYYY-MM-DD");
 
   useEffect(() => {
@@ -33,8 +41,8 @@ export default function TideCard() {
           `${process.env.NEXT_PUBLIC_API_URL}/mares/${hoje}`,
           {
             headers: {
-                Authorization: `Bearer ${token}`
-            }
+              Authorization: `Bearer ${token}`,
+            },
           }
         );
         setDataMar(response.data);
@@ -59,30 +67,70 @@ export default function TideCard() {
   if (!dataMar) return null;
 
   return (
-    <div className="max-w-md mx-auto p-4 bg-blue-50 rounded shadow">
-      <h2 className="text-xl font-bold mb-4 text-blue-700">
-        Tábua das Marés - {dayjs(dataMar.data).format("DD/MM/YYYY")}
-      </h2>
+    <div className="w-full max-w-[95%] sm:max-w-lg md:max-w-xl lg:max-w-2xl mx-auto p-6 bg-gray-100 rounded-2xl shadow">
+      <div className="mb-4">
+        <div className="flex items-center justify-between">
+          <h2 className="text-xl font-semibold text-gray-800 flex items-center gap-2">
+            Tábua das Marés - {dayjs(dataMar.data).format("DD/MM/YYYY")}
+            <TooltipProvider>
+              <Tooltip open={tooltipOpen} onOpenChange={setTooltipOpen}>
+                <TooltipTrigger asChild>
+                  <button
+                    onClick={() => setTooltipOpen(!tooltipOpen)}
+                    className="focus:outline-none"
+                    aria-label="Informações sobre a tábua das marés"
+                  >
+                    <Info className="w-5 h-5 text-blue-600" />
+                  </button>
+                </TooltipTrigger>
+                <TooltipContent
+                  className="bg-white text-black text-xs leading-relaxed p-3 rounded-md shadow-md max-w-xs text-justify z-50"
+                  side="top"
+                  align="end"
+                  sideOffset={8}
+                >
+                  A tábua das marés é um registro que apresenta os horários e os níveis das marés a
+                  longo do dia. Na tábua a seguir, as ondas em vermelho correspondem a maré alta,
+                  enquanto as ondas em verde correspondem a maré baixa.
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          </h2>
+        </div>
+        <p className="text-sm text-gray-600 mt-1">
+          Porto do Pecém
+        </p>
+      </div>
 
-      <table className="w-full text-left border-collapse">
-        <thead>
-          <tr className="bg-blue-200">
-            <th className="p-2 border border-blue-300">Hora</th>
-            <th className="p-2 border border-blue-300">Altura (m)</th>
-          </tr>
-        </thead>
-        <tbody>
-          {dataMar.dados.map(({ hora, altura }, idx) => (
-            <tr
-              key={idx}
-              className={idx % 2 === 0 ? "bg-blue-100" : "bg-blue-50"}
-            >
-              <td className="p-2 border border-blue-300">{hora}</td>
-              <td className="p-2 border border-blue-300">{altura.toFixed(2)}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="flex justify-between text-sm text-gray-500 font-semibold border-b border-gray-300 pb-2 mb-2">
+        <span>Horário</span>
+        <span>Altura das ondas (m)</span>
+      </div>
+
+      <div className="divide-y divide-gray-300">
+        {dataMar.dados.map(({ hora, altura }, idx) => {
+          const isAlta = altura >= 1.0;
+
+          return (
+            <div key={idx} className="flex justify-between items-center py-2">
+              <span className="text-gray-700 font-medium">{hora}</span>
+              <div className="flex items-center gap-2">
+                <span className="text-gray-900 font-semibold">
+                  {altura.toFixed(2)} m
+                </span>
+
+                <Image
+                  src={isAlta ? "/onda_vermelha.png" : "/onda_verde.png"}
+                  alt={isAlta ? "Onda Alta" : "Onda Baixa"} 
+                  width={50}
+                  height={50}
+                  className="h-5 w-auto"
+                />
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
