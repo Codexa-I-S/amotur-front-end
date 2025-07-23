@@ -61,17 +61,16 @@ export default function DashboardPage() {
         {/* Seção de Gráficos */}
         <section>
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="text-lg font-semibold">
-                  Locais por Categoria
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <LocationChart />
-              </CardContent>
-            </Card>
-            
+           <Card className="rounded-lg shadow-sm border border-gray-100">
+            <CardHeader className="pb-2">
+              <CardTitle className="text-lg font-semibold text-gray-800">
+                Locais por Categoria
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="pt-0">
+              <LocationChart />
+            </CardContent>
+          </Card>
             <Card>
               <CardHeader>
                 <CardTitle className="text-lg font-semibold">
@@ -84,7 +83,7 @@ export default function DashboardPage() {
             </Card>
           </div>
         </section>
-        <section className="flex-1 p-4 space-y-4 overflow-x-hidden">
+        <section className="grid grid-cols-1 gap-4 sm:gap-6">
             <div>
                 <LocationTable/>
             </div>
