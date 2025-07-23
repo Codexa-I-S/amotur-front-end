@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import Link from "next/link"
 import { Instagram } from "lucide-react"
 import { MdEmail, MdPhone } from "react-icons/md"
@@ -39,8 +40,10 @@ export default function CardInfo({
         <CarouselContent>
           {images.map((src, idx) => (
             <CarouselItem key={idx}>
-              <img
+              <Image
                 src={src}
+                width={500}
+                height={200}
                 alt={`Imagem ${idx + 1}`}
                 className="w-full h-60 sm:h-72 md:h-80 object-cover"
               />
@@ -59,8 +62,10 @@ export default function CardInfo({
           {/* Logo + Nome + Tipo */}
           <div className="flex items-center gap-3 overflow-hidden">
             <a href={logo} target="_blank" rel="noopener noreferrer">
-              <img
+              <Image
                 src={logo}
+                width={50}
+                height={50}
                 alt={`${name} logo`}
                 className="w-12 h-12 min-w-[3rem] min-h-[3rem] rounded-full border object-cover flex-shrink-0"
               />

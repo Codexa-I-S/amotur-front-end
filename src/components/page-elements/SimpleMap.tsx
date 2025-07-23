@@ -99,7 +99,7 @@ type Point = {
   images: string[];
   coordinates: {
     lat: number;
-    lon: number;
+    lng: number;
   };
 }
 
@@ -185,7 +185,7 @@ export default function SimpleMap({ focusCoords, setFocusCoords }: SimpleMapProp
           {places.map((place) => (
             <Marker 
               key={place.id}
-              position={[place.coordinates.lat, place.coordinates.lon]}
+              position={[place.coordinates.lat, place.coordinates.lng]}
               icon={getIconForType(place.type)} // Usando a função de seleção de ícone
             >
               <Popup maxWidth={500}  closeButton={false}>

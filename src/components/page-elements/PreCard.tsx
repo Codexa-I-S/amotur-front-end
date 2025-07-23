@@ -3,6 +3,7 @@
 import useEmblaCarousel from 'embla-carousel-react'
 import { useEffect } from 'react'
 import ModalCard from './ModalCard'
+import Image from 'next/image'
 
 type Props = {
   name: string
@@ -46,8 +47,9 @@ export default function PreCard({
           <div className="flex h-full">
             {images.map((src, idx) => (
               <div key={idx} className="flex-[0_0_100%] h-full">
-                <img
+                <Image
                   src={src}
+                  fill
                   alt={`Imagem ${idx + 1}`}
                   className="w-full h-full object-cover rounded-t-2xl"
                 />
