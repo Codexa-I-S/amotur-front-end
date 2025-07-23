@@ -4,30 +4,25 @@ import Image from "next/image";
 import { SearchDialog } from "./SearchDialog";
 import SideBarLocais from "../page-elements/SideBarLocais";
 import { useEffect, useState } from "react";
-import {
-  MdLocationOn,
-  MdHotel,
-  MdRestaurant,
-} from "react-icons/md";
+import { MdLocationOn, MdHotel, MdRestaurant } from "react-icons/md";
 import { FaPizzaSlice, FaMartiniGlass, FaHotel } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
 
-
 type NavbarProps = {
   setFocusCoords: (coords: [number, number] | null) => void;
-}
+};
 
-export default function Navbar({setFocusCoords} : NavbarProps) {
-  const [openSheet, setOpenSheet] = useState(false)
-  const [categoria, setCategoria] = useState<string>("")
-  const [label, setlabel] = useState<string>("")
-  const [token , setToken] = useState<string | null>(null)
-  const router = useRouter() 
+export default function Navbar({ setFocusCoords }: NavbarProps) {
+  const [openSheet, setOpenSheet] = useState(false);
+  const [categoria, setCategoria] = useState<string>("");
+  const [label, setlabel] = useState<string>("");
+  const [token, setToken] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
-    const storedToken = localStorage.getItem("authToken")
-    setToken(storedToken)
-  }, [])
+    const storedToken = localStorage.getItem("authToken");
+    setToken(storedToken);
+  }, []);
 
   const links = [
     { label: "Pontos Turísticos", tipo: "Ponto", icon: MdLocationOn },
@@ -38,29 +33,25 @@ export default function Navbar({setFocusCoords} : NavbarProps) {
     { label: "Bares", tipo: "Bar", icon: FaMartiniGlass },
   ];
 
-  const handleAbrirCategoria = (tipo: string, label:string) => {
-    setCategoria(tipo)
-    setlabel(label)
-    setOpenSheet(true)
-  }
+  const handleAbrirCategoria = (tipo: string, label: string) => {
+    setCategoria(tipo);
+    setlabel(label);
+    setOpenSheet(true);
+  };
 
   const handleLogin = () => {
-
-    router.push("/login")
-
-  }
+    router.push("/login");
+  };
 
   const handleLogout = () => {
-
-    localStorage.removeItem("authToken")
-    window.location.reload()
-
-  }
+    localStorage.removeItem("authToken");
+    window.location.reload();
+  };
 
   return (
     <div className="relative z-[1001]">
       {/* Navbar Desktop */}
-      <div className="hidden md:flex items-center justify-between px-7 h-16 fixed top-0 left-0 right-0 z-50 bg-[#009089] text-white tracking-wide">
+      <div className="hidden md:flex items-center justify-between px-7 h-16 fixed top-0 left-0 right-0 z-50 bg-[#F9FAFB] text[#0E2C66] tracking-wide">
         <div className="flex-shrink-0">
           <Image
             className="cursor-pointer"
@@ -71,35 +62,35 @@ export default function Navbar({setFocusCoords} : NavbarProps) {
           />
         </div>
 
-        <div className="flex items-center justify-end flex-grow gap-6 font-semibold text-base">
-          <ul className="flex items-center gap-3">
+        <div className="flex items-center justify-end flex-grow gap-6 font-medium text-sm uppercase tracking-wide">
+          <ul className="flex items-center gap-4">
             {links.map((item, index) => {
               const Icon = item.icon;
               return (
                 <li key={index}>
                   <button
                     onClick={() => handleAbrirCategoria(item.tipo, item.label)}
-                    className="flex items-center gap-2 text-[#f5f5f5] px-4 py-1 hover:scale-105 transition-transform"
+                    className="flex items-center gap-2 text-[#0E2C66] hover:scale-105 duration-500 ease-in-out uppercase px-3 py-1 transition-transform"
                   >
-                    <Icon size={18} />
+                    <Icon size={16} className="text-[#6A87A0]" />
                     {item.label}
                   </button>
                 </li>
               );
             })}
             <li>
-              {!token && (
-                <button 
-                  onClick={() => handleLogin() }
-                  className="flex items-center gap-2 rounded bg-white text-[#009089] px-4 py-1 hover:scale-105 transition-transform">
+              {!token ? (
+                <button
+                  onClick={() => handleLogin()}
+                  className="flex items-center gap-2 rounded bg-white border border-teal-600 text-teal-600 px-4 py-1 hover:bg-teal-50 transition"
+                >
                   Login
                 </button>
-              )}
-              
-              {token && (
-                <button 
-                  onClick={() => handleLogout() }
-                  className="flex items-center gap-2 rounded bg-red-500 text-[#f5f5f5] px-4 py-1 hover:scale-105 transition-transform">
+              ) : (
+                <button
+                  onClick={() => handleLogout()}
+                  className="flex items-center gap-2 rounded bg-red-500 text-white px-4 py-1 hover:bg-red-600 transition"
+                >
                   Sair
                 </button>
               )}
@@ -112,51 +103,52 @@ export default function Navbar({setFocusCoords} : NavbarProps) {
         </div>
       </div>
 
-      {/* Mobile: Barra de pesquisa flutuante com estilo moderno */}
-      <div className="md:hidden fixed top-8 left-0 right-0 z-[1002] px-4">
-        <div className="bg-white/60 rounded-full px-4 py-2 shadow backdrop-blur-md flex items-center gap-3">
-          <div className="flex-grow">
-            <SearchDialog variant="mobile" />
-          </div>
-          {!token ? (
-            <button
-              onClick={handleLogin}
-              className="bg-[#009089] text-white px-4 py-2 rounded-full whitespace-nowrap hover:bg-[#007a75] transition"
-            >
-              Login
-            </button>
-          ) : (
-            <button
-              onClick={handleLogout}
-              className="bg-red-500 text-white px-4 py-2 rounded-full whitespace-nowrap hover:bg-red-600 transition"
-            >
-              Sair
-            </button>
-          )}
+      {/* Barra de pesquisa flutuante - mobile */}
+      <div className="md:hidden fixed top-6 left-2 right-2 z-[1002] bg-[#F9FAFB]/70 backdrop-blur-md rounded-full shadow border px-3 py-1.5 flex items-center gap-3">
+        <div className="flex-grow">
+          <SearchDialog variant="mobile" />
         </div>
+        {!token ? (
+          <button
+            onClick={handleLogin}
+            className="bg-teal-600 hover:bg-teal-700 text-white text-xs px-3 py-1.5 rounded-md font-semibold transition duration-200"
+          >
+            Login
+          </button>
+        ) : (
+          <button
+            onClick={handleLogout}
+            className="bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1.5 rounded-md font-semibold transition duration-200"
+          >
+            Sair
+          </button>
+        )}
       </div>
 
-
-      {/* Botões flutuantes no topo - somente mobile */}
-      <div className="md:hidden fixed top-20 left-0 right-0 z-[1001] px-0.5 py-0.5 overflow-x-auto scrollbar-hide mt-3">
-        <div className="flex items-center gap-3 w-max">
-          {links.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <button
-                key={index}
-                onClick={() => handleAbrirCategoria(item.tipo, item.label)}
-                className="flex items-center gap-2 bg-[#009089] text-white px-4 py-2 rounded-full whitespace-nowrap shadow hover:scale-105 transition text-base"
-              >
-                <Icon size={16} />
-                {item.label}
-              </button>
-            );
-          })}
-        </div>
+      {/* Botões flutuantes no topo - mobile (logo abaixo da barra) */}
+      <div className="md:hidden fixed top-[72px] left-2 right-2 z-[1001] bg-transparent px-1 py-1 overflow-x-auto scrollbar-hide flex items-center gap-2 w-max max-w-full mt-0">
+        {links.map((item, index) => {
+          const Icon = item.icon;
+          return (
+            <button
+              key={index}
+              onClick={() => handleAbrirCategoria(item.tipo, item.label)}
+              className="flex items-center gap-2 bg-[#F9FAFB]/70 text-[#0E2C66] uppercase text-[13px] px-3.5 py-1.5 rounded-full shadow-md backdrop-blur-md font-medium tracking-wide hover:bg-teal-50 transition-all whitespace-nowrap"
+            >
+              <Icon size={14} className="text-[#6A87A0]" />
+              {item.label}
+            </button>
+          );
+        })}
       </div>
 
-      <SideBarLocais tipo={categoria} label={label} open={openSheet} onOpenChange={setOpenSheet} setFocusCoords={setFocusCoords} />
+      <SideBarLocais
+        tipo={categoria}
+        label={label}
+        open={openSheet}
+        onOpenChange={setOpenSheet}
+        setFocusCoords={setFocusCoords}
+      />
     </div>
   );
 }
