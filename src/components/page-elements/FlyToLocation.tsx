@@ -6,15 +6,13 @@ type Props = {
 }
 
 export default function FlyToLocation({coords} : Props) {
-
     const map = useMap()
 
     useEffect(() => {
         if (coords) {
             map.flyTo(coords, 18, {duration: 1.5})
         }
-    }, [coords] )
+    }, [coords, map]) // Adicionado map como dependência
 
     return null
-
 }

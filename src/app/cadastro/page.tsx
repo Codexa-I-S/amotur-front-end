@@ -8,9 +8,9 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import axios from "axios"
+import axios from "axios" 
 import { toast } from "sonner"
-import { Loader2 } from "lucide-react" // Importando o ícone de loading
+import { Loader2 } from "lucide-react"
 
 const validationSchema = z.object({
     email: z.string().email("E-mail inválido"),
@@ -44,11 +44,14 @@ export default function CadastroPage() {
     })
 
     const onSubmit = async (data: FormData) => {
-        const { confirmPassword, ...formData } = data
+        const formData = {
+            email: data.email,
+            password: data.password
+        }
         setIsLoading(true)
         
         try {
-            const response = await api.post('/auth/register', formData)
+            await api.post('/auth/register', formData)
             toast.success('Cadastro realizado com sucesso!', {
                 description: 'Você será redirecionado para a página inicial',
                 duration: 3000,
@@ -56,7 +59,7 @@ export default function CadastroPage() {
             
             setTimeout(() => router.push('/'), 3000)
 
-        } catch (error: any) {
+        } catch (error: unknown) {
             console.error('Erro no cadastro:', error)
             
             if (axios.isAxiosError(error)) {
@@ -86,9 +89,14 @@ export default function CadastroPage() {
                         duration: 5000,
                     })
                 }
-            } else {
+            } else if (error instanceof Error) {
                 toast.error('Erro desconhecido', {
                     description: error.message,
+                    duration: 5000,
+                })
+            } else {
+                toast.error('Erro desconhecido', {
+                    description: 'Ocorreu um erro inesperado',
                     duration: 5000,
                 })
             }
