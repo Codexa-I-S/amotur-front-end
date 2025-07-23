@@ -35,14 +35,14 @@ export function SearchDialog({ variant = "desktop" }: SearchDialogProps) {
         onClick={() => setOpen(true)}
         className={
           variant === "mobile"
-            ? "flex items-center gap-2 text-[#009089] w-full"
+            ? "flex items-center gap-2 text-[#6A87A0] w-full"
             : "text-white hover:scale-110 transition-transform"
         }
       >
         <Search
           size={20}
           strokeWidth={2.5}
-          className={variant === "mobile" ? "text-[#009089]" : "text-white"}
+          className={variant === "mobile" ? "text-[#6A87A0]" : "text-[#6A87A0]"}
         />
         {variant === "mobile" && (
           <span className="md:text-base text-zinc-700">Pesquisar</span>
