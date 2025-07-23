@@ -42,7 +42,7 @@ export function SearchDialog({ variant = "desktop" }: SearchDialogProps) {
         <Search
           size={20}
           strokeWidth={2.5}
-          className={variant === "mobile" ? "text-[#6A87A0]" : "text-white"}
+          className={variant === "mobile" ? "text-[#6A87A0]" : "text-[#6A87A0]"}
         />
         {variant === "mobile" && (
           <span className="md:text-base text-zinc-700">Pesquisar</span>
