@@ -12,6 +12,7 @@ import Link from "next/link"
 import axios from "axios" // Removido AxiosError não utilizado
 import { toast } from "sonner"
 import { Loader2, Eye, EyeOff } from "lucide-react"
+import { GoogleLogin } from "@react-oauth/google"
 
 const loginValidationSchema = z.object({
   email: z.string().email("E-mail inválido!"),
@@ -19,6 +20,12 @@ const loginValidationSchema = z.object({
 })
 
 type LoginData = z.infer<typeof loginValidationSchema>
+
+interface GoogleCredentialResponse {
+  credential?: string;
+  select_by?: string;
+  clientId?: string;
+}
 
 const api = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
@@ -42,6 +49,37 @@ export default function LoginPage() {
   } = useForm<LoginData>({
     resolver: zodResolver(loginValidationSchema),
   })
+
+
+const handleSuccess = async (credentialResponse: GoogleCredentialResponse) => {
+  try {
+    if (!credentialResponse.credential) {
+      throw new Error("Credencial do Google não encontrada");
+    }
+
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/google`, {
+      idToken: credentialResponse.credential
+    });
+
+    const token = response.data.authToken;
+    localStorage.setItem("authToken", token);
+    router.push("/");
+
+  } catch(err) {
+    console.error("Erro no login com o Google: ", err);
+    toast.error("Falha no login com Google", {
+      duration: 3000
+    });
+  }
+}
+
+  const handleError = () => {
+
+      toast.error("Erro ao autenticar com o Google",{
+        duration: 3000
+      })
+
+  }
 
   const onSubmit = async (data: LoginData) => {
     setLoading(true)
@@ -168,8 +206,17 @@ export default function LoginPage() {
                 ) : "Login"}
               </Button>
             </div>
+
+            <div className="flex justify-center items-center">
+                <GoogleLogin
+                  
+                  onSuccess={handleSuccess}
+                  onError={handleError}
+                
+                />
+            </div>
             
-            <div className="flex justify-center pt-8 text-white lg:text-[15px] text-center">
+            <div className="flex justify-center pt-2 text-white lg:text-[15px] text-center">
               <p>
                 Ainda não tem uma conta? <br />
                 <Link href="/cadastro" className="font-bold hover:underline">
