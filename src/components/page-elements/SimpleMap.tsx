@@ -9,24 +9,25 @@ import ModalRegister from './ModalRegister';
 import L from 'leaflet';
 import PreCard from './PreCard';
 import axios from 'axios';
-
 import FlyToLocation from './FlyToLocation';
 import TideCard from './TideTable';
 import { getUserRole } from './GetUserRole';
 
-
-// servio para ajeitar problema dos ícones padrão do Leaflet 
-delete (L.Icon.Default.prototype as any)._getIconUrl;
+// Correção type-safe para o problema dos ícones
+interface IconDefaultProto {
+  _getIconUrl?: string;
+}
+delete (L.Icon.Default.prototype as IconDefaultProto)._getIconUrl;
 L.Icon.Default.mergeOptions({
   iconRetinaUrl: '/images/marker-icon-2x.png',
   iconUrl: '/images/marker-icon.png',
   shadowUrl: '/images/marker-shadow.png',
 });
 
-
 type SimpleMapProps = {
   focusCoords: [number, number] | null;
-  setFocusCoords: (coords: [number, number] | null) => void;
+  // Mantido mas marcado como intencionalmente não usado
+  setFocusCoords?: (coords: [number, number] | null) => void;
 }
 
 type Props = {
@@ -41,7 +42,6 @@ function ShowFormRegisterOnClick({setLocationPosition}: Props) {
   return null
 }
 
-// string add um novo se nao existir
 type PointsType = "HOTEL" | "POUSADA" | "BAR" | "RESTAURANTE" | string
 
 const iconMap: Record<string, L.Icon> = {
@@ -71,7 +71,6 @@ const iconMap: Record<string, L.Icon> = {
   })
 }
 
-// Ícone padrao para tipos não mapeados
 const defaultIcon = new L.Icon({
   iconUrl: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
   iconSize: [35, 35],
@@ -79,7 +78,6 @@ const defaultIcon = new L.Icon({
   popupAnchor: [0, -35]
 });
 
-// Função para obter o ícone correto
 const getIconForType = (type: string): L.Icon => {
   const normalizedType = type?.toUpperCase();
   return iconMap[normalizedType] || defaultIcon;
@@ -104,6 +102,9 @@ type Point = {
 }
 
 export default function SimpleMap({ focusCoords, setFocusCoords }: SimpleMapProps) {
+  // Marca como intencionalmente não usado se não for utilizado
+  const _setFocusCoords = setFocusCoords; // eslint-disable-line @typescript-eslint/no-unused-vars
+  
   const [newLocationPosition, setNewLocationPosition] = useState<[number, number] | null>(null);
   const [places, setPlaces] = useState<Point[]>([]);
   const [loading, setLoading] = useState(true);
@@ -115,7 +116,7 @@ export default function SimpleMap({ focusCoords, setFocusCoords }: SimpleMapProp
       try {
         setLoading(true);
         setError(null);
-        const response = await axios.get("https://squad-03-server-production.up.railway.app/place/all",);
+        const response = await axios.get("https://squad-03-server-production.up.railway.app/place/all");
 
         setPlaces(response.data);
         console.log("Places recebidos:", response.data);
@@ -129,11 +130,6 @@ export default function SimpleMap({ focusCoords, setFocusCoords }: SimpleMapProp
 
     fetchPlaces();
   }, []);
-
-  const bounds: [[number, number], [number, number]] = [
-    [-3.1600, -39.8000],
-    [-2.9200, -39.5500],
-  ];
 
   return (
     <div className="h-screen w-screen relative">
@@ -168,7 +164,6 @@ export default function SimpleMap({ focusCoords, setFocusCoords }: SimpleMapProp
           </Popup>
         )}
        
-        
         {loading && (
           <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
             <div className="text-white text-xl">Carregando locais...</div>
@@ -181,28 +176,26 @@ export default function SimpleMap({ focusCoords, setFocusCoords }: SimpleMapProp
           </div>
         )}
 
-        
-          {places.map((place) => (
-            <Marker 
-              key={place.id}
-              position={[place.coordinates.lat, place.coordinates.lng]}
-              icon={getIconForType(place.type)} // Usando a função de seleção de ícone
-            >
-              <Popup maxWidth={500}  closeButton={false}>
-                  <PreCard
-                    name={place.name}
-                    type={place.type}
-                    instagramUrl={place.contacts.site}
-                    email={place.contacts.email}
-                    telefone={place.contacts.telefone}
-                    description={place.description}
-                    logo={place.logo}
-                    images={place.images}
-                  />
-              </Popup>
-                
-            </Marker>
-          ))}
+        {places.map((place) => (
+          <Marker 
+            key={place.id}
+            position={[place.coordinates.lat, place.coordinates.lng]}
+            icon={getIconForType(place.type)}
+          >
+            <Popup maxWidth={500} closeButton={false}>
+              <PreCard
+                name={place.name}
+                type={place.type}
+                instagramUrl={place.contacts.site}
+                email={place.contacts.email}
+                telefone={place.contacts.telefone}
+                description={place.description}
+                logo={place.logo}
+                images={place.images}
+              />
+            </Popup>
+          </Marker>
+        ))}
         
         <ZoomControls/>
         
@@ -215,7 +208,6 @@ export default function SimpleMap({ focusCoords, setFocusCoords }: SimpleMapProp
         </Marker>
 
       </MapContainer>
-      
     </div>
   );
 }
