@@ -26,7 +26,7 @@ type Local = {
   images: string[]
   coordinates: {
     lat: number
-    lon: number
+    lng: number
   }
 }
 
@@ -117,7 +117,7 @@ export default function SideBarLocais({ tipo, label, open, onOpenChange, setFocu
                 logo={local.logo}
 
                 onClick={() => {
-                  setFocusCoords([local.coordinates.lat, local.coordinates.lon])
+                  setFocusCoords([local.coordinates.lat, local.coordinates.lng])
                   onOpenChange(false)
                 }}
               />

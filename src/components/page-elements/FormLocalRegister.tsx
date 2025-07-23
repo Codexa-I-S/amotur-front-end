@@ -31,7 +31,7 @@ const validationLocalSchema = z.object({
   ], {
     errorMap: () => ({ message: "Selecione uma categoria válida." })
   }),
-  region: z.enum(["Caetanos", "Flecheiras", "Icaraí", "Moitas"], {
+  region: z.enum(["caetanos", "flecheiras", "icarai", "moitas"], {
     errorMap: () => ({ message: "Selecione uma região válida." })
   }),
   description: z.string().nonempty("Adicione uma descrição.").min(10, "Descrição muito curta."),
@@ -52,6 +52,13 @@ const typeMapping = {
   ponto_turistico: "Ponto Turístico",
   restaurante: "Restaurante"
 } as const
+
+const typeLocalization = {
+  caetanos: "Caetanos",
+  flecheiras: "Flecheiras",
+  icarai: "Icaraí",
+  moitas: "Moitas",
+}
 
 type Props = {
   lat: number
@@ -124,9 +131,9 @@ export default function FormLocalRegister({ lat, lng }: Props) {
       const formData = new FormData()
       formData.append("name", data.name)
       formData.append("type", typeMapping[data.type])
-      formData.append("region", data.region)
+      formData.append("localization", typeLocalization[data.region])
       formData.append("description", data.description)
-      formData.append("coordinates", JSON.stringify({ lat: data.lat, lon: data.lng }))
+      formData.append("coordinates", JSON.stringify({ lat: data.lat, lng: data.lng }))
       formData.append("contacts", JSON.stringify({
         telefone: data.phone,
         email: data.email,
@@ -135,10 +142,13 @@ export default function FormLocalRegister({ lat, lng }: Props) {
       if (logoFile) formData.append("logo", logoFile)
       photoFiles.forEach(file => formData.append("photos", file))
 
+      const token = localStorage.getItem("authToken")
+
       await api.post("/place", formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
-          'Accept': 'application/json'
+          'Accept': 'application/json',
+          Authorization: `Bearer ${token}`,
         }
       })
 
@@ -231,10 +241,10 @@ export default function FormLocalRegister({ lat, lng }: Props) {
                 <SelectValue placeholder="Selecione a região" />
               </SelectTrigger>
               <SelectContent className="z-[1003]">
-                <SelectItem value="Caetanos">Caetanos</SelectItem>
-                <SelectItem value="Flecheiras">Flecheiras</SelectItem>
-                <SelectItem value="Icaraí">Icaraí</SelectItem>
-                <SelectItem value="Moitas">Moitas</SelectItem>
+                <SelectItem value="caetanos">Caetanos</SelectItem>
+                <SelectItem value="flecheiras">Flecheiras</SelectItem>
+                <SelectItem value="icarai">Icaraí</SelectItem>
+                <SelectItem value="moitas">Moitas</SelectItem>
               </SelectContent>
             </Select>
           )}
