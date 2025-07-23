@@ -21,6 +21,12 @@ const loginValidationSchema = z.object({
 
 type LoginData = z.infer<typeof loginValidationSchema>
 
+interface GoogleCredentialResponse {
+  credential?: string;
+  select_by?: string;
+  clientId?: string;
+}
+
 const api = axios.create({
   baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
   timeout: 30000,
@@ -44,27 +50,28 @@ export default function LoginPage() {
     resolver: zodResolver(loginValidationSchema),
   })
 
-  const handleSuccess = async (credentialResponse: any) => {
 
-      try {
+const handleSuccess = async (credentialResponse: GoogleCredentialResponse) => {
+  try {
+    if (!credentialResponse.credential) {
+      throw new Error("Credencial do Google não encontrada");
+    }
 
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/google`,
-          {
-            idToken: credentialResponse.credential
-          }
-        )
+    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/google`, {
+      idToken: credentialResponse.credential
+    });
 
-        const token = response.data.authToken
+    const token = response.data.authToken;
+    localStorage.setItem("authToken", token);
+    router.push("/");
 
-        localStorage.setItem("authToken", token)
-
-        router.push("/")
-
-      } catch(err) {
-        console.error("Erro no login com o Google: ", err)
-      }
-
+  } catch(err) {
+    console.error("Erro no login com o Google: ", err);
+    toast.error("Falha no login com Google", {
+      duration: 3000
+    });
   }
+}
 
   const handleError = () => {
 
