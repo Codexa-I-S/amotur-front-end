@@ -6,6 +6,7 @@ export default function PageDashbord() {
             <h1 className="">
                 hello, world!
             </h1>
+            <p>pagina de exemplo</p>
         </div>
     )
 }
