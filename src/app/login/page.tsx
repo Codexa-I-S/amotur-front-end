@@ -9,9 +9,9 @@ import { useForm } from "react-hook-form"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
 import Link from "next/link"
-import axios from "axios"
+import axios from "axios" // Removido AxiosError não utilizado
 import { toast } from "sonner"
-import { Loader2, Eye, EyeOff } from "lucide-react" // icones Eye e EyeOff
+import { Loader2, Eye, EyeOff } from "lucide-react"
 
 const loginValidationSchema = z.object({
   email: z.string().email("E-mail inválido!"),
@@ -33,7 +33,7 @@ const api = axios.create({
 export default function LoginPage() {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
-  const [showPassword, setShowPassword] = useState(false) // Estado para mostrar/esconder senha
+  const [showPassword, setShowPassword] = useState(false)
 
   const {
     register,
@@ -65,7 +65,7 @@ export default function LoginPage() {
       
       setTimeout(() => router.push("/"), 3000)
 
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Erro no login:', err)
       
       if (axios.isAxiosError(err)) {
@@ -86,9 +86,14 @@ export default function LoginPage() {
             duration: 5000,
           })
         }
-      } else {
+      } else if (err instanceof Error) {
         toast.error('Erro desconhecido', {
           description: err.message,
+          duration: 5000,
+        })
+      } else {
+        toast.error('Erro desconhecido', {
+          description: 'Ocorreu um erro inesperado',
           duration: 5000,
         })
       }
@@ -100,7 +105,6 @@ export default function LoginPage() {
   return (
     <div className="bg-[url('/imagem_2.png')] bg-cover bg-center h-screen w-screen flex flex-col lg:flex-row">
       
-      {/* Logo */}
       <div className="h-1/3 lg:h-screen w-screen lg:w-1/2 flex justify-center items-center lg:mt-[-20]">
         <Image
           className="lg:w-[350px]"
@@ -112,11 +116,9 @@ export default function LoginPage() {
         />
       </div>
 
-      {/* Formulário */}
       <div className="bg-[#009089] h-2/3 lg:h-screen w-screen lg:w-1/2 rounded-t-[100px] lg:rounded-none flex flex-col justify-center items-center">
         <div className="mt-20 lg:mt-60 w-[80%] lg:w-[60%] h-[80%] text-[20px] flex-row">
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            {/* Email */}
             <div>
               <label className="text-white block mb-1">E-mail</label>
               <Input
@@ -128,7 +130,6 @@ export default function LoginPage() {
               {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
             </div>
 
-            {/* Senha com botão "olhinho" */}
             <div className="relative">
               <label className="text-white block mb-1">Senha:</label>
               <Input
@@ -151,7 +152,6 @@ export default function LoginPage() {
               {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
             </div>
             
-            {/* Botão de Login */}
             <div className="flex justify-center pt-6">
               <Button 
                 variant={"designButton"} 
@@ -169,7 +169,6 @@ export default function LoginPage() {
               </Button>
             </div>
             
-            {/* Link para cadastro */}
             <div className="flex justify-center pt-8 text-white lg:text-[15px] text-center">
               <p>
                 Ainda não tem uma conta? <br />

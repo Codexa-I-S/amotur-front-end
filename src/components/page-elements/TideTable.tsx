@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import axios from "axios";
+import axios from "axios"; // Removido AxiosError não utilizado
 import dayjs from "dayjs";
 import { Info } from "lucide-react";
 import {
@@ -45,8 +45,14 @@ export default function TideCard() {
           }
         );
         setDataMar(response.data);
-      } catch (err: any) {
-        setError(err.response?.data?.message || err.message || "Erro desconhecido");
+      } catch (err: unknown) {
+        if (axios.isAxiosError(err)) {
+          setError(err.response?.data?.message || err.message || "Erro na requisição");
+        } else if (err instanceof Error) {
+          setError(err.message);
+        } else {
+          setError("Erro desconhecido");
+        }
       } finally {
         setLoading(false);
       }

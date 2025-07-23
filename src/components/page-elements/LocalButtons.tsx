@@ -57,7 +57,7 @@ export default function BotoesLocalidades() {
       className={`
         flex justify-center items-center
         px-4 py-3 sm:px-8 md:px-14  lg:px-12 md:py-4 cursor-pointer
-        text-sm mb-4 mb:text-[15px]  font-semibold
+        text-sm mb-4 mb:text-[15px]  font-black
         rounded-3xl  border-1
         transition-all duration-200 
         ${
