@@ -129,7 +129,7 @@ export default function CadastroPage() {
                             className="bg-[#f5f5f5] h-[45px] mt-3 mb-4 rounded-2xl transition-transform duration-300 hover:scale-104"
                             width={400}
                         />
-                        {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+                        {errors.email && <p className="text-red-500 ">{errors.email.message}</p>}
 
                         <label className="text-white">Senha:</label>
                         <Input
