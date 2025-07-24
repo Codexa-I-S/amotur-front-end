@@ -51,14 +51,14 @@ export default function Navbar({ setFocusCoords }: NavbarProps) {
   return (
     <div className="relative z-[1001]">
       {/* Navbar Desktop */}
-      <div className="hidden md:flex items-center justify-between px-7 h-16 fixed top-0 left-0 right-0 z-50 bg-[#F9FAFB] text[#0E2C66] tracking-wide">
+      <div className="hidden md:flex items-center justify-between px-7 h-16 fixed top-0 left-0 right-0 z-50 bg-[#F9FAFB] text-[#003f5c] tracking-wide">
         <div className="flex-shrink-0">
           <Image
             className="cursor-pointer"
-            src="/amotur_azul.png"
+            src="/amotur_blue.png"
             width={100}
             height={80}
-            alt="Logo-Amotur"
+            alt="Logo do projeto Amotur"
           />
         </div>
 
@@ -70,9 +70,9 @@ export default function Navbar({ setFocusCoords }: NavbarProps) {
                 <li key={index}>
                   <button
                     onClick={() => handleAbrirCategoria(item.tipo, item.label)}
-                    className="flex items-center gap-2 text-[#0E2C66] hover:scale-105 duration-500 ease-in-out uppercase px-3 py-1 transition-transform"
+                    className="flex items-center gap-2 text-[#003f5c] hover:text-[#005377] hover:scale-105 duration-500 ease-in-out uppercase px-3 py-1 transition-transform"
                   >
-                    <Icon size={16} className="text-[#6A87A0]" />
+                    <Icon size={16} className="text-[#003f5c]" />
                     {item.label}
                   </button>
                 </li>
@@ -81,14 +81,14 @@ export default function Navbar({ setFocusCoords }: NavbarProps) {
             <li>
               {!token ? (
                 <button
-                  onClick={() => handleLogin()}
+                  onClick={handleLogin}
                   className="flex items-center gap-2 rounded-2xl bg-white border border-teal-600 text-teal-600 px-4 py-1 hover:bg-teal-50 transition"
                 >
                   Login
                 </button>
               ) : (
                 <button
-                  onClick={() => handleLogout()}
+                  onClick={handleLogout}
                   className="flex items-center gap-2 rounded-2xl bg-red-500 text-white px-4 py-1 hover:bg-red-600 transition"
                 >
                   Sair
@@ -104,7 +104,7 @@ export default function Navbar({ setFocusCoords }: NavbarProps) {
       </div>
 
       {/* Barra de pesquisa flutuante - mobile */}
-      <div className="md:hidden fixed top-6 left-2 right-2 z-[1002] bg-[#F9FAFB]/70 backdrop-blur-md rounded-2xl shadow border px-3 py-1.5 flex items-center gap-3">
+      <div className="md:hidden fixed top-6 left-2 right-2 z-[1002] bg-[#F9FAFB]/70 backdrop-blur-md rounded-2xl shadow border px-4 py-2.5 flex items-center gap-3">
         <div className="flex-grow">
           <SearchDialog variant="mobile" />
         </div>
@@ -125,17 +125,17 @@ export default function Navbar({ setFocusCoords }: NavbarProps) {
         )}
       </div>
 
-      {/* Botões flutuantes no topo - mobile (logo abaixo da barra) */}
-      <div className="md:hidden fixed top-[72px] left-2 right-2 z-[1001] bg-transparent px-1 py-1 overflow-x-auto scrollbar-hide flex items-center gap-2 w-max max-w-full mt-0">
+      {/* Botões flutuantes no topo - mobile */}
+      <div className="md:hidden fixed top-[72px] left-2 right-2 z-[1001] bg-transparent px-2 py-2 overflow-x-auto scrollbar-hide flex items-center gap-2 w-max max-w-full mt-1">
         {links.map((item, index) => {
           const Icon = item.icon;
           return (
             <button
               key={index}
               onClick={() => handleAbrirCategoria(item.tipo, item.label)}
-              className="flex items-center gap-2 bg-[#F9FAFB]/70 text-[#0E2C66] uppercase text-[13px] px-4 py-2 rounded-2xl shadow-md backdrop-blur-md font-medium tracking-wide hover:bg-teal-50 transition-all whitespace-nowrap"
+              className="flex items-center gap-2 bg-[#F9FAFB]/70 text-[#003f5c] uppercase text-[13px] px-4 py-2 rounded-2xl shadow-md backdrop-blur-md font-medium tracking-wide hover:bg-teal-50 transition-all whitespace-nowrap"
             >
-              <Icon size={14} className="text-[#6A87A0]" />
+              <Icon size={14} className="text-[#003f5c]" />
               {item.label}
             </button>
           );
