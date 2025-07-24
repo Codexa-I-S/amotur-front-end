@@ -1,76 +1,93 @@
-'use client'
+"use client";
 
-import { useMap, useMapEvent } from 'react-leaflet'
-import React, { useState } from 'react'
+import { useMap, useMapEvent } from "react-leaflet";
+import React, { useState } from "react";
 
-type Coordenada = [number, number]
+// Ícones
+import { FaUmbrellaBeach } from "react-icons/fa6";
+import { GiPalmTree, GiSeaStar } from "react-icons/gi";
+import { MdOutlineKitesurfing } from "react-icons/md";
 
-// Interface para representar uma localidade  
+type Coordenada = [number, number];
+
 interface Localidade {
-  nome: string
-  coordenadas: Coordenada
+  nome: string;
+  coordenadas: Coordenada;
+  icon: React.ReactNode;
 }
 
 export default function BotoesLocalidades() {
-  const mapa = useMap() // Acessa a instância do mapa
-  const mapaCarregado = useMapEvent('load', () => {}) // Verifica se o mapa foi carregado
+  const mapa = useMap();
+  const mapaCarregado = useMapEvent("load", () => {});
 
- 
   const localidades: Localidade[] = [
-    { nome: 'Icaraí', coordenadas: [-3.027, -39.650] },
-    { nome: 'Moitas', coordenadas: [-3.006, -39.694] },
-    { nome: 'Caetanos', coordenadas: [-3.078, -39.561] },
-    { nome: 'Frecheiras', coordenadas: [-3.065,-39.651 ] }
-  ]
+    {
+      nome: "Icaraí",
+      coordenadas: [-3.027, -39.65],
+      icon: <MdOutlineKitesurfing className="text-lg mr-2" />,
+    },
+    {
+      nome: "Moitas",
+      coordenadas: [-3.006, -39.694],
+      icon: <GiPalmTree className="text-lg mr-2" />,
+    },
+    {
+      nome: "Caetanos",
+      coordenadas: [-3.078, -39.561],
+      icon: <GiSeaStar className="text-lg mr-2" />,
+    },
+    {
+      nome: "Flecheiras",
+      coordenadas: [-3.065, -39.651],
+      icon: <FaUmbrellaBeach className="text-lg mr-2" />,
+    },
+  ];
 
-  // Qual local está selecionado
-  const [ativo, setAtivo] = useState<string>(localidades[0].nome)
+  const [ativo, setAtivo] = useState<string>(localidades[0].nome);
 
-  //centralizar o mapa 
   const centralizarNoMapa = (local: Localidade) => {
-    setAtivo(local.nome)
+    setAtivo(local.nome);
     mapa.flyTo(local.coordenadas, 16, {
-      duration: 1
-    })
-  }
+      duration: 1,
+    });
+  };
 
-  // Só renderiza os botões se o mapa estiver carregado
-  if (!mapaCarregado) return null
+  if (!mapaCarregado) return null;
 
   return (
     <div
-  className="
+      className="
     fixed bottom-0 left-1/2 -translate-x-1/2 z-[9999] 
-    flex justify-center items-center gap-2 md:gap-4  md:mb-3
-    md:justify-center md:bg-transparent md:w-auto
-   bg-[#009089]/87  w-full px-4 py-2  h-[90px]
-  rounded-t-3xl 
-    
+    flex md:flex justify-center items-center md:gap-4 md:mb-3
+    md:justify-center md:w-auto
+    w-full px-2 py-2 h-[140px] md:h-auto
+    bg-[#0077b6]/40 md:bg-transparent rounded-t-3xl md:rounded-none
   "
->
-  {localidades.map((local) => (
-    <button
-      key={local.nome}
-      onClick={() => centralizarNoMapa(local)}
-      aria-current={ativo === local.nome ? 'location' : undefined}
-      aria-label={`Centralizar mapa em ${local.nome}`}
-      className={`
-        flex justify-center items-center
-        px-4 py-3 sm:px-8 md:px-14  lg:px-12 md:py-4 cursor-pointer
-        text-sm mb-4 mb:text-[15px]  font-black
-        rounded-3xl  border-1
-        transition-all duration-200 
-        ${
-          ativo === local.nome
-            ? 'bg-white text-teal-700 border-teal-700'
-            : 'bg-[#009089] text-white border-teal-700 hover:bg-teal-800'
-        }
-      `}
     >
-      {local.nome}
-    </button>
-  ))}
-</div>
-
-  )
+      <div className="grid grid-cols-2 gap-x-3 gap-y-3 md:flex md:gap-4">
+        {localidades.map((local) => (
+          <button
+            key={local.nome}
+            onClick={() => centralizarNoMapa(local)}
+            aria-current={ativo === local.nome ? "location" : undefined}
+            aria-label={`Centralizar mapa em ${local.nome}`}
+            className={`
+          flex justify-center items-center
+          px-4 py-3 sm:px-6 md:px-10 lg:px-12 md:py-4 cursor-pointer
+          text-sm text-white uppercase tracking-wide font-medium
+          rounded-2xl transition-all duration-200
+          ${
+            ativo === local.nome
+              ? "bg-[#0077b6]"
+              : "bg-[#003f5c] hover:bg-[#005377]"
+          }
+        `}
+          >
+            {local.icon}
+            {local.nome}
+          </button>
+        ))}
+      </div>
+    </div>
+  );
 }
