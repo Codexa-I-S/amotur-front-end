@@ -34,7 +34,7 @@ export default function CardInfo({
   logo,
 }: CardProps) {
   return (
-    <div className="w-full max-w-md md:max-w-2xl mx-auto border rounded-xl shadow-md bg-white overflow-hidden">
+    <div className="w-full max-w-md md:max-w-2xl mx-auto rounded-xl bg-white overflow-hidden">
       {/* Carrossel de Imagens */}
       <Carousel opts={{ loop: true }} className="w-full relative">
         <CarouselContent>
