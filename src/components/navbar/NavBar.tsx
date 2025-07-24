@@ -91,14 +91,14 @@ export default function Navbar({ setFocusCoords }: NavbarProps) {
               {!token ? (
                 <button
                   onClick={() => handleLogin()}
-                  className="flex items-center gap-2 rounded bg-white border border-teal-600 text-teal-600 px-4 py-1 hover:bg-teal-50 transition"
+                  className="flex items-center gap-2 rounded-2xl bg-white border border-teal-600 text-teal-600 px-4 py-1 hover:bg-teal-50 transition"
                 >
                   Login
                 </button>
               ) : (
                 <button
                   onClick={() => handleLogout()}
-                  className="flex items-center gap-2 rounded bg-red-500 text-white px-4 py-1 hover:bg-red-600 transition"
+                  className="flex items-center gap-2 rounded-2xl bg-red-500 text-white px-4 py-1 hover:bg-red-600 transition"
                 >
                   Sair
                 </button>
@@ -118,21 +118,21 @@ export default function Navbar({ setFocusCoords }: NavbarProps) {
       </div>
 
       {/* Barra de pesquisa flutuante - mobile */}
-      <div className="md:hidden fixed top-6 left-2 right-2 z-[1002] bg-[#F9FAFB]/70 backdrop-blur-md rounded-full shadow border px-3 py-1.5 flex items-center gap-3">
+      <div className="md:hidden fixed top-6 left-2 right-2 z-[1002] bg-[#F9FAFB]/70 backdrop-blur-md rounded-2xl shadow border px-3 py-1.5 flex items-center gap-3">
         <div className="flex-grow">
           <SearchDialog variant="mobile" />
         </div>
         {!token ? (
           <button
             onClick={handleLogin}
-            className="bg-teal-600 hover:bg-teal-700 text-white text-xs px-3 py-1.5 rounded-md font-semibold transition duration-200"
+            className="bg-teal-600 hover:bg-teal-700 text-white text-xs px-3 py-1.5 rounded-2xl font-semibold transition duration-200"
           >
             Login
           </button>
         ) : (
           <button
             onClick={handleLogout}
-            className="bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1.5 rounded-md font-semibold transition duration-200"
+            className="bg-red-500 hover:bg-red-600 text-white text-xs px-3 py-1.5 rounded-2xl font-semibold transition duration-200"
           >
             Sair
           </button>
@@ -150,7 +150,7 @@ export default function Navbar({ setFocusCoords }: NavbarProps) {
             <button
               key={index}
               onClick={() => handleAbrirCategoria(item.tipo, item.label)}
-              className="flex items-center gap-2 bg-[#F9FAFB]/70 text-[#0E2C66] uppercase text-[13px] px-3.5 py-1.5 rounded-full shadow-md backdrop-blur-md font-medium tracking-wide hover:bg-teal-50 transition-all whitespace-nowrap"
+              className="flex items-center gap-2 bg-[#F9FAFB]/70 text-[#0E2C66] uppercase text-[13px] px-4 py-2 rounded-2xl shadow-md backdrop-blur-md font-medium tracking-wide hover:bg-teal-50 transition-all whitespace-nowrap"
             >
               <Icon size={14} className="text-[#6A87A0]" />
               {item.label}
