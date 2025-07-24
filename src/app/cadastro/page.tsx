@@ -123,52 +123,51 @@ export default function CadastroPage() {
       </div>
 
       {/* Lado direito com formulário */}
-      <div className="bg-[#F9FAFB] h-2/3 lg:h-full w-full lg:w-1/2 rounded-t-[65px] lg:rounded-none flex justify-center items-center">
-        <div className="mt-10 lg:mt-40 w-[85%] lg:w-[60%] text-[16px] flex flex-col gap-6">
-          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
-            <div className="flex flex-col gap-1">
-              <label className="text-[#0E2C66]">E-mail:</label>
+      <div className="bg-[#009089] h-[60%] lg:h-full w-full lg:w-1/2 rounded-t-[65px] lg:rounded-none flex justify-center items-center">
+        <div className="w-[80%] lg:w-[60%] text-[20px]">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <div>
+              <label className="text-white block mb-1">E-mail</label>
               <Input
                 {...register("email")}
                 type="email"
                 placeholder="Digite seu e-mail"
-                className="bg-[#F9FAFB] h-[50px] rounded-2xl"
+                className="bg-[#f5f5f5] h-[45px] rounded-2xl transition-transform duration-300 hover:scale-104"
               />
-              {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
+              {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
             </div>
 
-            <div className="flex flex-col gap-1">
-              <label className="text-[#0E2C66]">Senha:</label>
+            <div>
+              <label className="text-white block mb-1">Senha:</label>
               <Input
                 {...register("password")}
                 type="password"
                 placeholder="Digite sua senha"
-                className="bg-[#F9FAFB] h-[50px] rounded-2xl"
+                className="bg-[#f5f5f5] h-[45px] rounded-2xl transition-transform duration-300 hover:scale-104"
               />
-              {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
+              {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
             </div>
 
-
-            <div className="flex flex-col gap-1">
-              <label className="text-[#0E2C66]">Confirme sua senha:</label>
+            <div>
+              <label className="text-white block mb-1">Confirme sua senha:</label>
               <Input
                 {...register("confirmPassword")}
                 type="password"
                 placeholder="Confirme sua senha"
-                className="bg-[#F9FAFB] h-[50px] rounded-2xl"
+                className="bg-[#f5f5f5] h-[45px] rounded-2xl transition-transform duration-300 hover:scale-104"
               />
               {errors.confirmPassword && (
-                <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>
+                <p className="text-red-500 text-sm mt-1">{errors.confirmPassword.message}</p>
               )}
             </div>
 
-            <div className="flex justify-center mt-2">
+            <div className="flex justify-center pt-6">
               <Button
                 variant={"designButton"}
                 size={"buttonSize"}
                 disabled={isLoading}
                 type="submit"
-                className="min-w-[150px]"
+                className="min-w-[120px]"
               >
                 {isLoading ? (
                   <div className="flex items-center gap-2">
@@ -181,24 +180,11 @@ export default function CadastroPage() {
               </Button>
             </div>
 
-            <div className="bg-[#009089] h-2/3 lg:h-screen w-screen lg:w-1/2 rounded-t-[100px] lg:rounded-none flex flex-col justify-center items-center">
-                <div className="mt-10 lg:mt-40 w-[80%] lg:w-[60%] h-[80%] text-[20px] flex-row">
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <label className="text-white">E-mail</label>
-                        <Input
-                            {...register("email")}
-                            type="email"
-                            placeholder="Digite seu e-mail"
-                            className="bg-[#f5f5f5] h-[45px] mt-3 mb-4 rounded-2xl transition-transform duration-300 hover:scale-104"
-                            width={400}
-                        />
-                        {errors.email && <p className="text-red-500 ">{errors.email.message}</p>}
-
-            <div className="flex justify-center mt-2 text-sm text-[#0E2C66] text-center">
+            <div className="flex justify-center pt-2 text-white text-sm text-center">
               <p>
                 Já tem uma conta? <br />
-                <a className="hover:underline" href="/login">
-                  <strong>Clique aqui.</strong>
+                <a className="font-bold hover:underline" href="/login">
+                  Clique aqui.
                 </a>
               </p>
             </div>

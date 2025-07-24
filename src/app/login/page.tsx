@@ -70,24 +70,6 @@ export default function LoginPage() {
     }
   };
 
-
-    const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/google`, {
-      idToken: credentialResponse.credential
-    });
-   
-    const token = response.data;
-    localStorage.setItem("authToken", token);
-    router.push("/");
-
-  } catch(err) {
-    console.error("Erro no login com o Google: ", err);
-    toast.error("Falha no login com Google", {
-      duration: 3000
-    });
-  }
-}
-
-
   const handleError = () => {
     toast.error("Erro ao autenticar com o Google", { duration: 3000 });
   };
