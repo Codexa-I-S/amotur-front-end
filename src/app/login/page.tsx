@@ -60,8 +60,8 @@ const handleSuccess = async (credentialResponse: GoogleCredentialResponse) => {
     const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/auth/google`, {
       idToken: credentialResponse.credential
     });
-
-    const token = response.data.authToken;
+   
+    const token = response.data;
     localStorage.setItem("authToken", token);
     router.push("/");
 

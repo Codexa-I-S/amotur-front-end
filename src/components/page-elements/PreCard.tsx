@@ -46,12 +46,12 @@ export default function PreCard({
         <div className="overflow-hidden w-full h-full" ref={emblaRef}>
           <div className="flex h-full">
             {images.map((src, idx) => (
-              <div key={idx} className="flex-[0_0_100%] h-full">
+              <div key={idx} className="flex-[0_0_100%] h-full relative">
                 <Image
                   src={src}
                   fill
                   alt={`Imagem ${idx + 1}`}
-                  className="w-full h-full object-cover rounded-t-2xl"
+                  className="object-cover rounded-t-2xl"
                 />
               </div>
             ))}
