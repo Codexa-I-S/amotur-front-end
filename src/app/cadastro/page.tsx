@@ -11,7 +11,6 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
-import Link from "next/link";
 
 const validationSchema = z
   .object({
@@ -109,7 +108,7 @@ export default function CadastroPage() {
   };
 
   return (
-    <div className="h-screen w-screen flex flex-col lg:flex-row bg-[url('/palm-tree.jpg')] bg-cover bg-center ">
+    <div className="h-screen w-screen flex flex-col lg:flex-row bg-[url('/palm-tree.jpg')] bg-cover bg-center">
       {/* Lado esquerdo com imagem */}
       <div className="h-[40%] lg:h-full w-full lg:w-1/2 relative flex justify-center items-center">
         <div className="hidden lg:block absolute inset-0 bg-[url('/palm-tree.jpg')] bg-cover bg-center" />
@@ -124,11 +123,11 @@ export default function CadastroPage() {
       </div>
 
       {/* Lado direito com formulário */}
-      <div className="bg-[#F9FAFB] h-[60%] lg:h-full w-full lg:w-1/2 rounded-t-[65px] lg:rounded-none flex justify-center items-center">
-        <div className="w-[80%] lg:w-[60%] text-[20px]">
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div>
-              <label className="text-[#0E2C66] block mb-1">E-mail</label>
+      <div className="bg-[#F9FAFB] h-2/3 lg:h-full w-full lg:w-1/2 rounded-t-[65px] lg:rounded-none flex justify-center items-center">
+        <div className="mt-10 lg:mt-40 w-[85%] lg:w-[60%] text-[16px] flex flex-col gap-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5">
+            <div className="flex flex-col gap-1">
+              <label className="text-[#0E2C66]">E-mail:</label>
               <Input
                 {...register("email")}
                 type="email"
@@ -138,8 +137,8 @@ export default function CadastroPage() {
               {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
             </div>
 
-            <div>
-              <label className="text-[#0E2C66] block mb-1">Senha:</label>
+            <div className="flex flex-col gap-1">
+              <label className="text-[#0E2C66]">Senha:</label>
               <Input
                 {...register("password")}
                 type="password"
@@ -149,9 +148,8 @@ export default function CadastroPage() {
               {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
             </div>
 
-
-            <div>
-              <label className="text-[#0E2C66] block mb-1">Confirme sua senha:</label>
+            <div className="flex flex-col gap-1">
+              <label className="text-[#0E2C66]">Confirme sua senha:</label>
               <Input
                 {...register("confirmPassword")}
                 type="password"
@@ -165,15 +163,15 @@ export default function CadastroPage() {
 
             <div className="flex justify-center">
               <Button
-                variant="designButton"
-                size="buttonSize"
+                variant={"designButton"}
+                size={"buttonSize"}
                 disabled={isLoading}
                 type="submit"
                 className="min-w-[150px]"
               >
                 {isLoading ? (
                   <div className="flex items-center gap-2">
-                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <Loader2 className="h-6 w-6 animate-spin" />
                     Cadastrando...
                   </div>
                 ) : (
@@ -182,12 +180,12 @@ export default function CadastroPage() {
               </Button>
             </div>
 
-            <div className="flex justify-center pt-2 text-[#0E2C66] text-sm text-center">
+            <div className="flex justify-center text-sm text-[#0E2C66] text-center mt-[-px]">
               <p>
                 Já tem uma conta? <br />
-                <Link href="/login" className="font-bold hover:underline">
-                  Clique aqui.
-                </Link>
+                <a className="hover:underline" href="/login">
+                  <strong>Clique aqui.</strong>
+                </a>
               </p>
             </div>
           </form>
