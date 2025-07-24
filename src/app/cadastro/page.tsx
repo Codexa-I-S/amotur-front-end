@@ -148,6 +148,7 @@ export default function CadastroPage() {
               {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
             </div>
 
+
             <div className="flex flex-col gap-1">
               <label className="text-[#0E2C66]">Confirme sua senha:</label>
               <Input
@@ -179,6 +180,19 @@ export default function CadastroPage() {
                 )}
               </Button>
             </div>
+
+            <div className="bg-[#009089] h-2/3 lg:h-screen w-screen lg:w-1/2 rounded-t-[100px] lg:rounded-none flex flex-col justify-center items-center">
+                <div className="mt-10 lg:mt-40 w-[80%] lg:w-[60%] h-[80%] text-[20px] flex-row">
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        <label className="text-white">E-mail</label>
+                        <Input
+                            {...register("email")}
+                            type="email"
+                            placeholder="Digite seu e-mail"
+                            className="bg-[#f5f5f5] h-[45px] mt-3 mb-4 rounded-2xl transition-transform duration-300 hover:scale-104"
+                            width={400}
+                        />
+                        {errors.email && <p className="text-red-500 ">{errors.email.message}</p>}
 
             <div className="flex justify-center mt-2 text-sm text-[#0E2C66] text-center">
               <p>

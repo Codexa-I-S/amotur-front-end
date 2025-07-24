@@ -25,7 +25,7 @@ const iconClasses = {
 }
 
 const getIcon = (title: string, color: string) => {
-  const className = `h-6 w-6 sm:h-8 sm:w-8 ${iconClasses[color as keyof typeof iconClasses]}`
+  const className = `h-5 w-5 sm:h-6 sm:w-6 ${iconClasses[color as keyof typeof iconClasses]}`
 
   if (title.includes("USUÁRIOS")) return <Users className={className} />
   if (title.includes("LOCAIS")) return <MapPin className={className} />
@@ -40,14 +40,24 @@ export function MetricCard({ title, value, change, changeType, subtitle, color }
 
   return (
     <Card
-      className={`shadow-sm hover:shadow-md transition-shadow ${colorClasses[color]} min-h-[120px] sm:min-h-[140px]`}
+      className={`shadow-sm hover:shadow-md transition-all ${colorClasses[color]} h-full flex flex-col min-w-[200px]`}
     >
-      <CardContent className="p-4 sm:p-6">
-        <div className="flex items-center justify-between h-full">
-          <div className="flex-1 min-w-0">
-            <p className="text-xs font-semibold text-gray-600 uppercase tracking-wide mb-2 truncate">{title}</p>
+      <CardContent className="p-4 sm:p-5 flex-grow">
+        <div className="flex flex-col h-full">
+          <div className="flex justify-between items-start mb-2">
+            <p className="text-xs sm:text-[0.8rem] font-semibold text-gray-600 uppercase tracking-wide truncate">
+              {title}
+            </p>
+            <div className="ml-2 flex-shrink-0">
+              {getIcon(title, color)}
+            </div>
+          </div>
+          
+          <div className="mt-auto">
             <div className="flex items-baseline gap-2 mb-1 flex-wrap">
-              <p className="text-xl sm:text-2xl font-bold text-gray-800">{value}</p>
+              <p className="text-xl sm:text-2xl font-bold text-gray-800">
+                {value}
+              </p>
               <div
                 className={`flex items-center gap-1 ${isPositive ? "text-[#1cc88a]" : "text-[#e74a3b]"} flex-shrink-0`}
               >
@@ -61,7 +71,6 @@ export function MetricCard({ title, value, change, changeType, subtitle, color }
             </div>
             <p className="text-xs text-gray-500 truncate">{subtitle}</p>
           </div>
-          <div className="ml-2 sm:ml-4 flex-shrink-0">{getIcon(title, color)}</div>
         </div>
       </CardContent>
     </Card>
