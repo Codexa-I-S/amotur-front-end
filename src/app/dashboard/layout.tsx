@@ -1,11 +1,8 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
-import { Search, User, ChevronDown, Home, LogOut, MapPin, BarChart2, Menu } from "lucide-react";
+import { ChevronDown, Home, LogOut, MapPin, BarChart2} from "lucide-react";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
