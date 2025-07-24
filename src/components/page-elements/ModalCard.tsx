@@ -30,7 +30,7 @@ export default function ModalCard({name, type, instagramUrl, email, telefone, de
                 Mais informações
         
             </DialogTrigger>
-            <DialogContent className="p-5">
+            <DialogContent className="p-5 z-[1010]">
                 
                  <DialogHeader>
 
