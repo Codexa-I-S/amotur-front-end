@@ -93,7 +93,7 @@ export default function SideBarLocais({ tipo, label, open, onOpenChange, setFocu
       >
         <SheetHeader className="h-[10%] ">
 
-          <SheetTitle className="text-white" >{label}</SheetTitle>
+          <SheetTitle className="text-[#6A87A0]" >{label}</SheetTitle>
 
         </SheetHeader>
 

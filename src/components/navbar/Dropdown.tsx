@@ -48,7 +48,7 @@ export default function Dropdown() {
 
         </DropdownMenuTrigger>
 
-        <DropdownMenuContent className="z-[1002] mt-5">
+        <DropdownMenuContent className="z-[1002] mt-5 mr-4">
 
        
 
