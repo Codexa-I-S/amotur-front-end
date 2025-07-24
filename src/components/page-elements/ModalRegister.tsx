@@ -24,7 +24,6 @@ export default function ModalRegister({ lat, lng }: Props) {
       <DialogContent
         className={`
           scrollbar-hidden
-          [&>button.absolute]:hidden
           max-h-[90vh] overflow-y-auto
           w-[95vw] max-w-md sm:max-w-lg
           p-0 sm:p-0
