@@ -5,6 +5,8 @@ import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import { Toaster } from "sonner"; // Importação direta do Sonner
 
+import { GoogleOAuthProvider } from '@react-oauth/google'
+
 const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
@@ -24,9 +26,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-br">
-      <body className={`${poppins.className} antialiased`}>       
-        {children}
-        
+      <body className={`${poppins.className} antialiased`}>  
+
+        <GoogleOAuthProvider clientId={process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!}>
+          
+          {children}
+
+        </GoogleOAuthProvider>
+
         {/* Adição do Toaster (única modificação) */}
         <Toaster 
           position="top-center"
