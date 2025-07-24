@@ -88,12 +88,12 @@ export default function SideBarLocais({ tipo, label, open, onOpenChange, setFocu
         side={isMobile ? "bottom" : "left"}
         className={`flex flex-col [&>button.absolute]:hidden ${
           isMobile ? "h-[65%]" : "w-[360px] sm:w-[350px] h-full z-[2000]"
-        } bg-white/10 backdrop-blur-lg border border-white/20`}
+        } bg-white`}
         aria-describedby={undefined}
       >
         <SheetHeader className="h-[10%] ">
 
-          <SheetTitle className="text-white" >{label}</SheetTitle>
+          <SheetTitle className="text-[#6A87A0]" >{label}</SheetTitle>
 
         </SheetHeader>
 
@@ -105,22 +105,24 @@ export default function SideBarLocais({ tipo, label, open, onOpenChange, setFocu
           ))
           :
             locais.map((local, idx) => (
-              <PreCard
-                key={idx}
-                name={local.name}
-                type={local.type}
-                email={local.contacts.email}
-                telefone={local.contacts.telefone}
-                instagramUrl={local.contacts.site}
-                description={local.description}
-                images={local.images}
-                logo={local.logo}
-
-                onClick={() => {
-                  setFocusCoords([local.coordinates.lat, local.coordinates.lng])
-                  onOpenChange(false)
-                }}
-              />
+              <div className="shadow-md rounded-2xl" key={idx}>
+                <PreCard
+                  key={idx}
+                  name={local.name}
+                  type={local.type}
+                  email={local.contacts.email}
+                  telefone={local.contacts.telefone}
+                  instagramUrl={local.contacts.site}
+                  description={local.description}
+                  images={local.images}
+                  logo={local.logo}
+  
+                  onClick={() => {
+                    setFocusCoords([local.coordinates.lat, local.coordinates.lng])
+                    onOpenChange(false)
+                  }}
+                />
+              </div>
             ))
           }
         </div>

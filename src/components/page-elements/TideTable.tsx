@@ -27,6 +27,7 @@ export default function TideCard() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [tooltipOpen, setTooltipOpen] = useState(false);
+  const [token, setToken] = useState<string | null>(null)
 
   const hoje = dayjs().format("YYYY-MM-DD");
 
@@ -35,6 +36,7 @@ export default function TideCard() {
       setLoading(true);
       setError("");
       const token = localStorage.getItem("authToken");
+      setToken(token)
 
       try {
         const response = await axios.get<ApiResponse>(
@@ -61,9 +63,24 @@ export default function TideCard() {
 
     fetchTide();
   }, [hoje]);
+  
+  if (!token)
+     return (
+        <div className="flex justify-center items-center">
+          <p className="text-red-600">Faça login para usar essa funcionalidade.</p>
+        </div>
+     )
+     
+  if (loading) 
+    return (
+      <div className="flex justify-center items-center">
+        <p>Carregando tabela da maré...</p>
+      </div>
+  )
 
-  if (loading) return <p>Carregando tabela da maré...</p>;
-  if (error) return <p className="text-red-600">Erro: {error}</p>;
+
+  if (error) return <p className="text-red-600">Erro: {error}</p>
+
   if (!dataMar) return null;
 
   return (

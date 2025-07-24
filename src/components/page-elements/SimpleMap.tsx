@@ -13,6 +13,7 @@ import FlyToLocation from './FlyToLocation';
 import TideCard from './TideTable';
 import { getUserRole } from './GetUserRole';
 
+
 // Correção type-safe para o problema dos ícones
 interface IconDefaultProto {
   _getIconUrl?: string;
@@ -46,25 +47,25 @@ type PointsType = "HOTEL" | "POUSADA" | "BAR" | "RESTAURANTE" | string
 
 const iconMap: Record<string, L.Icon> = {
   HOTEL: new L.Icon({
-    iconUrl: "https://img.icons8.com/?size=100&id=3EoZXr2wBtFd&format=png&color=C850F2",
+    iconUrl: "/location.svg",
     iconSize: [35, 35],
     iconAnchor: [17, 35],
     popupAnchor: [0, -35]
   }),
   POUSADA: new L.Icon({
-    iconUrl: "https://img.icons8.com/?size=100&id=bc9PfkZ8cbJC&format=png&color=FAB005",
+    iconUrl: "/pin-map.svg",
     iconSize: [35, 35],
     iconAnchor: [17, 35],
     popupAnchor: [0, -35]
   }),
   BAR: new L.Icon({
-    iconUrl: "https://img.icons8.com/?size=100&id=C7fB8O7JIvix&format=png&color=228BE6",
+    iconUrl: "/pub.svg",
     iconSize: [35, 35],
     iconAnchor: [17, 35],
     popupAnchor: [0, -35]
   }),
   RESTAURANTE: new L.Icon({
-    iconUrl: "https://img.icons8.com/?size=100&id=lq7Ugy76e18x&format=png&color=12B886",
+    iconUrl: "/restaurant.svg",
     iconSize: [35, 35],
     iconAnchor: [17, 35],
     popupAnchor: [0, -35]
@@ -199,9 +200,10 @@ export default function SimpleMap({ focusCoords, setFocusCoords }: SimpleMapProp
         
         <ZoomControls/>
         
+        
         <Marker position={[-3.0206125094, -39.6507740021]} icon={defaultIcon}>
           <Popup maxWidth={400}>
-            <div className="w-[350px] max-h-[400px] overflow-auto">
+            <div className="w-[350px] max-h-[400px] overflow-auto mx-[-12]">
               <TideCard />
             </div>
           </Popup>
@@ -209,5 +211,5 @@ export default function SimpleMap({ focusCoords, setFocusCoords }: SimpleMapProp
 
       </MapContainer>
     </div>
-  );
+  );  
 }
