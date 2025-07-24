@@ -25,7 +25,7 @@ export default function ModalCard({name, type, instagramUrl, email, telefone, de
 
     return (
         <Dialog>
-            <DialogTrigger className="mt-2 cursor-pointer">
+            <DialogTrigger className="mt-2 cursor-pointer text-[12px]">
                 
                 Mais informações
         

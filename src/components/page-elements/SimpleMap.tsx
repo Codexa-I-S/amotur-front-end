@@ -201,7 +201,7 @@ export default function SimpleMap({ focusCoords, setFocusCoords }: SimpleMapProp
         
         <Marker position={[-3.0206125094, -39.6507740021]} icon={defaultIcon}>
           <Popup maxWidth={400}>
-            <div className="w-[350px] max-h-[400px] overflow-auto">
+            <div className="w-[350px] max-h-[400px] overflow-auto mx-[-12]">
               <TideCard />
             </div>
           </Popup>
