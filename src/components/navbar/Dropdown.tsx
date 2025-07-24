@@ -6,7 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { LayoutDashboard } from "lucide-react"
+import { MoreVertical } from "lucide-react"
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -44,7 +44,7 @@ export default function Dropdown() {
         <DropdownMenu>
         <DropdownMenuTrigger>
 
-            <LayoutDashboard/>
+            <MoreVertical/>
 
         </DropdownMenuTrigger>
 
@@ -67,15 +67,18 @@ export default function Dropdown() {
                     </button>
                 )}
             </DropdownMenuItem>
-            <DropdownMenuItem>
-                {getUserRole() === 'ADMIN' && (
+
+            {getUserRole() === 'ADMIN' && (
+                <DropdownMenuItem>
+
                     <button
                         onClick={handleRedirect}
-                    >
+                        >
                         Dashboard
                     </button>
-                )}
-            </DropdownMenuItem>
+
+                </DropdownMenuItem>
+            )}
        
 
         </DropdownMenuContent>
