@@ -6,7 +6,6 @@ import SideBarLocais from "../page-elements/SideBarLocais";
 import { useState } from "react";
 import { MdLocationOn, MdHotel, MdRestaurant } from "react-icons/md";
 import { FaPizzaSlice, FaMartiniGlass, FaHotel } from "react-icons/fa6";
-import { getUserRole } from "../page-elements/GetUserRole";
 import Dropdown from "./Dropdown";
 
 type NavbarProps = {
