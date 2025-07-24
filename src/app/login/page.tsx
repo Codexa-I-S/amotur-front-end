@@ -133,10 +133,10 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="h-screen w-screen flex flex-col lg:flex-row">
+    <div className="h-screen w-screen flex flex-col lg:flex-row bg-[url('/palm-tree.jpg')]  bg-cover bg-center ">
       {/* LADO DA IMAGEM */}
       <div className="h-[40%] lg:h-full w-full lg:w-1/2 relative flex justify-center items-center">
-        <div className="absolute inset-0 bg-[url('/palm-tree.jpg')] bg-cover bg-center" />
+        <div className="hidden lg:block absolute inset-0 bg-[url('/palm-tree.jpg')] bg-cover bg-center" />
         <Image
           className="w-[200px] lg:w-[350px] z-10"
           src="/amotur_branca.png"

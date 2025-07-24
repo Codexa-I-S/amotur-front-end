@@ -109,10 +109,10 @@ export default function CadastroPage() {
   };
 
   return (
-    <div className="h-screen w-screen flex flex-col lg:flex-row">
+    <div className="h-screen w-screen flex flex-col lg:flex-row bg-[url('/palm-tree.jpg')] bg-cover bg-center ">
       {/* Lado esquerdo com imagem */}
       <div className="h-[40%] lg:h-full w-full lg:w-1/2 relative flex justify-center items-center">
-        <div className="absolute inset-0 bg-[url('/palm-tree.jpg')] bg-cover bg-center" />
+        <div className="hidden lg:block absolute inset-0 bg-[url('/palm-tree.jpg')] bg-cover bg-center" />
         <Image
           className="w-[200px] lg:w-[350px] z-10"
           src="/amotur_branca.png"
@@ -124,11 +124,11 @@ export default function CadastroPage() {
       </div>
 
       {/* Lado direito com formulário */}
-      <div className="bg-[#F9FAFB] h-2/3 lg:h-full w-full lg:w-1/2 rounded-t-[65px] lg:rounded-none flex justify-center items-center">
-        <div className="w-[85%] lg:w-[60%] flex flex-col gap-6">
-          <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-5 text-[16px]">
-            <div className="flex flex-col gap-1">
-              <label className="text-[#0E2C66]">E-mail:</label>
+      <div className="bg-[#F9FAFB] h-[60%] lg:h-full w-full lg:w-1/2 rounded-t-[65px] lg:rounded-none flex justify-center items-center">
+        <div className="w-[80%] lg:w-[60%] text-[20px]">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            <div>
+              <label className="text-[#0E2C66] block mb-1">E-mail</label>
               <Input
                 {...register("email")}
                 type="email"
@@ -138,8 +138,8 @@ export default function CadastroPage() {
               {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
             </div>
 
-            <div className="flex flex-col gap-1">
-              <label className="text-[#0E2C66]">Senha:</label>
+            <div>
+              <label className="text-[#0E2C66] block mb-1">Senha:</label>
               <Input
                 {...register("password")}
                 type="password"
@@ -149,8 +149,9 @@ export default function CadastroPage() {
               {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
             </div>
 
-            <div className="flex flex-col gap-1">
-              <label className="text-[#0E2C66]">Confirme sua senha:</label>
+
+            <div>
+              <label className="text-[#0E2C66] block mb-1">Confirme sua senha:</label>
               <Input
                 {...register("confirmPassword")}
                 type="password"
@@ -181,7 +182,7 @@ export default function CadastroPage() {
               </Button>
             </div>
 
-            <div className="flex justify-center text-[#0E2C66] text-center text-sm">
+            <div className="flex justify-center pt-2 text-[#0E2C66] text-sm text-center">
               <p>
                 Já tem uma conta? <br />
                 <Link href="/login" className="font-bold hover:underline">
