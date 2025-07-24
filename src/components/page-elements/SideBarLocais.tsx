@@ -105,7 +105,7 @@ export default function SideBarLocais({ tipo, label, open, onOpenChange, setFocu
           ))
           :
             locais.map((local, idx) => (
-              <div className="shadow-md rounded-2xl">
+              <div className="shadow-md rounded-2xl" key={idx}>
                 <PreCard
                   key={idx}
                   name={local.name}
