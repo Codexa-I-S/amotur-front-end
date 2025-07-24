@@ -7,6 +7,9 @@ import { useEffect, useState } from "react";
 import { MdLocationOn, MdHotel, MdRestaurant } from "react-icons/md";
 import { FaPizzaSlice, FaMartiniGlass, FaHotel } from "react-icons/fa6";
 import { useRouter } from "next/navigation";
+import { getUserRole } from "../page-elements/GetUserRole";
+import { LayoutDashboard } from "lucide-react";
+import Dropdown from "./Dropdown";
 
 type NavbarProps = {
   setFocusCoords: (coords: [number, number] | null) => void;
@@ -47,6 +50,12 @@ export default function Navbar({ setFocusCoords }: NavbarProps) {
     localStorage.removeItem("authToken");
     window.location.reload();
   };
+
+  const handleRedirect = () => {
+
+    router.push("/dashboard")
+
+  }
 
   return (
     <div className="relative z-[1001]">
@@ -95,6 +104,11 @@ export default function Navbar({ setFocusCoords }: NavbarProps) {
                 </button>
               )}
             </li>
+            <li>
+              {getUserRole() === 'ADMIN' && (
+                <Dropdown/>
+              )}
+            </li>
           </ul>
 
           <div>
@@ -123,6 +137,9 @@ export default function Navbar({ setFocusCoords }: NavbarProps) {
             Sair
           </button>
         )}
+        {getUserRole() === 'ADMIN' && (
+                <Dropdown/>
+          )}
       </div>
 
       {/* Botões flutuantes no topo - mobile (logo abaixo da barra) */}
