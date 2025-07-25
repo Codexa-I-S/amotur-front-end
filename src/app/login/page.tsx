@@ -61,7 +61,7 @@ export default function LoginPage() {
         { idToken: credentialResponse.credential }
       );
 
-      const token = response.data.authToken;
+      const token = response.data;
       localStorage.setItem("authToken", token);
       router.push("/");
     } catch (err) {
