@@ -20,7 +20,7 @@ interface DashboardData {
 
 
 const api = axios.create({
-  baseURL: "https://squad-03-server-production.up.railway.app",
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     'Accept': 'application/json',
     'Content-Type': 'application/json'

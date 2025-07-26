@@ -37,7 +37,7 @@ const LocationByRegionChart: React.FC = () => {
         const today = new Date().toLocaleDateString('pt-BR').replace(/\//g, '%2F');
         
         const response = await axios.get<ApiResponse>(
-          `https://squad-03-server-production.up.railway.app/dashboard/${today}`,
+          `${process.env.NEXT_PUBLIC_API_URL}/dashboard/${today}`,
           {
             headers: {
               'Authorization': `Bearer ${token}`
