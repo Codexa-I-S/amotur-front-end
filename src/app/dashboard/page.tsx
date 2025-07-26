@@ -18,7 +18,7 @@ interface DashboardData {
   lugaresPorRegiao: Array<{ location: string; quantidade: number }>
 }
 
-// Criação da instância do Axios com interceptors
+
 const api = axios.create({
   baseURL: "https://squad-03-server-production.up.railway.app",
   headers: {
@@ -29,16 +29,16 @@ const api = axios.create({
 
 // Interceptor para adicionar o token automaticamente
 api.interceptors.request.use((config) => {
-  // Busca o token no localStorage com a chave 'authToken'
+
   const token = localStorage.getItem('authToken')
   if (token) {
-    // Adiciona o token no header Authorization
+    
     config.headers.Authorization = `Bearer ${token}`
   }
   return config
 })
 
-// Interceptor para tratamento global de erros
+
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -69,7 +69,7 @@ export default function DashboardPage() {
         setLoading(true)
         setError(null)
         
-        // Verifica se existe token com a chave 'authToken'
+      
         const token = localStorage.getItem('authToken')
         if (!token) {
           throw new Error('Token de autenticação não encontrado')
