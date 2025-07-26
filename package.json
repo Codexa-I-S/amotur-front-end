@@ -39,6 +39,7 @@
     "lucide-react": "^0.517.0",
     "motion": "^12.23.0",
     "next": "^15.4.2",
+    "next-auth": "^4.24.11",
     "react": "^19.0.0-rc.1",
     "react-apexcharts": "^1.7.0",
     "react-dom": "^19.0.0-rc.1",
