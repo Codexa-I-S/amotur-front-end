@@ -2,25 +2,31 @@
 
 import { Bar, BarChart, CartesianGrid, XAxis, YAxis, ResponsiveContainer, Tooltip, TooltipProps } from "recharts"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { useEffect, useState } from "react"
+import { Skeleton } from "@/components/ui/skeleton"
+import axios from "axios"
+import { useRouter } from "next/navigation"
 
 interface ChartDataItem {
-  region: string
-  locais: number
+  type: string
+  quantidade: number
   fill?: string
 }
 
-interface LocationChartProps {
-  data?: ChartDataItem[]
+interface ApiResponse {
+  lugaresPorTipo: ChartDataItem[]
+  totalDeLugares: number
 }
 
-const defaultData: ChartDataItem[] = [
-  { region: "Pontos Turísticos", locais: 32, fill: "#3b82f6" },
-  { region: "Hotéis", locais: 43, fill: "#10b981" },
-  { region: "Pousadas", locais: 34, fill: "#f59e0b" },
-  { region: "Restaurantes", locais: 28, fill: "#ef4444" },
-  { region: "Bares", locais: 22, fill: "#8b5cf6" },
-  { region: "Petiscaria", locais: 1, fill: "#ec4899" },
-]
+// Cores para cada tipo de local
+const typeColors: Record<string, string> = {
+  "Bar": "#8b5cf6",
+  "Ponto Turístico": "#3b82f6",
+  "Pousada": "#f59e0b",
+  "Restaurante": "#ef4444",
+  "Hotel": "#10b981",
+  "Petiscaria": "#ec4899"
+}
 
 interface CustomTooltipProps extends TooltipProps<number, string> {
   active?: boolean
@@ -39,15 +45,106 @@ const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
 
   return (
     <div className="bg-white p-3 rounded-lg border border-gray-200 shadow-md text-sm backdrop-blur-sm bg-opacity-90">
-      <p className="font-semibold text-gray-900">{data.region}</p>
+      <p className="font-semibold text-gray-900">{data.type}</p>
       <p className="text-gray-600">
-        Locais: <span className="font-medium text-gray-900">{payload[0].value}</span>
+        Quantidade: <span className="font-medium text-gray-900">{payload[0].value}</span>
       </p>
     </div>
   )
 }
 
-export function LocationChart({ data = defaultData }: LocationChartProps) {
+export function LocationChart() {
+  const router = useRouter()
+  const [chartData, setChartData] = useState<ChartDataItem[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true)
+        
+        // Obtém o token do localStorage (mesmo padrão do LocationByRegionChart)
+        const token = localStorage.getItem('authToken')
+        
+        if (!token) {
+          throw new Error('Token de autenticação não encontrado')
+        }
+
+        // Formata a data igual ao componente que funciona
+        const today = new Date().toLocaleDateString('pt-BR').replace(/\//g, '%2F')
+        
+        // Faz a requisição com a mesma URL base e headers
+        const response = await axios.get<ApiResponse>(
+          `${process.env.NEXT_PUBLIC_API_URL}/dashboard/${today}`,
+          {
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          }
+        )
+
+        // Adiciona cores aos dados
+        const formattedData = response.data.lugaresPorTipo.map(item => ({
+          ...item,
+          fill: typeColors[item.type] || "#8884d8"
+        }))
+
+        setChartData(formattedData)
+      } catch (err) {
+        console.error("Erro ao buscar dados:", err)
+        
+        if (axios.isAxiosError(err)) {
+          setError(err.response?.data?.message || err.message || 'Erro ao carregar dados')
+          // Redireciona para login se não autorizado
+          if (err.response?.status === 401) {
+            router.push('/login')
+          }
+        } else if (err instanceof Error) {
+          setError(err.message)
+        } else {
+          setError('Ocorreu um erro desconhecido')
+        }
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [router])
+
+  if (loading) {
+    return (
+      <Card className="shadow-sm border-0">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-base sm:text-lg font-semibold text-gray-800">
+            Locais Cadastrados por Categorias
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="px-1 sm:px-4">
+          <Skeleton className="h-[320px] w-full" />
+        </CardContent>
+      </Card>
+    )
+  }
+
+  if (error) {
+    return (
+      <Card className="shadow-sm border-0">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-base sm:text-lg font-semibold text-gray-800">
+            Locais Cadastrados por Categorias
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="px-1 sm:px-4">
+          <div className="h-[320px] flex items-center justify-center text-red-500">
+            {error}
+          </div>
+        </CardContent>
+      </Card>
+    )
+  }
+
   return (
     <Card className="shadow-sm border-0">
       <CardHeader className="pb-2">
@@ -63,14 +160,13 @@ export function LocationChart({ data = defaultData }: LocationChartProps) {
         >
           <ResponsiveContainer width="100%" height="100%">
             <BarChart 
-              data={data} 
+              data={chartData} 
               margin={{ top: 20, right: 10, left: 20, bottom: 40 }}
-              accessibilityLayer
               barCategoryGap="15%"
             >
               <CartesianGrid strokeDasharray="3 3" stroke="#f3f4f6" vertical={false} />
               <XAxis
-                dataKey="region"
+                dataKey="type"
                 tick={{ fontSize: 11, fill: "#6b7280" }}
                 axisLine={{ stroke: "#e5e7eb" }}
                 tickLine={false}
@@ -84,29 +180,13 @@ export function LocationChart({ data = defaultData }: LocationChartProps) {
                 axisLine={{ stroke: "#e5e7eb" }}
                 tickLine={false}
                 tickCount={6}
-                label={{
-                  value: "Quantidade",
-                  angle: -90,
-                  position: "insideLeft",
-                  fontSize: 12,
-                  fill: "#6b7280",
-                  offset: 10
-                }}
               />
-              <Tooltip 
-                content={<CustomTooltip />}
-                cursor={{ fill: "rgba(59, 130, 246, 0.05)" }}
-              />
+              <Tooltip content={<CustomTooltip />} />
               <Bar 
-                dataKey="locais" 
+                dataKey="quantidade" 
                 radius={[4, 4, 0, 0]} 
-                name="Locais"
-                aria-label="Quantidade de locais"
-              >
-                {data.map((entry, index) => (
-                  <rect key={`bar-${index}`} fill={entry.fill} />
-                ))}
-              </Bar>
+                name="Quantidade"
+              />
             </BarChart>
           </ResponsiveContainer>
         </div>

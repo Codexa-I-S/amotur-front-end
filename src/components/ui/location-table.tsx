@@ -1,62 +1,135 @@
 "use client"
-import { useState } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { Edit, Trash2, Eye, Search, Plus, ChevronLeft, ChevronRight } from "lucide-react"
+import { Edit, Trash2, Eye, Search, Plus, ChevronLeft, ChevronRight, Loader2 } from "lucide-react"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { Input } from "@/components/ui/input"
 import { Pagination, PaginationContent, PaginationItem, PaginationLink } from "@/components/ui/pagination"
+import axios from "axios"
+import { Skeleton } from "@/components/ui/skeleton"
+import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 type Location = {
-  id: number
+  id: string
   name: string
   region: string
   type: string
 }
 
+type ApiLocation = {
+  id: string
+  name: string
+  localization: string
+  type: string
+}
+
 export function LocationTable() {
+  const router = useRouter()
   const [searchTerm, setSearchTerm] = useState("")
   const [currentPage, setCurrentPage] = useState(1)
+  const [locations, setLocations] = useState<Location[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+  const [totalItems, setTotalItems] = useState(0)
+  const [lastPage, setLastPage] = useState(1)
+  const [isDeleting, setIsDeleting] = useState<string | null>(null)
   const itemsPerPage = 5
 
-  const locations: Location[] = [
-    {
-      id: 1,
-      name: "Praia de Icaraí",
-      region: "Icaraí",
-      type: "Praia",
-    },
-    {
-      id: 2,
-      name: "Açai do Biel",
-      region: "Caetanos",
-      type: "Alimentação",
-    },
-    {
-      id: 3,
-      name: "Moitas Academia",
-      region: "Moitas",
-      type: "Academia",
-    },
-    {
-      id: 4,
-      name: "Restaurante Maré Alta",
-      region: "Centro",
-      type: "Restaurante",
-    },
-    {
-      id: 5,
-      name: "Pousada Sol Nascente",
-      region: "Praia Grande",
-      type: "Hospedagem",
-    },
-    {
-      id: 6,
-      name: "Café Cultural",
-      region: "Histórico",
-      type: "Cafeteria",
-    },
-  ]
+  const fetchLocations = useCallback(async () => {
+    try {
+      setLoading(true)
+      const token = localStorage.getItem('authToken')
+      
+      if (!token) {
+        throw new Error('Token de autenticação não encontrado')
+      }
+
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_API_URL}/place/page?limit=${itemsPerPage}&page=${currentPage}`,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'accept': '*/*'
+          }
+        }
+      )
+
+      setLocations(response.data.data.map((item: ApiLocation) => ({
+        id: item.id,
+        name: item.name,
+        region: item.localization,
+        type: item.type
+      })))
+
+      setTotalItems(response.data.meta.total)
+      setLastPage(response.data.meta.lastPage)
+    } catch (err) {
+      console.error("Erro ao buscar locais:", err)
+      setError("Falha ao carregar locais. Tente novamente mais tarde.")
+    } finally {
+      setLoading(false)
+    }
+  }, [currentPage, itemsPerPage])
+
+  useEffect(() => {
+    fetchLocations()
+  }, [fetchLocations, currentPage])
+
+  const handleDeleteLocation = async (id: string) => {
+    try {
+      setIsDeleting(id)
+      const token = localStorage.getItem('authToken')
+      
+      if (!token) {
+        throw new Error('Token de autenticação não encontrado')
+      }
+
+      await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/place/id=${id}`,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'accept': '*/*'
+          }
+        }
+      )
+
+      toast.success("Local deletado com sucesso!")
+      
+      // Recarregar os dados mantendo a página atual
+      if (locations.length === 1 && currentPage > 1) {
+        setCurrentPage(currentPage - 1)
+      } else {
+        fetchLocations()
+      }
+    } catch (err) {
+      console.error("Erro ao deletar local:", err)
+      
+      if (axios.isAxiosError(err)) {
+        if (err.response?.status === 401 || err.response?.status === 403) {
+          toast.error("Sessão expirada", {
+            description: "Faça login novamente para continuar",
+            duration: 3000
+          })
+          router.push('/login')
+        } else {
+          toast.error("Erro ao deletar local", {
+            description: err.response?.data?.message || "Ocorreu um erro ao deletar o local",
+            duration: 3000
+          })
+        }
+      } else {
+        toast.error("Erro desconhecido", {
+          description: "Ocorreu um erro inesperado",
+          duration: 3000
+        })
+      }
+    } finally {
+      setIsDeleting(null)
+    }
+  }
 
   const filteredLocations = locations.filter(location => 
     location.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -64,11 +137,41 @@ export function LocationTable() {
     location.type.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
-  const totalPages = Math.ceil(filteredLocations.length / itemsPerPage)
-  const paginatedLocations = filteredLocations.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  )
+  const handlePageChange = (newPage: number) => {
+    setCurrentPage(newPage)
+  }
+
+  if (loading && locations.length === 0) {
+    return (
+      <Card className="shadow-sm border-0">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-lg font-semibold text-gray-800">Locais Cadastrados</CardTitle>
+        </CardHeader>
+        <CardContent className="px-0 sm:px-6">
+          <div className="space-y-4">
+            {[...Array(5)].map((_, i) => (
+              <Skeleton key={i} className="h-16 w-full" />
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    )
+  }
+
+  if (error) {
+    return (
+      <Card className="shadow-sm border-0">
+        <CardHeader className="pb-2">
+          <CardTitle className="text-lg font-semibold text-gray-800">Locais Cadastrados</CardTitle>
+        </CardHeader>
+        <CardContent className="px-0 sm:px-6">
+          <div className="h-32 flex items-center justify-center text-red-500">
+            {error}
+          </div>
+        </CardContent>
+      </Card>
+    )
+  }
 
   return (
     <Card className="shadow-sm border-0">
@@ -104,17 +207,19 @@ export function LocationTable() {
                     Nome do Local
                   </TableHead>
                   <TableHead className="font-semibold text-gray-700 px-4 py-3">Região</TableHead>
-                  <TableHead className="font-semibold text-gray-700 px-4 py-3">Type</TableHead>
+                  <TableHead className="font-semibold text-gray-700 px-4 py-3">Categoria</TableHead>
                   <TableHead className="font-semibold text-gray-700 px-4 py-3 text-right">
                     Ações
                   </TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {paginatedLocations.length > 0 ? (
-                  paginatedLocations.map((location) => (
+                {filteredLocations.length > 0 ? (
+                  filteredLocations.map((location) => (
                     <TableRow key={location.id} className="hover:bg-gray-50 transition-colors">
-                      <TableCell className="text-gray-600 px-4 py-3">{location.id}</TableCell>
+                      <TableCell className="text-gray-600 px-4 py-3">
+                        {location.id.substring(0, 8)}...
+                      </TableCell>
                       <TableCell className="font-medium text-gray-800 px-4 py-3">
                         <div className="max-w-[180px] truncate">{location.name}</div>
                       </TableCell>
@@ -143,8 +248,14 @@ export function LocationTable() {
                             size="sm"
                             className="h-8 w-8 p-0 text-[#e74a3b] hover:text-[#c82333] hover:bg-red-50"
                             title="Excluir"
+                            onClick={() => handleDeleteLocation(location.id)}
+                            disabled={isDeleting === location.id}
                           >
-                            <Trash2 className="h-4 w-4" />
+                            {isDeleting === location.id ? (
+                              <Loader2 className="h-4 w-4 animate-spin" />
+                            ) : (
+                              <Trash2 className="h-4 w-4" />
+                            )}
                           </Button>
                         </div>
                       </TableCell>
@@ -162,12 +273,12 @@ export function LocationTable() {
           </div>
         </div>
 
-        {filteredLocations.length > 0 && (
+        {totalItems > 0 && (
           <div className="mt-6 flex justify-between items-center">
             <div className="text-sm text-gray-600">
-              Mostrando {Math.min((currentPage - 1) * itemsPerPage + 1, filteredLocations.length)} a{' '}
-              {Math.min(currentPage * itemsPerPage, filteredLocations.length)} de{' '}
-              {filteredLocations.length} locais
+              Mostrando {(currentPage - 1) * itemsPerPage + 1} a{' '}
+              {Math.min(currentPage * itemsPerPage, totalItems)} de{' '}
+              {totalItems} locais
             </div>
             <Pagination>
               <PaginationContent>
@@ -175,7 +286,7 @@ export function LocationTable() {
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => currentPage > 1 && setCurrentPage(currentPage - 1)}
+                    onClick={() => handlePageChange(currentPage - 1)}
                     disabled={currentPage === 1}
                     className="gap-1 pl-2.5"
                   >
@@ -184,10 +295,10 @@ export function LocationTable() {
                   </Button>
                 </PaginationItem>
                 
-                {Array.from({ length: totalPages }, (_, i) => i + 1).map(page => (
+                {Array.from({ length: lastPage }, (_, i) => i + 1).map(page => (
                   <PaginationItem key={page}>
                     <PaginationLink
-                      onClick={() => setCurrentPage(page)}
+                      onClick={() => handlePageChange(page)}
                       isActive={page === currentPage}
                     >
                       {page}
@@ -199,8 +310,8 @@ export function LocationTable() {
                   <Button
                     variant="ghost"
                     size="sm"
-                    onClick={() => currentPage < totalPages && setCurrentPage(currentPage + 1)}
-                    disabled={currentPage === totalPages}
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    disabled={currentPage === lastPage}
                     className="gap-1 pr-2.5"
                   >
                     <span>Próxima</span>
