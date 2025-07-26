@@ -61,7 +61,7 @@ export default function LoginPage() {
       );
 
       const token = response.data;
-      localStorage.setItem("authToken", token);
+      localStorage.setItem("acess_token", token);
       router.push("/");
     } catch (err) {
       console.error("Erro no login com o Google: ", err);
