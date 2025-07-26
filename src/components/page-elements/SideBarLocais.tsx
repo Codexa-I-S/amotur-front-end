@@ -78,7 +78,7 @@ export default function SideBarLocais({ tipo, label, open, onOpenChange, setFocu
     if (open) {
       setLoading(true)
 
-      axios.get("https://squad-03-server-production.up.railway.app/place", {
+      axios.get(`${process.env.NEXT_PUBLIC_API_URL}/place`, {
         params: {
           type: tipo
         }

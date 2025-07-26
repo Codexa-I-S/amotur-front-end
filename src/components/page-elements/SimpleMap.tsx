@@ -117,7 +117,7 @@ export default function SimpleMap({ focusCoords, setFocusCoords }: SimpleMapProp
       try {
         setLoading(true);
         setError(null);
-        const response = await axios.get("https://squad-03-server-production.up.railway.app/place/all");
+        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/place/all`);
 
         setPlaces(response.data);
         console.log("Places recebidos:", response.data);
