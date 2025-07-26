@@ -47,7 +47,7 @@ export function LocationTable() {
       }
 
       const response = await axios.get(
-        `https://squad-03-server-production.up.railway.app/place/page?limit=${itemsPerPage}&page=${currentPage}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/place/page?limit=${itemsPerPage}&page=${currentPage}`,
         {
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -87,7 +87,7 @@ export function LocationTable() {
       }
 
       await axios.delete(
-        `https://squad-03-server-production.up.railway.app/place/id=${id}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/place/id=${id}`,
         {
           headers: {
             'Authorization': `Bearer ${token}`,
