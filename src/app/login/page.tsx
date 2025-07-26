@@ -56,8 +56,7 @@ export default function LoginPage() {
         throw new Error("Credencial do Google não encontrada");
       }
 
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/google`,
+      const response = await api.post("/auth/google",
         { idToken: credentialResponse.credential }
       );
 

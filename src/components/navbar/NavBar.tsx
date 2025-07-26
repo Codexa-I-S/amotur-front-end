@@ -65,7 +65,7 @@ export default function Navbar({ setFocusCoords }: NavbarProps) {
             })}
           </ul>
           <div>
-            <SearchDialog />
+            <SearchDialog setFocusCoords={setFocusCoords}/>
           </div>
           <div>
               <Dropdown/>
@@ -76,7 +76,7 @@ export default function Navbar({ setFocusCoords }: NavbarProps) {
       {/* Barra de pesquisa flutuante - mobile */}
       <div className="md:hidden fixed top-6 left-2 right-2 z-[1002] bg-[#F9FAFB]/70 backdrop-blur-md rounded-2xl shadow border px-4 py-2.5 flex items-center gap-3">
         <div className="flex-grow">
-          <SearchDialog variant="mobile" />
+          <SearchDialog variant="mobile" setFocusCoords={setFocusCoords} />
         </div>
         <div>
             <Dropdown/>
