@@ -12,6 +12,7 @@ import { toast } from "sonner"
 import { useRouter } from "next/navigation"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import FormLocalRegisterDashboard  from "@/components/page-elements/FormLocalRegisterDashboard" 
+import FormLocalEdit from "@/components/page-elements/FormLocalEdit";
 
 type Location = {
   id: string
@@ -39,7 +40,7 @@ export function LocationTable() {
   const [isDeleting, setIsDeleting] = useState<string | null>(null)
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
   const itemsPerPage = 5
-
+  const [editingLocationId, setEditingLocationId] = useState<string | null>(null);
   const fetchLocations = useCallback(async () => {
     try {
       setLoading(true)
@@ -252,6 +253,7 @@ export function LocationTable() {
                               size="sm"
                               className="h-8 w-8 p-0 text-[#f6c23e] hover:text-[#d4a017] hover:bg-yellow-50"
                               title="Editar"
+                              onClick={() => setEditingLocationId(location.id)}
                             >
                               <Edit className="h-4 w-4" />
                             </Button>
@@ -344,6 +346,25 @@ export function LocationTable() {
             <DialogTitle></DialogTitle>
           </DialogHeader>
           <FormLocalRegisterDashboard onSuccess={handleAddSuccess} />
+        </DialogContent>
+      </Dialog>
+
+     
+      <Dialog open={!!editingLocationId} onOpenChange={(open) => !open && setEditingLocationId(null)}>
+        <DialogContent className="w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle></DialogTitle>
+          </DialogHeader>
+          {editingLocationId && (
+            <FormLocalEdit 
+              locationId={editingLocationId}
+              onSuccess={() => {
+                fetchLocations();
+                setEditingLocationId(null);
+              }}
+              onClose={() => setEditingLocationId(null)}
+            />
+          )}
         </DialogContent>
       </Dialog>
     </>
