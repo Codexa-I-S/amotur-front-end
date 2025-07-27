@@ -19,12 +19,12 @@ export default function Navbar({ setFocusCoords }: NavbarProps) {
 
 
   const links = [
-    { label: "Pontos Turísticos", tipo: "Ponto Turístico", icon: MdLocationOn },
-    { label: "Hotéis", tipo: "Hotel", icon: FaHotel },
-    { label: "Pousadas", tipo: "Pousada", icon: MdHotel },
-    { label: "Restaurantes", tipo: "Restaurante", icon: MdRestaurant },
-    { label: "Petiscarias", tipo: "Petiscaria", icon: FaPizzaSlice },
-    { label: "Bares", tipo: "Bar", icon: FaMartiniGlass },
+    { label: "Pontos Turísticos", tipo: "TURISTICO", icon: MdLocationOn },
+    { label: "Hotéis", tipo: "HOTEL", icon: FaHotel },
+    { label: "Pousadas", tipo: "POUSADA", icon: MdHotel },
+    { label: "Restaurantes", tipo: "RESTAURANTE", icon: MdRestaurant },
+    { label: "Petiscarias", tipo: "PETISCARIA", icon: FaPizzaSlice },
+    { label: "Bares", tipo: "BAR", icon: FaMartiniGlass },
   ];
 
   const handleAbrirCategoria = (tipo: string, label: string) => {

@@ -54,19 +54,19 @@ const validationLocalSchema = z.object({
 type LocalFormData = z.infer<typeof validationLocalSchema>;
 
 const typeMapping = {
-  hotel: "Hotel",
-  pousada: "Pousada",
-  bar: "Bar",
-  petiscaria: "Petiscaria",
-  ponto_turistico: "Ponto Turístico",
-  restaurante: "Restaurante",
+  hotel: "HOTEL",
+  pousada: "POUSADA",
+  bar: "BAR",
+  petiscaria: "PETISCARIA",
+  ponto_turistico: "TURISTICO",
+  restaurante: "RESTAURANTE",
 } as const;
 
 const typeLocalization = {
-  caetanos: "Caetanos",
-  flecheiras: "Flecheiras",
-  icarai: "Icaraí",
-  moitas: "Moitas",
+  caetanos: "CAETANOS",
+  flecheiras: "FLECHEIRAS",
+  icarai: "ICARAI",
+  moitas: "MOITAS",
 };
 
 export default function FormLocalRegisterDashboard({ onSuccess }: FormLocalRegisterDashboardProps) {
