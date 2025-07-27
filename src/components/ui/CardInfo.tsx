@@ -3,7 +3,7 @@
 import Image from "next/image"
 import Link from "next/link"
 import { Instagram } from "lucide-react"
-import { MdEmail, MdPhone } from "react-icons/md"
+import { MdEmail, MdWhatsapp } from "react-icons/md"
 import {
   Carousel,
   CarouselContent,
@@ -11,13 +11,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import { getUserRole } from "../page-elements/GetUserRole"
 
 type CardProps = {
   name: string
   type: string
   instagramUrl: string
-  email: string
-  telefone: string
+  email?: string
+  telefone?: string
   description: string
   images: string[]
   logo: string
@@ -78,15 +79,29 @@ export default function CardInfo({
             </div>
           </div>
 
-          {/* Instagram */}
-          <Link
-            href={instagramUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-pink-600 hover:text-pink-800 flex-shrink-0"
-          >
-            <Instagram className="w-6 h-6" />
-          </Link>
+          <div className="flex flex-row gap-2 justify-center items-center">
+            {/* Instagram */}
+            <Link
+              href={instagramUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-pink-600 hover:text-pink-800 flex-shrink-0"
+            >
+              <Instagram className="w-5 h-5" />
+            </Link>
+            {telefone && (
+                <Link
+                  href={`https://wa.me/55${telefone.replace(/\D/g, "")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xl text-green-600"
+                >
+                  <MdWhatsapp className="w-6 h-6 "/>
+                </Link>
+              )
+            }
+            
+          </div>
         </div>
 
         {/* Descrição */}
@@ -94,14 +109,17 @@ export default function CardInfo({
 
         {/* Contato */}
         <div className="flex flex-col gap-2 text-gray-700">
-          <div className="flex items-center gap-2">
-            <MdEmail className="text-xl text-blue-600" />
-            <span className="text-sm">{email}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <MdPhone className="text-xl text-green-600" />
-            <span className="text-sm">{telefone}</span>
-          </div>
+          {getUserRole() === 'ADMIN' && (
+
+            <div className="flex items-center gap-2">
+              <MdEmail className="text-xl text-blue-600" />
+              <span className="text-sm">{email}</span>
+            </div>
+
+            )
+          }
+
+          
         </div>
       </div>
     </div>
