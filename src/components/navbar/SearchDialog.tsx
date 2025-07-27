@@ -87,7 +87,7 @@ export function SearchDialog({ variant = "desktop", setFocusCoords }: SearchDial
         )}
       </button>
 
-      <CommandDialog open={open} onOpenChange={setOpen}>
+      <CommandDialog open={open} onOpenChange={setOpen} className="z-[1005]">
         <CommandInput placeholder="Buscar..." />
         <CommandList className="scrollbar-hidden">
           <CommandEmpty>Nenhum resultado encontrado.</CommandEmpty>

@@ -201,7 +201,15 @@ export default function SimpleMap({ focusCoords, setFocusCoords }: SimpleMapProp
         <ZoomControls/>
         
         
-        <Marker position={[-3.0206125094, -39.6507740021]} icon={defaultIcon}>
+        <Marker 
+          position={[-3.0206125094, -39.6507740021]} 
+          icon={L.icon({
+            iconUrl: "/waves.svg",
+            iconSize: [35, 35],
+            iconAnchor: [17, 35],
+            popupAnchor: [0, -35]
+          })}
+          >
           <Popup maxWidth={400}>
             <div className="w-[350px] max-h-[400px] overflow-auto mx-[-12]">
               <TideCard />
