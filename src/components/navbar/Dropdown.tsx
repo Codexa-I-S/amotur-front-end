@@ -52,32 +52,35 @@ export default function Dropdown() {
 
        
 
-            <DropdownMenuItem>
-                {!token ? (
+            
+            {!token ? (
+                <button
+                    className="w-full"
+                    onClick={() => handleLogin()}>
+
+                    <DropdownMenuItem> Login </DropdownMenuItem>
+
+                </button>
+
+                ) : (
                     <button
-                    onClick={() => handleLogin()}
-                    >
-                    Login
+                        className="w-full"
+                        onClick={() => handleLogout()}>
+                        
+                        <DropdownMenuItem> Sair </DropdownMenuItem>
+
                     </button>
-                    ) : (
-                    <button
-                    onClick={() => handleLogout()}
-                    >
-                    Sair
-                    </button>
-                )}
-            </DropdownMenuItem>
+            )}
+            
 
             {getUserRole() === 'ADMIN' && (
-                <DropdownMenuItem>
+                <button
+                    className="w-full"
+                    onClick={handleRedirect}>
 
-                    <button
-                        onClick={handleRedirect}
-                        >
-                        Dashboard
-                    </button>
-
-                </DropdownMenuItem>
+                    <DropdownMenuItem> Dashboard </DropdownMenuItem>
+                    
+                </button>
             )}
        
 
