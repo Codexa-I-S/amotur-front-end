@@ -122,10 +122,10 @@ export default function SideBarLocais({ tipo, label, open, onOpenChange, setFocu
 
             <SelectContent className="z-[2001] text-[#0E2C66]">
               <SelectItem value="Todos">Todos</SelectItem>
-              <SelectItem value="Icaraí">Icaraí</SelectItem>
-              <SelectItem value="Moitas">Moitas</SelectItem>
-              <SelectItem value="Caetanos">Caetanos</SelectItem>
-              <SelectItem value="Flecheiras">Flecheiras</SelectItem>
+              <SelectItem value="ICARAI">Icaraí</SelectItem>
+              <SelectItem value="MOITAS">Moitas</SelectItem>
+              <SelectItem value="CAETANOS">Caetanos</SelectItem>
+              <SelectItem value="FLECHEIRAS">Flecheiras</SelectItem>
             </SelectContent>
           </Select>
 

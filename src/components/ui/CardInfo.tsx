@@ -62,7 +62,6 @@ export default function CardInfo({
         <div className="flex items-start justify-between gap-2">
           {/* Logo + Nome + Tipo */}
           <div className="flex items-center gap-3 overflow-hidden">
-            <a href={logo} target="_blank" rel="noopener noreferrer">
               <Image
                 src={logo}
                 width={50}
@@ -70,7 +69,6 @@ export default function CardInfo({
                 alt={`${name} logo`}
                 className="w-12 h-12 min-w-[3rem] min-h-[3rem] rounded-full border object-cover flex-shrink-0"
               />
-            </a>
             <div className="min-w-0 flex flex-col">
               <h2 className="text-lg sm:text-xl font-bold break-words leading-snug">
                 {name}
