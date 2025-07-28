@@ -4,10 +4,9 @@ import { TrendingUp, TrendingDown, Users, MapPin, Eye, Star } from "lucide-react
 interface MetricCardProps {
   title: string
   value: string
-  change: string
-  changeType: "positive" | "negative"
-  subtitle: string
-  color: "blue" | "green" | "red" | "purple"
+  change?: string
+  subtitle?: string
+  color?: "blue" | "green" | "red" | "purple"
 }
 
 const colorClasses = {
@@ -35,8 +34,15 @@ const getIcon = (title: string, color: string) => {
   return <Users className={className} />
 }
 
-export function MetricCard({ title, value, change, changeType, subtitle, color }: MetricCardProps) {
-  const isPositive = changeType === "positive"
+export function MetricCard({ 
+  title, 
+  value, 
+  change = "", 
+  subtitle = "", 
+  color = "blue" 
+}: MetricCardProps) {
+  // Determina se a mudança é positiva baseada no valor de change
+  const isPositive = change.startsWith('+') || !change.startsWith('-')
 
   return (
     <Card
@@ -52,24 +58,25 @@ export function MetricCard({ title, value, change, changeType, subtitle, color }
               {getIcon(title, color)}
             </div>
           </div>
-          
           <div className="mt-auto">
             <div className="flex items-baseline gap-2 mb-1 flex-wrap">
               <p className="text-xl sm:text-2xl font-bold text-gray-800">
                 {value}
               </p>
-              <div
-                className={`flex items-center gap-1 ${isPositive ? "text-[#1cc88a]" : "text-[#e74a3b]"} flex-shrink-0`}
-              >
-                {isPositive ? (
-                  <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4" />
-                ) : (
-                  <TrendingDown className="h-3 w-3 sm:h-4 sm:w-4" />
-                )}
-                <span className="text-xs sm:text-sm font-medium">{change}</span>
-              </div>
+              {change && (
+                <div
+                  className={`flex items-center gap-1 ${isPositive ? "text-[#1cc88a]" : "text-[#e74a3b]"} flex-shrink-0`}
+                >
+                  {isPositive ? (
+                    <TrendingUp className="h-3 w-3 sm:h-4 sm:w-4" />
+                  ) : (
+                    <TrendingDown className="h-3 w-3 sm:h-4 sm:w-4" />
+                  )}
+                  <span className="text-xs sm:text-sm font-medium">{change}</span>
+                </div>
+              )}
             </div>
-            <p className="text-xs text-gray-500 truncate">{subtitle}</p>
+            {subtitle && <p className="text-xs text-gray-500 truncate">{subtitle}</p>}
           </div>
         </div>
       </CardContent>
