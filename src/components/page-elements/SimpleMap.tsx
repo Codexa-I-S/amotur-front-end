@@ -43,7 +43,7 @@ function ShowFormRegisterOnClick({setLocationPosition}: Props) {
   return null
 }
 
-type PointsType = "HOTEL" | "POUSADA" | "BAR" | "RESTAURANTE" | "TURISTICO" | string
+type PointsType = "HOTEL" | "POUSADA" | "BAR" | "RESTAURANTE" | "TURISTICO" | "PETISCARIA" | string
 
 const iconMap: Record<string, L.Icon> = {
   HOTEL: new L.Icon({
@@ -72,6 +72,12 @@ const iconMap: Record<string, L.Icon> = {
   }),
   TURISTICO: new L.Icon({
     iconUrl: "/destination.svg",
+    iconSize: [35, 35],
+    iconAnchor: [17, 35],
+    popupAnchor: [0, -35]
+  }),
+  PETISCARIA: new L.Icon({
+    iconUrl: "/food.svg",
     iconSize: [35, 35],
     iconAnchor: [17, 35],
     popupAnchor: [0, -35]
