@@ -55,32 +55,32 @@ const validationLocalSchema = z.object({
 type LocalFormData = z.infer<typeof validationLocalSchema>;
 
 const typeMapping = {
-  hotel: "HOTEL",
-  pousada: "POUSADA",
-  bar: "BAR",
-  petiscaria: "PETISCARIA",
-  ponto_turistico: "TURISTICO",
-  restaurante: "RESTAURANTE",
+  hotel: "Hotel",
+  pousada: "Pousada",
+  bar: "Bar",
+  petiscaria: "Petiscaria",
+  ponto_turistico: "Ponto Turístico",
+  restaurante: "Restaurante",
 } as const;
 
-type BackendLocationType = "HOTEL" | "POUSADA" | "BAR" | "PETISCARIA" | "TURISTICO" | "RESTAURANTE";
+type BackendLocationType = "Hotel" | "Pousada" | "Bar" | "Petiscaria" | "Ponto Turístico" | "Restaurante";
 type FormLocationType = keyof typeof typeMapping;
 
 const reverseTypeMapping: Record<BackendLocationType, FormLocationType> = {
-  "HOTEL": "hotel",
-  "POUSADA": "pousada",
-  "BAR": "bar",
-  "PETISCARIA": "petiscaria",
-  "TURISTICO": "ponto_turistico",
-  "RESTAURANTE": "restaurante"
+  "Hotel": "hotel",
+  "Pousada": "pousada",
+  "Bar": "bar",
+  "Petiscaria": "petiscaria",
+  "Ponto Turístico": "ponto_turistico",
+  "Restaurante": "restaurante"
 } as const;
 
 const typeLocalization = {
-  caetanos: "CAETANOS",
-  flecheiras: "FLECHEIRAS",
-  icarai: "ICARAI",
-  moitas: "MOITAS",
-};
+  caetanos: "Caetanos",
+  flecheiras: "Flecheiras",
+  icarai: "Icaraí",
+  moitas: "Moitas",
+} as const;
 
 export default function FormLocalEdit({ locationId, onSuccess, onClose }: FormLocalEditProps) {
   const [logoFile, setLogoFile] = useState<File | null>(null);
