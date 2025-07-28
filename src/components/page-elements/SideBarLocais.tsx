@@ -132,30 +132,35 @@ export default function SideBarLocais({ tipo, label, open, onOpenChange, setFocu
         </SheetHeader>
 
         <div className="flex flex-col flex-1 items-center overflow-y-auto px-4 gap-8 scrollbar-hidden">
-          {loading
-            ? Array.from({ length: expectdeCount }).map((_, i) => (
-                <div key={i} className="w-[280px]">
-                  <Skeleton className="w-full h-45 rounded-xl" />
-                </div>
-              ))
-            : filtroLocais.map((local, idx) => (
-                <div className="shadow-md rounded-2xl" key={idx}>
-                  <PreCard
-                    name={local.name}
-                    type={local.type}
-                    email={local.contacts.email}
-                    telefone={local.contacts.telefone}
-                    instagramUrl={local.contacts.site}
-                    description={local.description}
-                    images={local.images}
-                    logo={local.logo}
-                    onClick={() => {
-                      setFocusCoords([local.coordinates.lat, local.coordinates.lng])
-                      onOpenChange(false)
-                    }}
-                  />
-                </div>
-              ))}
+            {loading ? (
+            Array.from({ length: expectdeCount }).map((_, i) => (
+              <div key={i} className="w-[280px]">
+                <Skeleton className="w-full h-45 rounded-xl" />
+              </div>
+            ))
+          ) : filtroLocais.length === 0 ? (
+            <p className="text-[#6A87A0] text-center mt-10">Nenhum local encontrado.</p>
+          ) : (
+            filtroLocais.map((local, idx) => (
+              <div className="shadow-md rounded-2xl" key={idx}>
+                <PreCard
+                  name={local.name}
+                  type={local.type}
+                  email={local.contacts.email}
+                  telefone={local.contacts.telefone}
+                  instagramUrl={local.contacts.site}
+                  description={local.description}
+                  images={local.images}
+                  logo={local.logo}
+                  onClick={() => {
+                    setFocusCoords([local.coordinates.lat, local.coordinates.lng])
+                    onOpenChange(false)
+                  }}
+                />
+              </div>
+            ))
+          )}
+
         </div>
         
       </SheetContent>

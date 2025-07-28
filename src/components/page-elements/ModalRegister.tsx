@@ -16,7 +16,7 @@ export default function ModalRegister({ lat, lng }: Props) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="bg-[#009089] text-white px-3 py-2 rounded">
+        <button className="bg-[#0077b6] text-white px-3 py-2 rounded">
           Cadastrar Local
         </button>
       </DialogTrigger>

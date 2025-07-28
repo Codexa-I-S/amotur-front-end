@@ -6,6 +6,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import CardInfo from "../ui/CardInfo"
+import { Info } from "lucide-react" 
 
 
 type ModalProps = {
@@ -27,7 +28,9 @@ export default function ModalCard({name, type, instagramUrl, email, telefone, de
         <Dialog>
             <DialogTrigger className="mt-2 cursor-pointer text-[12px]">
                 
-                Mais informações
+                <div className="flex gap-1">
+                    <Info width={15} height={15}/>Informações
+                </div>
         
             </DialogTrigger>
             <DialogContent className="p-5 z-[1010]">
