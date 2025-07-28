@@ -153,7 +153,7 @@ export default function DashboardPage() {
                   color="green"
                 />
                 <MetricCard
-                  title="VISITAS HOJE"
+                  title="USUÁRIOS LOGADOS HOJE"
                   value={formatNumber(dashboardData.contagemlogados)}
                   change="-3%"
                   changeType="negative"
