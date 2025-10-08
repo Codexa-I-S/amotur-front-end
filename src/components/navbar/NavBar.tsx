@@ -40,8 +40,8 @@ export default function Navbar({ setFocusCoords }: NavbarProps) {
         <div className="flex-shrink-0">
           <Image
             className="cursor-pointer"
-            src="/amotur_blue.png"
-            width={100}
+            src="/Litormap.png"
+            width={180}
             height={80}
             alt="Logo do projeto Amotur"
           />

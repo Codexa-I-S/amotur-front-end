@@ -113,10 +113,10 @@ export default function CadastroPage() {
       <div className="h-[40%] lg:h-full w-full lg:w-1/2 relative flex justify-center items-center">
         <div className="hidden lg:block absolute inset-0 bg-[url('/palm-tree.jpg')] bg-cover bg-center" />
         <Image
-          className="w-[200px] lg:w-[350px] z-10"
-          src="/amotur_branca.png"
-          width={250}
-          height={50}
+          className=" z-10"
+          src="/Litormapbranca.png"
+          height={500}
+          width={500}
           alt="Logo-Amotur"
           priority
         />
