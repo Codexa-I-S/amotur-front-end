@@ -49,7 +49,7 @@ export default function DashboardLayout({
               className="p-1 rounded-md hover:bg-gray-100 dark:hover:bg-neutral-800 hidden md:block"
             >
               <Image
-                src="/amotur_azul.png" 
+                src="/Litormap.png" 
                 alt="Logo da Amotur"
                 width={100}
                 height={50}
