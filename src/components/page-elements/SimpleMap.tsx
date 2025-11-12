@@ -107,7 +107,7 @@ type Point = {
   };
   description: string;
   logo: { url: string };
-  images: string[];
+  images: { url: string }[];
   coordinates: {
     lat: number;
     lng: number;
@@ -204,7 +204,7 @@ export default function SimpleMap({ focusCoords, setFocusCoords }: SimpleMapProp
                 telefone={place.contacts.telefone}
                 description={place.description}
                 logo={place.logo?.url}
-                images={place.images?.map((img: any) => img.url)} 
+                images={place.images?.map((img) => img.url)}
               />
             </Popup>
           </Marker>
