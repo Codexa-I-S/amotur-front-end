@@ -13,7 +13,7 @@ type Props = {
   telefone: string
   description: string
   images: string[]
-  logo: string
+  logo: string 
   onClick? : () => void;
 }
 
