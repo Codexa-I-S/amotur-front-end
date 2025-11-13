@@ -30,8 +30,8 @@ type Local = {
     site: string
   }
   description: string
-  logo: string
-  images: string[]
+  logo: { url: string };
+  images: { url: string }[];
   coordinates: {
     lat: number
     lng: number
@@ -150,8 +150,8 @@ export default function SideBarLocais({ tipo, label, open, onOpenChange, setFocu
                   telefone={local.contacts.telefone}
                   instagramUrl={local.contacts.site}
                   description={local.description}
-                  images={local.images}
-                  logo={local.logo}
+                  logo={local.logo?.url}
+                  images={local.images?.map((img) => img.url)}
                   onClick={() => {
                     setFocusCoords([local.coordinates.lat, local.coordinates.lng])
                     onOpenChange(false)
