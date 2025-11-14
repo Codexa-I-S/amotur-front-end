@@ -71,7 +71,7 @@ const reverseTypeMapping: Record<string, FormLocationType> = {
   POUSADA: "pousada",
   BAR: "bar",
   PETISCARIA: "petiscaria",
-  "PONTO TURISTICO": "ponto_turistico",
+  TURISTICO: "ponto_turistico",
   RESTAURANTE: "restaurante",
 };
 
