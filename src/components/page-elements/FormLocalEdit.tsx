@@ -66,14 +66,14 @@ const typeMapping = {
 type BackendLocationType = "Hotel" | "Pousada" | "Bar" | "Petiscaria" | "Ponto Turístico" | "Restaurante";
 type FormLocationType = keyof typeof typeMapping;
 
-const reverseTypeMapping: Record<BackendLocationType, FormLocationType> = {
-  "Hotel": "hotel",
-  "Pousada": "pousada",
-  "Bar": "bar",
-  "Petiscaria": "petiscaria",
-  "Ponto Turístico": "ponto_turistico",
-  "Restaurante": "restaurante"
-} as const;
+const reverseTypeMapping: Record<string, FormLocationType> = {
+  HOTEL: "hotel",
+  POUSADA: "pousada",
+  BAR: "bar",
+  PETISCARIA: "petiscaria",
+  "PONTO TURISTICO": "ponto_turistico",
+  RESTAURANTE: "restaurante",
+};
 
 const typeLocalization = {
   caetanos: "Caetanos",
