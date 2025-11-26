@@ -3,8 +3,8 @@
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Input } from "../ui/input";
-import { Button } from "../ui/button";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -54,19 +54,25 @@ const validationLocalSchema = z.object({
 
 type LocalFormData = z.infer<typeof validationLocalSchema>;
 
-const typeMapping = {
-  hotel: "Hotel",
-  pousada: "Pousada",
-  bar: "Bar",
-  petiscaria: "Petiscaria",
-  ponto_turistico: "Ponto Turístico",
-  restaurante: "Restaurante",
+// Mapeamento para ENVIO (form -> backend)
+const typeToBackend = {
+  hotel: "HOTEL",
+  pousada: "POUSADA",
+  bar: "BAR",
+  petiscaria: "PETISCARIA",
+  ponto_turistico: "TURISTICO",
+  restaurante: "RESTAURANTE",
 } as const;
 
-type BackendLocationType = "Hotel" | "Pousada" | "Bar" | "Petiscaria" | "Ponto Turístico" | "Restaurante";
-type FormLocationType = keyof typeof typeMapping;
+const regionToBackend = {
+  caetanos: "CAETANOS",
+  flecheiras: "FLECHEIRAS",
+  icarai: "ICARAI",
+  moitas: "MOITAS",
+} as const;
 
-const reverseTypeMapping: Record<string, FormLocationType> = {
+// Mapeamento para RECEBIMENTO (backend -> form)
+const typeFromBackend: Record<string, keyof typeof typeToBackend> = {
   HOTEL: "hotel",
   POUSADA: "pousada",
   BAR: "bar",
@@ -75,28 +81,21 @@ const reverseTypeMapping: Record<string, FormLocationType> = {
   RESTAURANTE: "restaurante",
 };
 
-const typeLocalization = {
-  caetanos: "Caetanos",
-  flecheiras: "Flecheiras",
-  icarai: "Icaraí",
-  moitas: "Moitas",
-} as const;
+const regionFromBackend: Record<string, keyof typeof regionToBackend> = {
+  CAETANOS: "caetanos",
+  FLECHEIRAS: "flecheiras",
+  ICARAI: "icarai",
+  MOITAS: "moitas",
+};
 
 export default function FormLocalEdit({ locationId, onSuccess, onClose }: FormLocalEditProps) {
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [photoFiles, setPhotoFiles] = useState<File[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [logoError] = useState<string | null>(null);
-  const [photoError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
   const [currentLogo, setCurrentLogo] = useState<string | null>(null);
   const [currentPhotos, setCurrentPhotos] = useState<string[]>([]);
   const router = useRouter();
-
-  const api = axios.create({
-    baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
-    timeout: 30000,
-    withCredentials: true,
-  });
 
   const {
     register,
@@ -108,46 +107,53 @@ export default function FormLocalEdit({ locationId, onSuccess, onClose }: FormLo
     resolver: zodResolver(validationLocalSchema),
   });
 
+  // Carregar dados do local
   useEffect(() => {
     const fetchLocationData = async () => {
       try {
+        setIsLoading(true);
         const token = localStorage.getItem("authToken");
-        const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/place/id=${locationId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_API_URL}/place/id=${locationId}`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         const data = response.data;
-        
-        // Verifica se o tipo recebido é válido
-        const backendType = data.type as BackendLocationType;
-        if (!(backendType in reverseTypeMapping)) {
-          throw new Error(`Tipo inválido recebido do backend: ${data.type}`);
+
+        // Mapear os dados do backend para o formato do form
+        const mappedType = typeFromBackend[data.type];
+        const mappedRegion = regionFromBackend[data.localization];
+
+        if (!mappedType || !mappedRegion) {
+          throw new Error("Tipo ou região inválida recebida do backend");
         }
 
-        // Preenche os valores do formulário
+        // Preencher o formulário
         reset({
           name: data.name,
-          type: reverseTypeMapping[backendType],
-          region: Object.keys(typeLocalization).find(
-            key => typeLocalization[key as keyof typeof typeLocalization] === data.localization
-          ) as keyof typeof typeLocalization,
+          type: mappedType,
+          region: mappedRegion,
           description: data.description,
           lat: data.coordinates.lat,
           lng: data.coordinates.lng,
           email: data.contacts.email,
           phone: data.contacts.telefone,
-          instagram: data.contacts.site
+          instagram: data.contacts.site,
         });
 
-        // Armazena as imagens atuais
+        // Armazenar imagens atuais
         setCurrentLogo(data.logo || null);
         setCurrentPhotos(data.photos || []);
-
       } catch (error) {
         console.error("Erro ao carregar dados do local:", error);
         toast.error("Erro ao carregar dados do local");
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -173,9 +179,11 @@ export default function FormLocalEdit({ locationId, onSuccess, onClose }: FormLo
 
     try {
       const formData = new FormData();
+      
+      // Adicionar campos obrigatórios
       formData.append("name", data.name);
-      formData.append("type", typeMapping[data.type]);
-      formData.append("localization", typeLocalization[data.region]);
+      formData.append("type", typeToBackend[data.type]);
+      formData.append("localization", regionToBackend[data.region]);
       formData.append("description", data.description);
       formData.append(
         "coordinates",
@@ -189,18 +197,30 @@ export default function FormLocalEdit({ locationId, onSuccess, onClose }: FormLo
           site: data.instagram,
         })
       );
-      if (logoFile) formData.append("logo", logoFile);
-      photoFiles.forEach((file) => formData.append("photos", file));
+
+      // Adicionar logo apenas se uma nova foi selecionada
+      if (logoFile) {
+        formData.append("logo", logoFile);
+      }
+
+      // Adicionar fotos apenas se novas foram selecionadas
+      if (photoFiles.length > 0) {
+        photoFiles.forEach((file) => formData.append("photos", file));
+      }
 
       const token = localStorage.getItem("authToken");
 
-      await api.put(`/place/id=${locationId}`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Accept: "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.put(
+        `${process.env.NEXT_PUBLIC_API_URL}/place/id=${locationId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Accept: "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       toast.success("Local atualizado com sucesso!", {
         description: "O local foi atualizado com sucesso!",
@@ -242,6 +262,14 @@ export default function FormLocalEdit({ locationId, onSuccess, onClose }: FormLo
     }
   }
 
+  if (isLoading) {
+    return (
+      <div className="w-full sm:max-w-2xl mx-auto bg-white rounded-2xl sm:px-6 sm:py-8 flex justify-center items-center min-h-[400px]">
+        <Loader2 className="h-8 w-8 animate-spin text-teal-600" />
+      </div>
+    );
+  }
+
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
@@ -251,7 +279,6 @@ export default function FormLocalEdit({ locationId, onSuccess, onClose }: FormLo
         Editar Local
       </h2>
 
-      {/* Campos do formulário (iguais ao FormLocalRegisterDashboard) */}
       {/* Nome */}
       <div className="mb-4">
         <label
@@ -475,14 +502,11 @@ export default function FormLocalEdit({ locationId, onSuccess, onClose }: FormLo
             <span className="text-gray-500 text-xs italic truncate max-w-[200px] sm:max-w-xs">
               {logoFile.name}
             </span>
-          ) : currentLogo && (
+          ) : currentLogo ? (
             <span className="text-gray-500 text-xs italic">
               Logo atual mantida
             </span>
-          )}
-          {logoError && (
-            <span className="text-red-500 text-xs">{logoError}</span>
-          )}
+          ) : null}
         </div>
 
         <div className="flex flex-col items-center gap-1">
@@ -505,14 +529,11 @@ export default function FormLocalEdit({ locationId, onSuccess, onClose }: FormLo
             <span className="text-gray-500 text-xs italic">
               {photoFiles.length} nova(s) foto(s)
             </span>
-          ) : currentPhotos.length > 0 && (
+          ) : currentPhotos.length > 0 ? (
             <span className="text-gray-500 text-xs italic">
-              {currentPhotos.length} foto(s) atual mantida(s)
+              {currentPhotos.length} foto(s) mantida(s)
             </span>
-          )}
-          {photoError && (
-            <span className="text-red-500 text-xs">{photoError}</span>
-          )}
+          ) : null}
         </div>
       </div>
 
